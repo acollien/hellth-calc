@@ -38,7 +38,7 @@ const HealthResults = ({ results }: ResultsProps) => {
   const renderTooltip = (content: string, trigger: React.ReactNode) => (
     <Tooltip>
       <TooltipTrigger asChild>
-        <button className="inline-flex items-center">
+        <button type="button" className="inline-flex items-center">
           {trigger}
           <Info className="h-4 w-4 ml-1 text-mint-500" />
         </button>
