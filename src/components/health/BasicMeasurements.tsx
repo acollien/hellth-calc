@@ -4,6 +4,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
 import { HealthMetrics } from "./types";
+import { useToast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 interface BasicMeasurementsProps {
   metrics: HealthMetrics;
@@ -11,42 +14,38 @@ interface BasicMeasurementsProps {
 }
 
 const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) => {
-  const renderTooltip = (content: string) => (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <button type="button">
-          <Info className="h-4 w-4 ml-1 text-mint-500" />
-        </button>
-      </TooltipTrigger>
-      <TooltipContent>
-        <p className="max-w-xs text-sm">{content}</p>
-      </TooltipContent>
-    </Tooltip>
-  );
+  const { toast } = useToast();
 
-  const renderMetricInput = (
-    label: string,
-    key: keyof HealthMetrics,
-    tooltip: string,
-    placeholder: string
-  ) => (
-    <div className="space-y-2">
-      <div className="flex items-center">
-        <Label htmlFor={key}>
-          {label} ({metrics.unit === "metric" ? "cm" : "in"})
-        </Label>
-        {renderTooltip(tooltip)}
-      </div>
-      <Input
-        id={key}
-        type="number"
-        value={metrics[key]}
-        onChange={(e) => onMetricChange(key, e.target.value)}
-        placeholder={placeholder}
-        className="transition-all duration-200 focus:ring-mint-500"
-      />
-    </div>
-  );
+  const validateNumericInput = (value: string, fieldName: string, min: number, max: number) => {
+    const num = parseFloat(value);
+    if (isNaN(num)) {
+      toast({
+        title: "Invalid Input",
+        description: `${fieldName} must be a numeric value`,
+        variant: "destructive"
+      });
+      return false;
+    }
+    if (num < min || num > max) {
+      toast({
+        title: "Invalid Range",
+        description: `${fieldName} must be between ${min} and ${max}`,
+        variant: "destructive"
+      });
+      return false;
+    }
+    return true;
+  };
+
+  const handleInputChange = (key: keyof HealthMetrics, value: string, fieldName: string, min: number, max: number) => {
+    if (value === "") {
+      onMetricChange(key, value);
+      return;
+    }
+    if (validateNumericInput(value, fieldName, min, max)) {
+      onMetricChange(key, value);
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -68,13 +67,25 @@ const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) 
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="gender">Gender</Label>
+          <div className="flex items-center gap-2">
+            <Label htmlFor="gender">Biological Sex at Birth</Label>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="ghost" size="icon" className="h-4 w-4 p-0">
+                  <Info className="h-4 w-4 text-mint-500" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent className="max-w-xs">
+                <p>We acknowledge that gender exists on a spectrum. Due to the historical nature of available medical calculation methods, this application currently requires biological sex at birth for accurate results. We are committed to updating our methods as more inclusive research becomes available.</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
           <Select
             value={metrics.gender}
             onValueChange={(value: 'male' | 'female') => onMetricChange('gender', value)}
           >
             <SelectTrigger>
-              <SelectValue placeholder="Select gender" />
+              <SelectValue placeholder="Select biological sex at birth" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="male">Male</SelectItem>
@@ -85,20 +96,64 @@ const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) 
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">
-        {renderMetricInput("Height", "height", "Your standing height", "175")}
-        {renderMetricInput("Weight", "weight", "Your current weight", "70")}
+        <div className="space-y-2">
+          <Label htmlFor="height">Height ({metrics.unit === "metric" ? "cm" : "in"})</Label>
+          <Input
+            id="height"
+            type="number"
+            value={metrics.height}
+            onChange={(e) => handleInputChange('height', e.target.value, 'Height', 
+              metrics.unit === "metric" ? 50 : 20,
+              metrics.unit === "metric" ? 300 : 118)}
+            className="transition-all duration-200 focus:ring-mint-500"
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="weight">Weight ({metrics.unit === "metric" ? "kg" : "lbs"})</Label>
+          <Input
+            id="weight"
+            type="number"
+            value={metrics.weight}
+            onChange={(e) => handleInputChange('weight', e.target.value, 'Weight',
+              metrics.unit === "metric" ? 20 : 44,
+              metrics.unit === "metric" ? 500 : 1102)}
+            className="transition-all duration-200 focus:ring-mint-500"
+          />
+        </div>
         <div className="space-y-2">
           <Label htmlFor="age">Age (years)</Label>
           <Input
             id="age"
             type="number"
             value={metrics.age}
-            onChange={(e) => onMetricChange('age', e.target.value)}
-            placeholder="25"
+            onChange={(e) => handleInputChange('age', e.target.value, 'Age', 0, 120)}
             className="transition-all duration-200 focus:ring-mint-500"
           />
         </div>
       </div>
+
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant="outline" size="sm" className="text-xs">Legal Information</Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Legal Information</DialogTitle>
+            <DialogDescription className="space-y-4">
+              <p>This application ("Hellth") is provided for informational purposes only and should not be considered medical advice. Always consult with healthcare professionals for medical decisions.</p>
+              
+              <h4 className="font-semibold">Data Privacy</h4>
+              <p>We do not collect, store, or sell any personal information. All calculations are performed locally in your browser.</p>
+              
+              <h4 className="font-semibold">Cookies</h4>
+              <p>This application does not use cookies or tracking mechanisms.</p>
+              
+              <h4 className="font-semibold">Disclaimer</h4>
+              <p>The calculations and results provided are based on general formulas and may not account for individual variations or specific medical conditions. Use at your own discretion.</p>
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
