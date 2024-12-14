@@ -31,7 +31,7 @@ const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) 
     if (num < min || num > max) {
       toast({
         title: "Invalid Range",
-        description: `${fieldName} must be between ${min} and ${max}`,
+        description: `${fieldName} must be between ${min} and ${max} ${fieldName === "Height" ? (metrics.unit === "metric" ? "cm" : "inches") : (metrics.unit === "metric" ? "kg" : "lbs")}`,
         variant: "destructive"
       });
       return false;
@@ -109,8 +109,8 @@ const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) 
             type="number"
             value={metrics.height}
             onChange={(e) => handleInputChange('height', e.target.value, 'Height', 
-              metrics.unit === "metric" ? 50 : 20,
-              metrics.unit === "metric" ? 300 : 118)}
+              metrics.unit === "metric" ? 100 : 39,  // Adjusted minimum heights
+              metrics.unit === "metric" ? 250 : 98)} // Adjusted maximum heights
             className="transition-all duration-200 focus:ring-mint-500"
             step="0.1"
           />
@@ -122,8 +122,8 @@ const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) 
             type="number"
             value={metrics.weight}
             onChange={(e) => handleInputChange('weight', e.target.value, 'Weight',
-              metrics.unit === "metric" ? 20 : 44,
-              metrics.unit === "metric" ? 500 : 1102)}
+              metrics.unit === "metric" ? 30 : 66,   // Adjusted minimum weights
+              metrics.unit === "metric" ? 300 : 661)} // Adjusted maximum weights
             className="transition-all duration-200 focus:ring-mint-500"
             step="0.1"
           />
