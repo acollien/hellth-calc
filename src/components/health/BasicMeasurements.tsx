@@ -17,6 +17,8 @@ const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) 
   const { toast } = useToast();
 
   const validateNumericInput = (value: string, fieldName: string, min: number, max: number) => {
+    if (value === "") return true;
+    
     const num = parseFloat(value);
     if (isNaN(num)) {
       toast({
@@ -106,6 +108,7 @@ const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) 
               metrics.unit === "metric" ? 50 : 20,
               metrics.unit === "metric" ? 300 : 118)}
             className="transition-all duration-200 focus:ring-mint-500"
+            step="0.1"
           />
         </div>
         <div className="space-y-2">
@@ -118,6 +121,7 @@ const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) 
               metrics.unit === "metric" ? 20 : 44,
               metrics.unit === "metric" ? 500 : 1102)}
             className="transition-all duration-200 focus:ring-mint-500"
+            step="0.1"
           />
         </div>
         <div className="space-y-2">
