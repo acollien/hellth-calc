@@ -40,12 +40,16 @@ const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) 
   };
 
   const handleInputChange = (key: keyof HealthMetrics, value: string, fieldName: string, min: number, max: number) => {
-    if (value === "") {
-      onMetricChange(key, value);
-      return;
-    }
-    if (validateNumericInput(value, fieldName, min, max)) {
-      onMetricChange(key, value);
+    // Always update the field value first
+    onMetricChange(key, value);
+    
+    // Only validate if the field is not empty and when the user has finished typing
+    if (value !== "") {
+      setTimeout(() => {
+        if (!validateNumericInput(value, fieldName, min, max)) {
+          onMetricChange(key, "");
+        }
+      }, 1500); // Delay validation by 1.5 seconds to allow for typing
     }
   };
 
