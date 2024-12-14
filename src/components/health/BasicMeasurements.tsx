@@ -1,12 +1,11 @@
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
 import { HealthMetrics } from "./types";
-import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Slider } from "@/components/ui/slider";
 
 interface BasicMeasurementsProps {
   metrics: HealthMetrics;
@@ -14,43 +13,23 @@ interface BasicMeasurementsProps {
 }
 
 const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) => {
-  const { toast } = useToast();
-
-  const validateNumericInput = (value: string, fieldName: string, min: number, max: number) => {
-    if (value === "") return true;
-    
-    const num = parseFloat(value);
-    if (isNaN(num)) {
-      toast({
-        title: "Invalid Input",
-        description: `${fieldName} must be a numeric value`,
-        variant: "destructive"
-      });
-      return false;
-    }
-    if (num < min || num > max) {
-      toast({
-        title: "Invalid Range",
-        description: `${fieldName} must be between ${min} and ${max} ${fieldName === "Height" ? (metrics.unit === "metric" ? "cm" : "inches") : (metrics.unit === "metric" ? "kg" : "lbs")}`,
-        variant: "destructive"
-      });
-      return false;
-    }
-    return true;
+  const getHeightRange = () => {
+    return metrics.unit === "metric" 
+      ? { min: 100, max: 250, step: 1 }  // cm
+      : { min: 39, max: 98, step: 0.5 }; // inches
   };
 
-  const handleInputChange = (key: keyof HealthMetrics, value: string, fieldName: string, min: number, max: number) => {
-    // Always update the field value first
-    onMetricChange(key, value);
-    
-    // Only validate if the field is not empty and when the user has finished typing
-    if (value !== "") {
-      setTimeout(() => {
-        if (!validateNumericInput(value, fieldName, min, max)) {
-          onMetricChange(key, "");
-        }
-      }, 1500); // Delay validation by 1.5 seconds to allow for typing
+  const getWeightRange = () => {
+    return metrics.unit === "metric"
+      ? { min: 30, max: 300, step: 0.5 }  // kg
+      : { min: 66, max: 661, step: 0.5 }; // lbs
+  };
+
+  const formatValue = (value: number, type: 'height' | 'weight') => {
+    if (type === 'height') {
+      return `${value} ${metrics.unit === "metric" ? "cm" : "in"}`;
     }
+    return `${value} ${metrics.unit === "metric" ? "kg" : "lbs"}`;
   };
 
   return (
@@ -101,41 +80,40 @@ const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) 
         </div>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-3">
-        <div className="space-y-2">
-          <Label htmlFor="height">Height ({metrics.unit === "metric" ? "cm" : "in"})</Label>
-          <Input
-            id="height"
-            type="number"
-            value={metrics.height}
-            onChange={(e) => handleInputChange('height', e.target.value, 'Height', 
-              metrics.unit === "metric" ? 100 : 39,  // Adjusted minimum heights
-              metrics.unit === "metric" ? 250 : 98)} // Adjusted maximum heights
-            className="transition-all duration-200 focus:ring-mint-500"
-            step="0.1"
+      <div className="grid gap-6 sm:grid-cols-3">
+        <div className="space-y-4">
+          <Label>Height {formatValue(Number(metrics.height) || getHeightRange().min, 'height')}</Label>
+          <Slider
+            value={[Number(metrics.height) || getHeightRange().min]}
+            min={getHeightRange().min}
+            max={getHeightRange().max}
+            step={getHeightRange().step}
+            onValueChange={(value) => onMetricChange('height', value[0].toString())}
+            className="mt-2"
           />
         </div>
-        <div className="space-y-2">
-          <Label htmlFor="weight">Weight ({metrics.unit === "metric" ? "kg" : "lbs"})</Label>
-          <Input
-            id="weight"
-            type="number"
-            value={metrics.weight}
-            onChange={(e) => handleInputChange('weight', e.target.value, 'Weight',
-              metrics.unit === "metric" ? 30 : 66,   // Adjusted minimum weights
-              metrics.unit === "metric" ? 300 : 661)} // Adjusted maximum weights
-            className="transition-all duration-200 focus:ring-mint-500"
-            step="0.1"
+        
+        <div className="space-y-4">
+          <Label>Weight {formatValue(Number(metrics.weight) || getWeightRange().min, 'weight')}</Label>
+          <Slider
+            value={[Number(metrics.weight) || getWeightRange().min]}
+            min={getWeightRange().min}
+            max={getWeightRange().max}
+            step={getWeightRange().step}
+            onValueChange={(value) => onMetricChange('weight', value[0].toString())}
+            className="mt-2"
           />
         </div>
-        <div className="space-y-2">
-          <Label htmlFor="age">Age (years)</Label>
-          <Input
-            id="age"
-            type="number"
-            value={metrics.age}
-            onChange={(e) => handleInputChange('age', e.target.value, 'Age', 0, 120)}
-            className="transition-all duration-200 focus:ring-mint-500"
+
+        <div className="space-y-4">
+          <Label>Age {metrics.age || "0"} years</Label>
+          <Slider
+            value={[Number(metrics.age) || 0]}
+            min={0}
+            max={120}
+            step={1}
+            onValueChange={(value) => onMetricChange('age', value[0].toString())}
+            className="mt-2"
           />
         </div>
       </div>
