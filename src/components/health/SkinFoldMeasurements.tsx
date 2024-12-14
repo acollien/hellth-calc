@@ -23,18 +23,29 @@ const SkinFoldMeasurements = ({ metrics, onMetricChange }: SkinFoldMeasurementsP
     </Tooltip>
   );
 
+  const getUnit = () => metrics.unit === "metric" ? "mm" : "in";
+  const getPlaceholder = (metricValue: string) => 
+    metrics.unit === "metric" ? metricValue : (parseFloat(metricValue) / 25.4).toFixed(2);
+
   const renderMetricInput = (label: string, key: keyof HealthMetrics, tooltip: string, placeholder: string) => (
     <div className="space-y-2">
       <div className="flex items-center">
-        <Label htmlFor={key}>{label} (mm)</Label>
+        <Label htmlFor={key}>{label} ({getUnit()})</Label>
         {renderTooltip(tooltip)}
       </div>
       <Input
         id={key}
         type="number"
         value={metrics[key]}
-        onChange={(e) => onMetricChange(key, e.target.value)}
-        placeholder={placeholder}
+        onChange={(e) => {
+          const value = e.target.value;
+          // Convert to mm if imperial
+          const finalValue = metrics.unit === "imperial" 
+            ? (parseFloat(value) * 25.4).toString()
+            : value;
+          onMetricChange(key, finalValue);
+        }}
+        placeholder={getPlaceholder(placeholder)}
         className="transition-all duration-200 focus:ring-mint-500"
       />
     </div>

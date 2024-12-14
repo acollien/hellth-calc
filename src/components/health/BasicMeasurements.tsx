@@ -15,14 +15,14 @@ interface BasicMeasurementsProps {
 const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) => {
   const getHeightRange = () => {
     return metrics.unit === "metric" 
-      ? { min: 100, max: 250, step: 1 }  // cm
-      : { min: 39, max: 98, step: 0.5 }; // inches
+      ? { min: 54, max: 251, step: 1 }    // cm (updated for record holders)
+      : { min: 21, max: 99, step: 0.5 };  // inches
   };
 
   const getWeightRange = () => {
     return metrics.unit === "metric"
-      ? { min: 30, max: 300, step: 0.5 }  // kg
-      : { min: 66, max: 661, step: 0.5 }; // lbs
+      ? { min: 2, max: 635, step: 0.5 }    // kg (updated for record holders)
+      : { min: 4.4, max: 1400, step: 0.5 }; // lbs
   };
 
   const formatValue = (value: number, type: 'height' | 'weight') => {
@@ -110,7 +110,7 @@ const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) 
           <Slider
             value={[Number(metrics.age) || 0]}
             min={0}
-            max={120}
+            max={123}
             step={1}
             onValueChange={(value) => onMetricChange('age', value[0].toString())}
             className="mt-2"
