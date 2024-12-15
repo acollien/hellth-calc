@@ -22,6 +22,9 @@ interface HealthMetrics {
   
   // Activity level
   activityLevel?: 'sedentary' | 'light' | 'moderate' | 'active' | 'veryActive';
+
+  // Unit system
+  unit?: 'metric' | 'imperial';
 }
 
 export const calculateBMI = (height: number, weight: number) => {
