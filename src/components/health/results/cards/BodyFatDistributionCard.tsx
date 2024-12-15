@@ -29,14 +29,23 @@ const BodyFatDistributionCard = ({ value }: BodyFatDistributionCardProps) => {
         <TooltipContent className="max-w-xs p-4">
           <div className="space-y-2">
             <h4 className="font-semibold">Body Fat Distribution Index (BFDI)</h4>
-            <p>Indicates how body fat is distributed between the waist and hips.</p>
-            <div className="text-sm">
-              <p className="font-medium">Interpretation:</p>
-              <ul className="list-disc pl-4">
-                <li>Optimal: &lt;0.5</li>
-                <li>Moderate: 0.5-0.8</li>
-                <li>High Risk: &gt;0.8</li>
-              </ul>
+            <div className="text-sm space-y-2">
+              <div>
+                <p className="font-medium">Formula:</p>
+                <p className="text-mint-700">BFDI = (Waist² × Height) / (Hip² × √Height)</p>
+              </div>
+              <div>
+                <p className="font-medium">Description:</p>
+                <p>A measure that evaluates how body fat is distributed between the waist and hip regions, taking height into account. This index helps assess central obesity and related health risks.</p>
+              </div>
+              <div>
+                <p className="font-medium">Interpretation:</p>
+                <ul className="list-disc pl-4">
+                  <li>Below 0.5: Optimal fat distribution, lower health risk</li>
+                  <li>0.5-0.8: Moderate fat distribution, increased health risk</li>
+                  <li>Above 0.8: High central fat distribution, significant health risk</li>
+                </ul>
+              </div>
             </div>
           </div>
         </TooltipContent>
