@@ -39,7 +39,17 @@ const Group3Results = ({
 
   return (
     <div className="w-full space-y-6">
-      <h3 className="text-lg font-medium text-mint-800">Advanced Body Measurements</h3>
+      <div className="flex items-center gap-2">
+        <h3 className="text-lg font-medium text-mint-800">Advanced Body Measurements</h3>
+        <Tooltip>
+          <TooltipTrigger>
+            <Info className="h-4 w-4 text-mint-500" />
+          </TooltipTrigger>
+          <TooltipContent align="start" className="max-w-xs p-4">
+            <p>Advanced measurements that provide detailed insights about your body composition and health risks.</p>
+          </TooltipContent>
+        </Tooltip>
+      </div>
       <div className="grid grid-cols-1 gap-4 w-full mx-auto">
         {typeof leanMassIndex === 'number' && (
           <div className="p-4 rounded-lg bg-mint-50 border border-mint-100 w-full">
