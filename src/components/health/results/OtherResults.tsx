@@ -9,8 +9,9 @@ interface OtherResultsProps {
 const OtherResults = ({ frameSize, waistToHip }: OtherResultsProps) => {
   console.log("OtherResults received frameSize:", frameSize);
   
-  const getFrameSizeColor = (size: string) => {
-    switch (size?.toLowerCase()) {
+  const getFrameSizeColor = (size: string | null) => {
+    if (!size) return "text-mint-900";
+    switch (size.toLowerCase()) {
       case 'small': return "text-blue-600";
       case 'medium': return "text-green-600";
       case 'large': return "text-yellow-600";
@@ -32,7 +33,7 @@ const OtherResults = ({ frameSize, waistToHip }: OtherResultsProps) => {
 
   return (
     <div className="grid gap-4 sm:grid-cols-2">
-      {frameSize && frameSize !== "undefined" && (
+      {frameSize && frameSize !== 'undefined' && (
         <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
           <Tooltip>
             <TooltipTrigger asChild>

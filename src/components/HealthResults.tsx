@@ -13,6 +13,11 @@ interface ResultsProps {
 const HealthResults = ({ results }: ResultsProps) => {
   console.log("HealthResults received results:", results);
   
+  // Extract frameSize value properly
+  const frameSize = typeof results.frameSize === 'object' ? 
+    (results.frameSize?.value !== 'undefined' ? results.frameSize.value : null) : 
+    (results.frameSize || null);
+  
   return (
     <div className="space-y-6 animate-fade-in">
       <ResultsHeader results={results} />
@@ -37,7 +42,7 @@ const HealthResults = ({ results }: ResultsProps) => {
       )}
 
       <OtherResults 
-        frameSize={results.frameSize || null}
+        frameSize={frameSize}
         waistToHip={results.waistToHip}
       />
     </div>
