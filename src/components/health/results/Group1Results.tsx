@@ -37,142 +37,132 @@ const Group1Results = ({ ponderalIndex, absi, bodyRoundnessIndex, waistToHeightR
       
       {ponderalIndex && (
         <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="flex items-start justify-between">
-                <div>
-                  <div className="text-sm text-mint-800 font-medium">Ponderal Index</div>
-                  <div className={`text-2xl font-semibold ${getValueColor(ponderalIndex[unit], 'ponderal')}`}>
-                    {ponderalIndex[unit].toFixed(2)} {unit === 'metric' ? 'kg/m³' : 'lb/ft³'}
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-mint-800 font-medium">Ponderal Index</span>
+            <Tooltip>
+              <TooltipTrigger>
+                <Info className="h-4 w-4 text-mint-500" />
+              </TooltipTrigger>
+              <TooltipContent className="max-w-xs p-4">
+                <div className="space-y-2">
+                  <h4 className="font-semibold">Ponderal Index (PI)</h4>
+                  <p>Also known as corpulence index, PI is a measure of leanness computed as weight divided by height cubed.</p>
+                  <div className="text-sm space-y-1">
+                    <p className="font-medium">Interpretation:</p>
+                    <ul className="list-disc pl-4 space-y-1">
+                      <li>&lt;11: Underweight</li>
+                      <li>11-14: Normal weight</li>
+                      <li>14-17: Overweight</li>
+                      <li>&gt;17: Obese</li>
+                    </ul>
                   </div>
                 </div>
-                <Info className="h-4 w-4 text-mint-500" />
-              </div>
-            </TooltipTrigger>
-            <TooltipContent className="max-w-xs p-4">
-              <div className="space-y-2">
-                <h4 className="font-semibold">Ponderal Index (PI)</h4>
-                <p>Also known as corpulence index, PI is a measure of leanness computed as weight divided by height cubed.</p>
-                <div className="text-sm space-y-1">
-                  <p className="font-medium">Interpretation:</p>
-                  <ul className="list-disc pl-4 space-y-1">
-                    <li>&lt;11: Underweight</li>
-                    <li>11-14: Normal weight</li>
-                    <li>14-17: Overweight</li>
-                    <li>&gt;17: Obese</li>
-                  </ul>
-                </div>
-              </div>
-            </TooltipContent>
-          </Tooltip>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+          <div className={`text-2xl font-semibold ${getValueColor(ponderalIndex[unit], 'ponderal')}`}>
+            {ponderalIndex[unit].toFixed(2)} {unit === 'metric' ? 'kg/m³' : 'lb/ft³'}
+          </div>
         </div>
       )}
 
       {absi && (
         <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="flex items-start justify-between">
-                <div>
-                  <div className="text-sm text-mint-800 font-medium">A Body Shape Index (ABSI)</div>
-                  <div className={`text-2xl font-semibold ${getValueColor(absi[unit], 'absi')}`}>
-                    {absi[unit].toFixed(5)} {unit === 'metric' ? 'm¹¹/⁶/kg²/³' : 'in¹¹/⁶/lb²/³'}
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-mint-800 font-medium">A Body Shape Index (ABSI)</span>
+            <Tooltip>
+              <TooltipTrigger>
+                <Info className="h-4 w-4 text-mint-500" />
+              </TooltipTrigger>
+              <TooltipContent className="max-w-xs p-4">
+                <div className="space-y-2">
+                  <h4 className="font-semibold">A Body Shape Index</h4>
+                  <p>ABSI is based on waist circumference adjusted for height and weight.</p>
+                  <div className="text-sm space-y-1">
+                    <p className="font-medium">Interpretation:</p>
+                    <ul className="list-disc pl-4">
+                      <li>Below 0.07: Low mortality risk</li>
+                      <li>0.07-0.08: Average mortality risk</li>
+                      <li>Above 0.08: High mortality risk</li>
+                    </ul>
+                    <p className="mt-2">Lower values generally indicate better health outcomes.</p>
                   </div>
                 </div>
-                <Info className="h-4 w-4 text-mint-500" />
-              </div>
-            </TooltipTrigger>
-            <TooltipContent className="max-w-xs p-4">
-              <div className="space-y-2">
-                <h4 className="font-semibold">A Body Shape Index</h4>
-                <p>ABSI is based on waist circumference adjusted for height and weight.</p>
-                <div className="text-sm space-y-1">
-                  <p className="font-medium">Interpretation:</p>
-                  <ul className="list-disc pl-4">
-                    <li>Below 0.07: Low mortality risk</li>
-                    <li>0.07-0.08: Average mortality risk</li>
-                    <li>Above 0.08: High mortality risk</li>
-                  </ul>
-                  <p className="mt-2">Lower values generally indicate better health outcomes.</p>
-                </div>
-              </div>
-            </TooltipContent>
-          </Tooltip>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+          <div className={`text-2xl font-semibold ${getValueColor(absi[unit], 'absi')}`}>
+            {absi[unit].toFixed(5)} {unit === 'metric' ? 'm¹¹/⁶/kg²/³' : 'in¹¹/⁶/lb²/³'}
+          </div>
         </div>
       )}
 
       {bodyRoundnessIndex && (
         <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="flex items-start justify-between">
-                <div>
-                  <div className="text-sm text-mint-800 font-medium">Body Roundness Index</div>
-                  <div className={`text-2xl font-semibold ${getValueColor(bodyRoundnessIndex[unit], 'bri')}`}>
-                    {bodyRoundnessIndex[unit].toFixed(2)}
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-mint-800 font-medium">Body Roundness Index</span>
+            <Tooltip>
+              <TooltipTrigger>
+                <Info className="h-4 w-4 text-mint-500" />
+              </TooltipTrigger>
+              <TooltipContent className="max-w-xs p-4">
+                <div className="space-y-2">
+                  <h4 className="font-semibold">Body Roundness Index (BRI)</h4>
+                  <p>BRI combines height and waist circumference to predict body fat and visceral adipose tissue.</p>
+                  <div className="text-sm space-y-1">
+                    <p className="font-medium">Interpretation:</p>
+                    <ul className="list-disc pl-4">
+                      <li>Below 1: Very lean body shape</li>
+                      <li>1-2: Normal body shape</li>
+                      <li>2-3: Overweight body shape</li>
+                      <li>Above 3: Obese body shape</li>
+                    </ul>
+                    <p className="mt-2">Lower values indicate less rounded body shapes and generally better health outcomes.</p>
                   </div>
                 </div>
-                <Info className="h-4 w-4 text-mint-500" />
-              </div>
-            </TooltipTrigger>
-            <TooltipContent className="max-w-xs p-4">
-              <div className="space-y-2">
-                <h4 className="font-semibold">Body Roundness Index (BRI)</h4>
-                <p>BRI combines height and waist circumference to predict body fat and visceral adipose tissue.</p>
-                <div className="text-sm space-y-1">
-                  <p className="font-medium">Interpretation:</p>
-                  <ul className="list-disc pl-4">
-                    <li>Below 1: Very lean body shape</li>
-                    <li>1-2: Normal body shape</li>
-                    <li>2-3: Overweight body shape</li>
-                    <li>Above 3: Obese body shape</li>
-                  </ul>
-                  <p className="mt-2">Lower values indicate less rounded body shapes and generally better health outcomes.</p>
-                </div>
-              </div>
-            </TooltipContent>
-          </Tooltip>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+          <div className={`text-2xl font-semibold ${getValueColor(bodyRoundnessIndex[unit], 'bri')}`}>
+            {bodyRoundnessIndex[unit].toFixed(2)}
+          </div>
         </div>
       )}
 
       {waistToHeightRatio && (
         <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="text-sm text-mint-800 font-medium">Waist-to-Height Ratio</div>
-                    <div className="text-2xl font-semibold text-mint-900">
-                      {waistToHeightRatio.toFixed(3)}
-                    </div>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-mint-800 font-medium">Waist-to-Height Ratio</span>
+            <Tooltip>
+              <TooltipTrigger>
+                <Info className="h-4 w-4 text-mint-500" />
+              </TooltipTrigger>
+              <TooltipContent className="max-w-xs p-4">
+                <div className="space-y-2">
+                  <h4 className="font-semibold">Waist-to-Height Ratio (WHtR)</h4>
+                  <p>A simple measure of central obesity and associated health risks.</p>
+                  <div className="text-sm space-y-1">
+                    <p className="font-medium">Interpretation:</p>
+                    <ul className="list-disc pl-4 space-y-1">
+                      <li>&lt;0.4: Underweight</li>
+                      <li>0.4-0.5: Healthy</li>
+                      <li>0.5-0.6: Overweight</li>
+                      <li>&gt;0.6: Obese</li>
+                    </ul>
                   </div>
-                  <Info className="h-4 w-4 text-mint-500" />
                 </div>
-                <RangeBar
-                  value={waistToHeightRatio}
-                  ranges={waistHeightRanges}
-                  max={1}
-                  unit="ratio"
-                />
-              </div>
-            </TooltipTrigger>
-            <TooltipContent className="max-w-xs p-4">
-              <div className="space-y-2">
-                <h4 className="font-semibold">Waist-to-Height Ratio (WHtR)</h4>
-                <p>A simple measure of central obesity and associated health risks.</p>
-                <div className="text-sm space-y-1">
-                  <p className="font-medium">Interpretation:</p>
-                  <ul className="list-disc pl-4 space-y-1">
-                    <li>&lt;0.4: Underweight</li>
-                    <li>0.4-0.5: Healthy</li>
-                    <li>0.5-0.6: Overweight</li>
-                    <li>&gt;0.6: Obese</li>
-                  </ul>
-                </div>
-              </div>
-            </TooltipContent>
-          </Tooltip>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+          <div className="text-2xl font-semibold text-mint-900">
+            {waistToHeightRatio.toFixed(3)}
+          </div>
+          <RangeBar
+            value={waistToHeightRatio}
+            ranges={waistHeightRanges}
+            max={1}
+            unit="ratio"
+          />
         </div>
       )}
     </div>

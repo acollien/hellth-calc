@@ -76,31 +76,29 @@ const BMIResults = ({ bmi }: BMIResultsProps) => {
             <div key={key} className="p-4 rounded-lg bg-mint-50 border border-mint-100">
               <div className="mb-2">
                 <div className="flex items-center gap-2 mb-1">
-                  <div className="text-sm text-mint-800 font-medium flex items-center gap-2">
-                    {info.title}
-                    <Tooltip>
-                      <TooltipTrigger>
-                        <Info className="h-4 w-4 text-mint-500" />
-                      </TooltipTrigger>
-                      <TooltipContent className="max-w-sm p-4">
-                        <div className="space-y-2">
-                          <h4 className="font-semibold">{info.title}</h4>
-                          <div className="text-sm space-y-1">
-                            <p className="font-medium">Formula:</p>
-                            <p className="text-mint-700">{info.formula}</p>
-                          </div>
-                          <div className="text-sm space-y-1">
-                            <p className="font-medium">Description:</p>
-                            <p className="text-mint-700">{info.description}</p>
-                          </div>
-                          <div className="text-sm space-y-1">
-                            <p className="font-medium">Interpretation:</p>
-                            <pre className="text-mint-700 whitespace-pre-line">{info.interpretation}</pre>
-                          </div>
+                  <span className="text-sm text-mint-800 font-medium">{info.title}</span>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Info className="h-4 w-4 text-mint-500" />
+                    </TooltipTrigger>
+                    <TooltipContent className="max-w-sm p-4">
+                      <div className="space-y-2">
+                        <h4 className="font-semibold">{info.title}</h4>
+                        <div className="text-sm space-y-1">
+                          <p className="font-medium">Formula:</p>
+                          <p className="text-mint-700">{info.formula}</p>
                         </div>
-                      </TooltipContent>
-                    </Tooltip>
-                  </div>
+                        <div className="text-sm space-y-1">
+                          <p className="font-medium">Description:</p>
+                          <p className="text-mint-700">{info.description}</p>
+                        </div>
+                        <div className="text-sm space-y-1">
+                          <p className="font-medium">Interpretation:</p>
+                          <pre className="text-mint-700 whitespace-pre-line">{info.interpretation}</pre>
+                        </div>
+                      </div>
+                    </TooltipContent>
+                  </Tooltip>
                 </div>
                 <div className="text-2xl font-semibold text-mint-900">
                   {value.toFixed(1)}

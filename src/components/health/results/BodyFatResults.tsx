@@ -115,35 +115,33 @@ const BodyFatResults = ({ bodyFat, gender }: BodyFatResultsProps) => {
         {Object.entries(bodyFat).map(([key, value]) => (
           value !== null && (
             <div key={key} className="p-4 rounded-lg bg-mint-50 border border-mint-100">
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <button type="button" className="inline-flex items-center w-full">
-                    <div className="w-full">
-                      <div className="text-sm text-mint-800 font-medium capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</div>
-                      <div className={`text-2xl font-semibold ${getBodyFatColor(value, gender)}`}>
-                        {value.toFixed(1)}%
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-mint-800 font-medium capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</span>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Info className="h-4 w-4 text-mint-500" />
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-xs p-4">
+                    <div className="space-y-2">
+                      <h4 className="font-semibold">{tooltipContent[key as keyof typeof tooltipContent].title}</h4>
+                      <p>{tooltipContent[key as keyof typeof tooltipContent].description}</p>
+                      <div className="text-sm space-y-1">
+                        <p className="font-medium">Formula:</p>
+                        <p className="text-mint-700 whitespace-pre-line">{tooltipContent[key as keyof typeof tooltipContent].formula}</p>
+                        <p className="font-medium mt-2">Ranges ({gender === 'male' ? 'Men' : 'Women'}):</p>
+                        <ul className="list-disc pl-4">
+                          {tooltipContent[key as keyof typeof tooltipContent].ranges[gender].map((range, index) => (
+                            <li key={index}>{range}</li>
+                          ))}
+                        </ul>
                       </div>
                     </div>
-                    <Info className="h-4 w-4 ml-1 text-mint-500" />
-                  </button>
-                </TooltipTrigger>
-                <TooltipContent className="max-w-xs p-4">
-                  <div className="space-y-2">
-                    <h4 className="font-semibold">{tooltipContent[key as keyof typeof tooltipContent].title}</h4>
-                    <p>{tooltipContent[key as keyof typeof tooltipContent].description}</p>
-                    <div className="text-sm space-y-1">
-                      <p className="font-medium">Formula:</p>
-                      <p className="text-mint-700 whitespace-pre-line">{tooltipContent[key as keyof typeof tooltipContent].formula}</p>
-                      <p className="font-medium mt-2">Ranges ({gender === 'male' ? 'Men' : 'Women'}):</p>
-                      <ul className="list-disc pl-4">
-                        {tooltipContent[key as keyof typeof tooltipContent].ranges[gender].map((range, index) => (
-                          <li key={index}>{range}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </TooltipContent>
-              </Tooltip>
+                  </TooltipContent>
+                </Tooltip>
+              </div>
+              <div className={`text-2xl font-semibold ${getBodyFatColor(value, gender)}`}>
+                {value.toFixed(1)}%
+              </div>
             </div>
           )
         ))}
