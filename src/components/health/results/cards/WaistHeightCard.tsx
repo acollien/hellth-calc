@@ -13,13 +13,6 @@ const WaistHeightCard = ({ value }: WaistHeightCardProps) => {
     return "text-red-600";
   };
 
-  const getLabel = (ratio: number) => {
-    if (ratio < 0.4) return "Very Low";
-    if (ratio < 0.5) return "Healthy";
-    if (ratio < 0.6) return "Overweight";
-    return "Obese";
-  };
-
   return (
     <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
       <Tooltip>
@@ -32,9 +25,6 @@ const WaistHeightCard = ({ value }: WaistHeightCardProps) => {
               </div>
               <div className={`text-2xl font-semibold ${getTextColor(value)}`}>
                 {value.toFixed(3)}
-              </div>
-              <div className="text-sm font-medium text-mint-700 mt-1">
-                {getLabel(value)}
               </div>
             </div>
           </div>
