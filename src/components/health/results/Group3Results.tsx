@@ -56,13 +56,13 @@ const Group3Results = ({
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="flex items-start gap-2">
-                  <Info className="h-4 w-4 text-mint-500 mt-1" />
                   <div>
                     <div className="text-sm text-mint-800 font-medium">Lean Mass Index</div>
                     <div className={`text-2xl font-semibold ${getLMIColor(leanMassIndex)}`}>
                       {leanMassIndex.toFixed(1)}
                     </div>
                   </div>
+                  <Info className="h-4 w-4 text-mint-500 mt-1" />
                 </div>
               </TooltipTrigger>
               <TooltipContent align="start" className="max-w-xs p-4">
@@ -88,13 +88,13 @@ const Group3Results = ({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div className="flex items-start gap-2">
-                    <Info className="h-4 w-4 text-mint-500 mt-1" />
                     <div>
                       <div className="text-sm text-mint-800 font-medium">Body Adiposity Index</div>
                       <div className={`text-2xl font-semibold ${getBAIColor(bodyAdiposityIndex)}`}>
                         {bodyAdiposityIndex.toFixed(1)}%
                       </div>
                     </div>
+                    <Info className="h-4 w-4 text-mint-500 mt-1" />
                   </div>
                 </TooltipTrigger>
                 <TooltipContent align="start" className="max-w-xs p-4">
@@ -119,13 +119,13 @@ const Group3Results = ({
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div className="flex items-start gap-2">
-                    <Info className="h-4 w-4 text-mint-500 mt-1" />
                     <div>
                       <div className="text-sm text-mint-800 font-medium">Conicity Index</div>
                       <div className={`text-2xl font-semibold ${getCIndexColor(conicityIndex)}`}>
                         {conicityIndex.toFixed(2)}
                       </div>
                     </div>
+                    <Info className="h-4 w-4 text-mint-500 mt-1" />
                   </div>
                 </TooltipTrigger>
                 <TooltipContent align="start" className="max-w-xs p-4">
