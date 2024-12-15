@@ -23,16 +23,30 @@ const WaistHeightCard = ({ value }: WaistHeightCardProps) => {
             <Info className="h-4 w-4 text-mint-500" />
           </TooltipTrigger>
           <TooltipContent className="max-w-xs p-4">
-            <h4 className="font-semibold">Waist-to-Height Ratio (WHtR)</h4>
-            <p>A simple measure of central obesity and associated health risks.</p>
-            <div className="text-sm space-y-1">
-              <p className="font-medium">Interpretation:</p>
-              <ul className="list-disc pl-4 space-y-1">
-                <li>&lt;0.4: Underweight</li>
-                <li>0.4-0.5: Healthy</li>
-                <li>0.5-0.6: Overweight</li>
-                <li>&gt;0.6: Obese</li>
-              </ul>
+            <div className="space-y-2">
+              <h4 className="font-semibold">Waist-to-Height Ratio (WHtR)</h4>
+              
+              <div className="text-sm space-y-2">
+                <div>
+                  <p className="font-medium">Formula:</p>
+                  <p className="text-mint-700">WHtR = Waist Circumference / Height</p>
+                </div>
+                
+                <div>
+                  <p className="font-medium">Description:</p>
+                  <p>A simple and effective screening tool for cardiovascular health risk and central obesity. It accounts for the impact of height on healthy waist circumference values.</p>
+                </div>
+                
+                <div>
+                  <p className="font-medium">Interpretation:</p>
+                  <ul className="list-disc pl-4 space-y-1">
+                    <li>Below 0.4: Underweight - may indicate insufficient body mass</li>
+                    <li>0.4-0.5: Healthy - optimal range for health outcomes</li>
+                    <li>0.5-0.6: Overweight - increased health risks</li>
+                    <li>Above 0.6: Obese - significantly elevated health risks</li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </TooltipContent>
         </Tooltip>
