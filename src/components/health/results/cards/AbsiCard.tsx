@@ -1,5 +1,4 @@
-import { Info } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import BaseResultCard from "./BaseResultCard";
 
 interface AbsiCardProps {
   value: { metric: number; imperial: number };
@@ -13,43 +12,26 @@ const AbsiCard = ({ value, unit }: AbsiCardProps) => {
     return "text-red-600";
   };
 
+  const interpretation = (
+    <ul className="list-disc pl-4">
+      <li>Below 0.07: Low health risk</li>
+      <li>0.07-0.08: Average health risk</li>
+      <li>Above 0.08: Elevated health risk</li>
+    </ul>
+  );
+
   return (
-    <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
-      <div className="flex items-center gap-2">
-        <span className="text-sm text-mint-800 font-medium">A Body Shape Index</span>
-        <Tooltip>
-          <TooltipTrigger>
-            <Info className="h-4 w-4 text-mint-500" />
-          </TooltipTrigger>
-          <TooltipContent className="max-w-xs p-4">
-            <div className="space-y-2">
-              <h4 className="font-semibold">A Body Shape Index (ABSI)</h4>
-              <div className="text-sm space-y-2">
-                <div>
-                  <p className="font-medium">Formula:</p>
-                  <p className="text-mint-700">ABSI = WC / (BMI^(2/3) × Height^(1/2))</p>
-                </div>
-                <div>
-                  <p className="font-medium">Description:</p>
-                  <p>A measure that evaluates body shape independent of height and weight, focusing on the health implications of central obesity.</p>
-                </div>
-                <div>
-                  <p className="font-medium">Interpretation:</p>
-                  <ul className="list-disc pl-4">
-                    <li>Below 0.07: Low health risk</li>
-                    <li>0.07-0.08: Average health risk</li>
-                    <li>Above 0.08: Elevated health risk</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </TooltipContent>
-        </Tooltip>
-      </div>
-      <div className={`text-2xl font-semibold ${getValueColor(value[unit])}`}>
-        {value[unit].toFixed(5)}
-      </div>
-    </div>
+    <BaseResultCard
+      label="A Body Shape Index"
+      value={value[unit]}
+      valueColor={getValueColor(value[unit])}
+      tooltipContent={{
+        title: "A Body Shape Index (ABSI)",
+        description: "A measure that evaluates body shape independent of height and weight, focusing on the health implications of central obesity.",
+        formula: "ABSI = WC / (BMI^(2/3) × Height^(1/2))",
+        interpretation
+      }}
+    />
   );
 };
 
