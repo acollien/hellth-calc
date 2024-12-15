@@ -5,8 +5,8 @@ export const calculateFrameSize = (metrics: HealthMetrics): 'small' | 'medium' |
     return null;
   }
 
-  const wristInCm = metrics.unit === 'imperial' ? metrics.wrist * 2.54 : metrics.wrist;
-  const heightInCm = metrics.unit === 'imperial' ? metrics.height * 2.54 : metrics.height;
+  const wristInCm = Number(metrics.unit === 'imperial' ? Number(metrics.wrist) * 2.54 : metrics.wrist);
+  const heightInCm = Number(metrics.unit === 'imperial' ? Number(metrics.height) * 2.54 : metrics.height);
 
   const r = heightInCm / wristInCm;
 

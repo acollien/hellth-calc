@@ -1,16 +1,18 @@
 import { HealthMetrics } from '@/components/health/types';
 
 export const calculateArmyBodyFat = (metrics: HealthMetrics): number | null => {
+  console.log('Calculating Army method body fat with metrics:', metrics);
+  
   if (!metrics.gender || !metrics.neck || !metrics.waist || !metrics.height || 
       (metrics.gender === 'female' && !metrics.hip)) {
     return null;
   }
 
-  const heightInInches = metrics.unit === 'metric' ? metrics.height / 2.54 : metrics.height;
-  const neckInInches = metrics.unit === 'metric' ? metrics.neck / 2.54 : metrics.neck;
-  const waistInInches = metrics.unit === 'metric' ? metrics.waist / 2.54 : metrics.waist;
+  const heightInInches = Number(metrics.unit === 'metric' ? Number(metrics.height) / 2.54 : metrics.height);
+  const neckInInches = Number(metrics.unit === 'metric' ? Number(metrics.neck) / 2.54 : metrics.neck);
+  const waistInInches = Number(metrics.unit === 'metric' ? Number(metrics.waist) / 2.54 : metrics.waist);
   const hipInInches = metrics.gender === 'female' ? 
-    (metrics.unit === 'metric' ? metrics.hip / 2.54 : metrics.hip) : 0;
+    Number(metrics.unit === 'metric' ? Number(metrics.hip) / 2.54 : metrics.hip) : 0;
 
   let bodyFat: number;
   

@@ -1,16 +1,17 @@
 import { HealthMetrics } from '@/components/health/types';
 
-export const calculateBMR = (metrics: HealthMetrics): number | null => {
+export const calculateBMR = (metrics: HealthMetrics) => {
   if (!metrics.weight || !metrics.height || !metrics.age || !metrics.gender) {
     return null;
   }
 
-  // Convert imperial to metric if needed
-  const weight = metrics.unit === 'imperial' ? metrics.weight * 0.453592 : metrics.weight;
-  const height = metrics.unit === 'imperial' ? metrics.height * 2.54 : metrics.height;
+  // Convert imperial to metric if needed and ensure numbers
+  const weight = Number(metrics.unit === 'imperial' ? Number(metrics.weight) * 0.453592 : metrics.weight);
+  const height = Number(metrics.unit === 'imperial' ? Number(metrics.height) * 2.54 : metrics.height);
+  const age = Number(metrics.age);
 
   // Mifflin-St Jeor Equation
-  let bmr = (10 * weight) + (6.25 * height) - (5 * metrics.age);
+  let bmr = (10 * weight) + (6.25 * height) - (5 * age);
   bmr = metrics.gender === 'male' ? bmr + 5 : bmr - 161;
 
   // Adjust BMR based on activity level
@@ -23,7 +24,8 @@ export const calculateBMR = (metrics: HealthMetrics): number | null => {
   };
 
   if (metrics.activityLevel && metrics.activityLevel !== '') {
-    bmr *= activityMultipliers[metrics.activityLevel];
+    const multiplier = activityMultipliers[metrics.activityLevel];
+    bmr *= multiplier;
   }
 
   return Math.round(bmr);

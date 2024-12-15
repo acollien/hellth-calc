@@ -5,9 +5,9 @@ export const calculateConicityIndex = (metrics: HealthMetrics): number | null =>
     return null;
   }
 
-  const waistInM = metrics.unit === 'imperial' ? metrics.waist * 0.0254 : metrics.waist / 100;
-  const heightInM = metrics.unit === 'imperial' ? metrics.height * 0.0254 : metrics.height / 100;
-  const weightInKg = metrics.unit === 'imperial' ? metrics.weight * 0.453592 : metrics.weight;
+  const waistInM = Number(metrics.unit === 'imperial' ? Number(metrics.waist) * 0.0254 : metrics.waist / 100);
+  const heightInM = Number(metrics.unit === 'imperial' ? Number(metrics.height) * 0.0254 : metrics.height / 100);
+  const weightInKg = Number(metrics.unit === 'imperial' ? Number(metrics.weight) * 0.453592 : metrics.weight);
 
   return waistInM / (0.109 * Math.sqrt(weightInKg / heightInM));
 };

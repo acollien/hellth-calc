@@ -5,9 +5,12 @@ export const calculateNavyBodyFat = (metrics: HealthMetrics): number | null => {
     return null;
   }
 
-  const { neck, waist, hip, height, gender } = metrics;
+  const neck = Number(metrics.neck);
+  const waist = Number(metrics.waist);
+  const hip = Number(metrics.hip);
+  const height = Number(metrics.height);
   
-  if (gender === 'male') {
+  if (metrics.gender === 'male') {
     return 495 / (1.0324 - 0.19077 * Math.log10(waist - neck) + 0.15456 * Math.log10(height)) - 450;
   }
   
