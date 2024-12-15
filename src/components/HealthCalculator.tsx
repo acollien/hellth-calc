@@ -7,6 +7,8 @@ import BodyMeasurements from "./health/BodyMeasurements";
 import SkinFoldMeasurements from "./health/SkinFoldMeasurements";
 import ActivityLevel from "./health/ActivityLevel";
 import { HealthMetrics } from "./health/types";
+import { Button } from "./ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./ui/dialog";
 
 const initialMetrics: HealthMetrics = {
   height: "",
@@ -18,12 +20,15 @@ const initialMetrics: HealthMetrics = {
   hip: "",
   wrist: "",
   forearm: "",
-  triceps: "",
-  subscapular: "",
-  suprailiac: "",
-  abdominal: "",
-  thigh: "",
-  chest: "",
+  chestSkinfold: "",
+  midaxillarySkinfold: "",
+  suprailiacSkinfold: "",
+  thighSkinfold: "",
+  umbilicalSkinfold: "",
+  tricepsSkinfold: "",
+  subscapularSkinfold: "",
+  calfSkinfold: "",
+  midaxillarySkinfold2: "",
   activityLevel: "",
   unit: "metric"
 };
@@ -81,9 +86,34 @@ const HealthCalculator = () => {
     <div className="w-full max-w-4xl mx-auto p-6 animate-fade-in">
       <Card className="p-6 backdrop-blur-sm bg-white/90 shadow-lg">
         <div className="space-y-8">
-          <div className="text-center space-y-2">
-            <h1 className="text-3xl font-semibold text-mint-800">Hellth Calculator</h1>
-            <p className="text-gray-600">Calculate various health metrics based on your measurements</p>
+          <div className="flex justify-between items-center">
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline" size="sm" className="text-xs">Legal Information</Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Legal Information</DialogTitle>
+                  <DialogDescription className="space-y-4">
+                    <p>This application ("Hellth") is provided for informational purposes only and should not be considered medical advice. Always consult with healthcare professionals for medical decisions.</p>
+                    
+                    <h4 className="font-semibold">Data Privacy</h4>
+                    <p>We do not collect, store, or sell any personal information. All calculations are performed locally in your browser.</p>
+                    
+                    <h4 className="font-semibold">Cookies</h4>
+                    <p>This application does not use cookies or tracking mechanisms.</p>
+                    
+                    <h4 className="font-semibold">Disclaimer</h4>
+                    <p>The calculations and results provided are based on general formulas and may not account for individual variations or specific medical conditions. Use at your own discretion.</p>
+                  </DialogDescription>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
+            <div className="text-center">
+              <h1 className="text-3xl font-semibold text-mint-800">Hellth Calculator</h1>
+              <p className="text-gray-600">Calculate various health metrics based on your measurements</p>
+            </div>
+            <div className="w-[100px]"></div> {/* Spacer for alignment */}
           </div>
 
           <div className="grid gap-6">
