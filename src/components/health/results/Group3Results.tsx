@@ -23,9 +23,15 @@ const Group3Results = ({
     conicityIndex
   });
   
-  // Only render if at least one value is present and not null
-  if (!leanMassIndex && !bodyAdiposityIndex && !conicityIndex) {
-    console.log("No values present in Group3Results, not rendering");
+  // Check if we have valid numbers for any of the indices
+  const hasValidValues = (
+    (typeof leanMassIndex === 'number' && !isNaN(leanMassIndex)) ||
+    (typeof bodyAdiposityIndex === 'number' && !isNaN(bodyAdiposityIndex)) ||
+    (typeof conicityIndex === 'number' && !isNaN(conicityIndex))
+  );
+
+  if (!hasValidValues) {
+    console.log("No valid values present in Group3Results, not rendering");
     return null;
   }
 

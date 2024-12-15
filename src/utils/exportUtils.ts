@@ -39,27 +39,33 @@ export const exportResults = (results: any, format: 'pdf' | 'json') => {
     return ranges[metric] || "No range data";
   };
 
+  const formatValue = (value: any): string => {
+    if (value === null || value === undefined || isNaN(value)) return 'N/A';
+    if (typeof value === 'number') return value.toFixed(1);
+    return String(value);
+  };
+
   const data = {
     "Primary Metrics": {
-      "BMI (Standard)": `${results.bmi?.standard?.toFixed(1) || 'N/A'} - ${getRangeForMetric("BMI", results.bmi?.standard)}`,
-      "BMI (Athletic)": `${results.bmi?.athletic?.toFixed(1) || 'N/A'}`,
-      "BMI (Devine)": `${results.bmi?.devine?.toFixed(1) || 'N/A'}`,
-      "BMI (Based)": `${results.bmi?.bmiBased?.toFixed(1) || 'N/A'}`,
-      "Body Fat % (Navy)": `${results.bodyFat?.navy?.toFixed(1) || 'N/A'} - ${getRangeForMetric("Body Fat %", results.bodyFat?.navy)}`,
-      "Body Fat % (Jackson)": `${results.bodyFat?.jackson?.toFixed(1) || 'N/A'}`,
-      "Body Fat % (BMI Based)": `${results.bodyFat?.bmiBased?.toFixed(1) || 'N/A'}`,
-      "Body Fat % (Army)": `${results.bodyFat?.army?.toFixed(1) || 'N/A'}`,
-      "BMR": `${results.bmr?.bmr?.toFixed(0) || 'N/A'} kcal`,
-      "TDEE": `${results.bmr?.tdee?.toFixed(0) || 'N/A'} kcal`,
-      "Biological Age": `${results.biologicalAge?.toFixed(1) || 'N/A'} years`
+      "BMI (Standard)": `${formatValue(results.bmi?.standard)} - ${getRangeForMetric("BMI", results.bmi?.standard)}`,
+      "BMI (Athletic)": formatValue(results.bmi?.athletic),
+      "BMI (Devine)": formatValue(results.bmi?.devine),
+      "BMI (Based)": formatValue(results.bmi?.bmiBased),
+      "Body Fat % (Navy)": `${formatValue(results.bodyFat?.navy)} - ${getRangeForMetric("Body Fat %", results.bodyFat?.navy)}`,
+      "Body Fat % (Jackson)": formatValue(results.bodyFat?.jackson),
+      "Body Fat % (BMI Based)": formatValue(results.bodyFat?.bmiBased),
+      "Body Fat % (Army)": formatValue(results.bodyFat?.army),
+      "BMR": `${formatValue(results.bmr?.bmr)} kcal`,
+      "TDEE": `${formatValue(results.bmr?.tdee)} kcal`,
+      "Biological Age": `${formatValue(results.biologicalAge)} years`
     },
     "Body Composition": {
-      "Lean Body Mass": `${results.leanBodyMass?.toFixed(1) || 'N/A'} kg`,
-      "Fat Free Mass Index": `${results.fatFreeMassIndex?.toFixed(1) || 'N/A'}`,
-      "Skeletal Muscle Mass": `${results.skeletalMuscleMass?.toFixed(1) || 'N/A'} kg`,
-      "Body Fat Distribution": `${results.bodyFatDistribution?.toFixed(2) || 'N/A'}`,
+      "Lean Body Mass": `${formatValue(results.leanBodyMass)} kg`,
+      "Fat Free Mass Index": formatValue(results.fatFreeMassIndex),
+      "Skeletal Muscle Mass": `${formatValue(results.skeletalMuscleMass)} kg`,
+      "Body Fat Distribution": formatValue(results.bodyFatDistribution),
       "Frame Size": results.frameSize || 'N/A',
-      "Lean Mass Index": `${results.leanMassIndex?.toFixed(2) || 'N/A'} - ${getRangeForMetric("Lean Mass Index", results.leanMassIndex)}`
+      "Lean Mass Index": `${formatValue(results.leanMassIndex)} - ${getRangeForMetric("Lean Mass Index", results.leanMassIndex)}`
     },
     "Body Indices": {
       "Ponderal Index": `${results.ponderalIndex?.metric?.toFixed(2) || 'N/A'} - ${getRangeForMetric("Ponderal Index", results.ponderalIndex?.metric)}`,
@@ -82,10 +88,6 @@ export const exportResults = (results: any, format: 'pdf' | 'json') => {
   };
 
   console.log("Processed data for export:", data);
-  console.log("Specific values being checked:");
-  console.log("Lean Mass Index:", results.leanMassIndex);
-  console.log("Athletic Formula:", results.idealWeight?.athletic);
-  console.log("BMI Based Range:", results.idealWeight?.bmiBased);
 
   if (format === 'json') {
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });

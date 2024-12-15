@@ -2,14 +2,21 @@ import { Info } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface LeanMassIndexCardProps {
-  value: number;
+  value: number | null;
 }
 
 const LeanMassIndexCard = ({ value }: LeanMassIndexCardProps) => {
-  const getColor = (value: number) => {
-    if (value < 16) return "text-blue-600";
-    if (value < 19) return "text-green-600";
-    if (value < 22) return "text-yellow-600";
+  console.log('LeanMassIndexCard rendering with value:', value);
+
+  if (!value || isNaN(value)) {
+    console.log('Invalid LeanMassIndex value, not rendering card');
+    return null;
+  }
+
+  const getColor = (val: number) => {
+    if (val < 16) return "text-blue-600";
+    if (val < 19) return "text-green-600";
+    if (val < 22) return "text-yellow-600";
     return "text-red-600";
   };
 
