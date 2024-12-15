@@ -42,7 +42,7 @@ const Header = ({ onTestDataClick }: HeaderProps) => {
           className="text-xs"
           onClick={() => onTestDataClick(generateTestData())}
         >
-          Test Data
+          Random Example Data
         </Button>
       </div>
       
