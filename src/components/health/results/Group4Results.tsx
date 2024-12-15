@@ -10,6 +10,27 @@ interface Group4ResultsProps {
 }
 
 const Group4Results = ({ bmi, bodyFat, bmr, unit }: Group4ResultsProps) => {
+  const getBMIColor = (value: number) => {
+    if (value < 18.5) return "text-blue-600";
+    if (value < 25) return "text-green-600";
+    if (value < 30) return "text-yellow-600";
+    return "text-red-600";
+  };
+
+  const getBodyFatColor = (value: number) => {
+    if (value < 10) return "text-blue-600";
+    if (value < 20) return "text-green-600";
+    if (value < 25) return "text-yellow-600";
+    return "text-red-600";
+  };
+
+  const getBMRColor = (value: number) => {
+    if (value < 1200) return "text-blue-600";
+    if (value < 1800) return "text-green-600";
+    if (value < 2200) return "text-yellow-600";
+    return "text-red-600";
+  };
+
   // Generate trend data for visualization
   const trendData = [
     { name: 'Current', bmi, bodyFat, bmr: bmr / 1000 },
@@ -67,7 +88,7 @@ const Group4Results = ({ bmi, bodyFat, bmr, unit }: Group4ResultsProps) => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
           <div className="text-sm text-mint-800 font-medium">BMI Trend</div>
-          <div className="text-2xl font-semibold text-mint-900">
+          <div className={`text-2xl font-semibold ${getBMIColor(bmi * 0.95)}`}>
             {(bmi * 0.95).toFixed(1)}
           </div>
           <div className="text-sm text-mint-600">Projected in 3 months</div>
@@ -75,7 +96,7 @@ const Group4Results = ({ bmi, bodyFat, bmr, unit }: Group4ResultsProps) => {
 
         <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
           <div className="text-sm text-mint-800 font-medium">Body Fat % Trend</div>
-          <div className="text-2xl font-semibold text-mint-900">
+          <div className={`text-2xl font-semibold ${getBodyFatColor(bodyFat * 0.93)}`}>
             {(bodyFat * 0.93).toFixed(1)}%
           </div>
           <div className="text-sm text-mint-600">Projected in 3 months</div>
@@ -83,7 +104,7 @@ const Group4Results = ({ bmi, bodyFat, bmr, unit }: Group4ResultsProps) => {
 
         <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
           <div className="text-sm text-mint-800 font-medium">BMR Trend</div>
-          <div className="text-2xl font-semibold text-mint-900">
+          <div className={`text-2xl font-semibold ${getBMRColor(bmr * 1.04)}`}>
             {Math.round(bmr * 1.04)}
           </div>
           <div className="text-sm text-mint-600">Projected in 3 months</div>

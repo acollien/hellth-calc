@@ -16,6 +16,26 @@ const Group3Results = ({
 }: Group3ResultsProps) => {
   if (!leanMassIndex && !bodyAdiposityIndex && !conicityIndex) return null;
 
+  const getLMIColor = (value: number) => {
+    if (value < 16) return "text-blue-600";
+    if (value < 19) return "text-green-600";
+    if (value < 22) return "text-yellow-600";
+    return "text-red-600";
+  };
+
+  const getBAIColor = (value: number) => {
+    if (value < 8) return "text-blue-600";
+    if (value < 21) return "text-green-600";
+    if (value < 33) return "text-yellow-600";
+    return "text-red-600";
+  };
+
+  const getCIndexColor = (value: number) => {
+    if (value < 1.25) return "text-green-600";
+    if (value < 1.35) return "text-yellow-600";
+    return "text-red-600";
+  };
+
   return (
     <div className="w-full space-y-6">
       <h3 className="text-lg font-medium text-mint-800">Advanced Body Measurements</h3>
@@ -27,7 +47,7 @@ const Group3Results = ({
                 <div className="flex items-start justify-between">
                   <div>
                     <div className="text-sm text-mint-800 font-medium">Lean Mass Index</div>
-                    <div className="text-2xl font-semibold text-mint-900">
+                    <div className={`text-2xl font-semibold ${getLMIColor(leanMassIndex)}`}>
                       {leanMassIndex.toFixed(1)}
                     </div>
                   </div>
@@ -58,7 +78,7 @@ const Group3Results = ({
                 <div className="flex items-start justify-between">
                   <div>
                     <div className="text-sm text-mint-800 font-medium">Body Adiposity Index</div>
-                    <div className="text-2xl font-semibold text-mint-900">
+                    <div className={`text-2xl font-semibold ${getBAIColor(bodyAdiposityIndex)}`}>
                       {bodyAdiposityIndex.toFixed(1)}%
                     </div>
                   </div>
@@ -89,7 +109,7 @@ const Group3Results = ({
                 <div className="flex items-start justify-between">
                   <div>
                     <div className="text-sm text-mint-800 font-medium">Conicity Index</div>
-                    <div className="text-2xl font-semibold text-mint-900">
+                    <div className={`text-2xl font-semibold ${getCIndexColor(conicityIndex)}`}>
                       {conicityIndex.toFixed(2)}
                     </div>
                   </div>

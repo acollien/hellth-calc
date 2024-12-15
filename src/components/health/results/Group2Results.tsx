@@ -20,10 +20,30 @@ const Group2Results = ({
     return null;
   }
 
-  const getFFMIColor = (ffmi: number) => {
-    if (ffmi < 18) return "text-blue-600";
-    if (ffmi < 20) return "text-green-600";
-    if (ffmi < 22) return "text-yellow-600";
+  const getLBMColor = (value: number) => {
+    if (value < 45) return "text-blue-600";
+    if (value < 65) return "text-green-600";
+    if (value < 75) return "text-yellow-600";
+    return "text-red-600";
+  };
+
+  const getFFMIColor = (value: number) => {
+    if (value < 18) return "text-blue-600";
+    if (value < 20) return "text-green-600";
+    if (value < 22) return "text-yellow-600";
+    return "text-red-600";
+  };
+
+  const getSMMColor = (value: number) => {
+    if (value < 25) return "text-blue-600";
+    if (value < 35) return "text-green-600";
+    if (value < 45) return "text-yellow-600";
+    return "text-red-600";
+  };
+
+  const getBFDColor = (value: number) => {
+    if (value < 0.8) return "text-green-600";
+    if (value < 1.0) return "text-yellow-600";
     return "text-red-600";
   };
 
@@ -38,7 +58,7 @@ const Group2Results = ({
                 <div className="flex items-start justify-between">
                   <div>
                     <div className="text-sm text-mint-800 font-medium">Lean Body Mass</div>
-                    <div className="text-2xl font-semibold text-mint-900">
+                    <div className={`text-2xl font-semibold ${getLBMColor(leanBodyMass)}`}>
                       {leanBodyMass.toFixed(1)} {unit === 'metric' ? 'kg' : 'lbs'}
                     </div>
                   </div>
@@ -107,7 +127,7 @@ const Group2Results = ({
                 <div className="flex items-start justify-between">
                   <div>
                     <div className="text-sm text-mint-800 font-medium">Skeletal Muscle Mass</div>
-                    <div className="text-2xl font-semibold text-mint-900">
+                    <div className={`text-2xl font-semibold ${getSMMColor(skeletalMuscleMass)}`}>
                       {skeletalMuscleMass.toFixed(1)} {unit === 'metric' ? 'kg' : 'lbs'}
                     </div>
                   </div>
@@ -143,7 +163,7 @@ const Group2Results = ({
                 <div className="flex items-start justify-between">
                   <div>
                     <div className="text-sm text-mint-800 font-medium">Body Fat Distribution</div>
-                    <div className="text-2xl font-semibold text-mint-900">
+                    <div className={`text-2xl font-semibold ${getBFDColor(bodyFatDistribution)}`}>
                       {bodyFatDistribution.toFixed(2)}
                     </div>
                   </div>
