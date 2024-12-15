@@ -1,7 +1,7 @@
 import { HealthMetrics } from '@/components/health/types';
 
 export const calculateBodyFat = (metrics: HealthMetrics) => {
-  console.log('Calculating body fat with metrics:', metrics);
+  console.log('Starting body fat calculations with metrics:', metrics);
   const results: { [key: string]: number | null } = {
     navy: null,
     jackson: null,
@@ -24,6 +24,21 @@ export const calculateBodyFat = (metrics: HealthMetrics) => {
   }
 
   // Jackson-Pollock Method
+  console.log('Checking Jackson-Pollock requirements:', {
+    hasChest: Boolean(metrics.chestSkinfold),
+    hasSuprailiac: Boolean(metrics.suprailiacSkinfold),
+    hasThigh: Boolean(metrics.thighSkinfold),
+    hasAge: Boolean(metrics.age),
+    hasGender: Boolean(metrics.gender),
+    values: {
+      chest: metrics.chestSkinfold,
+      suprailiac: metrics.suprailiacSkinfold,
+      thigh: metrics.thighSkinfold,
+      age: metrics.age,
+      gender: metrics.gender
+    }
+  });
+
   if (metrics.chestSkinfold && metrics.suprailiacSkinfold && metrics.thighSkinfold && metrics.age && metrics.gender) {
     console.log('Calculating Jackson-Pollock with:', {
       chest: metrics.chestSkinfold,
@@ -34,10 +49,16 @@ export const calculateBodyFat = (metrics: HealthMetrics) => {
     });
 
     const sum = parseFloat(metrics.chestSkinfold) + parseFloat(metrics.suprailiacSkinfold) + parseFloat(metrics.thighSkinfold);
+    console.log('Sum of skinfolds:', sum);
+    
     if (metrics.gender === 'male') {
-      results.jackson = 495 / (1.10938 - 0.0008267 * sum + 0.0000016 * sum * sum - 0.0002574 * parseFloat(metrics.age)) - 450;
+      const bodyDensity = 1.10938 - 0.0008267 * sum + 0.0000016 * sum * sum - 0.0002574 * parseFloat(metrics.age);
+      console.log('Male body density:', bodyDensity);
+      results.jackson = 495 / bodyDensity - 450;
     } else {
-      results.jackson = 495 / (1.089733 - 0.0009245 * sum + 0.0000025 * sum * sum - 0.0000979 * parseFloat(metrics.age)) - 450;
+      const bodyDensity = 1.089733 - 0.0009245 * sum + 0.0000025 * sum * sum - 0.0000979 * parseFloat(metrics.age);
+      console.log('Female body density:', bodyDensity);
+      results.jackson = 495 / bodyDensity - 450;
     }
     console.log('Jackson-Pollock result:', results.jackson);
   }
