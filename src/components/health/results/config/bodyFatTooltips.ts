@@ -6,14 +6,17 @@ interface TooltipRanges {
 interface TooltipContent {
   title: string;
   description: string;
-  formula: string;
+  formula: {
+    male: string;
+    female: string;
+  };
   ranges: TooltipRanges;
 }
 
 export const bodyFatTooltips: Record<string, TooltipContent> = {
   navy: {
     title: "U.S. Navy Method",
-    description: "Uses circumference measurements for accurate body fat estimation.",
+    description: "A circumference-based method developed by the U.S. Navy for quick and accurate body fat estimation using basic body measurements.",
     formula: {
       male: "495 / (1.0324 - 0.19077 × log₁₀(waist - neck) + 0.15456 × log₁₀(height)) - 450",
       female: "495 / (1.29579 - 0.35004 × log₁₀(waist + hip - neck) + 0.22100 × log₁₀(height)) - 450"
@@ -37,7 +40,7 @@ export const bodyFatTooltips: Record<string, TooltipContent> = {
   },
   jackson: {
     title: "Jackson-Pollock Method",
-    description: "Uses multiple skinfold measurements for precise body fat calculation.",
+    description: "A highly accurate method using skinfold measurements to estimate body density and calculate body fat percentage.",
     formula: {
       male: "Body Density = 1.10938 - (0.0008267 × sum) + (0.0000016 × sum²) - (0.0002574 × age)\nBody Fat % = (495 / Body Density) - 450",
       female: "Body Density = 1.089733 - (0.0009245 × sum) + (0.0000025 × sum²) - (0.0000979 × age)\nBody Fat % = (495 / Body Density) - 450"
@@ -60,8 +63,8 @@ export const bodyFatTooltips: Record<string, TooltipContent> = {
     }
   },
   bmiBased: {
-    title: "BMI-Based Estimation",
-    description: "Estimates body fat using BMI correlation and demographic factors.",
+    title: "BMI-Based Method",
+    description: "A simplified estimation using BMI and age to approximate body fat percentage. Less accurate than methods using direct body measurements.",
     formula: {
       male: "Body Fat % = (1.20 × BMI) + (0.23 × age) - 10.8 - 5.4",
       female: "Body Fat % = (1.20 × BMI) + (0.23 × age) - 5.4"
@@ -85,7 +88,7 @@ export const bodyFatTooltips: Record<string, TooltipContent> = {
   },
   army: {
     title: "U.S. Army Method",
-    description: "Official method used by the U.S. Army for body fat assessment.",
+    description: "The official method used by the U.S. Army for body fat assessment, using circumference measurements and height.",
     formula: {
       male: "86.010 × log₁₀(waist - neck) - 70.041 × log₁₀(height) + 36.76",
       female: "163.205 × log₁₀(waist + hip - neck) - 97.684 × log₁₀(height) - 78.387"
