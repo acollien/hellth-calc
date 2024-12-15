@@ -15,7 +15,6 @@ export const calculateLeanMassIndex = (metrics: HealthMetrics): number | null =>
   
   // Convert all numeric string values to numbers
   const convertedMetrics = {
-    ...metrics,
     height: Number(height),
     weight: Number(weight),
     age: metrics.age ? Number(metrics.age) : undefined,
@@ -35,11 +34,11 @@ export const calculateLeanMassIndex = (metrics: HealthMetrics): number | null =>
     midaxillarySkinfold2: metrics.midaxillarySkinfold2 ? Number(metrics.midaxillarySkinfold2) : undefined,
     // Only pass gender if it's male or female, otherwise undefined
     gender: metrics.gender === 'male' || metrics.gender === 'female' ? metrics.gender : undefined,
-    activityLevel: metrics.activityLevel,
+    // Only pass activityLevel if it's a valid value, otherwise undefined
+    activityLevel: metrics.activityLevel === '' ? undefined : metrics.activityLevel,
     unit: metrics.unit
   };
   
-  // Calculate body fat using the Navy method as it's generally most reliable
   const bodyFatResults = calculateBodyFat(convertedMetrics);
   const bodyFatPercentage = bodyFatResults?.navy || null;
   
