@@ -32,7 +32,7 @@ const BodyFatCard = ({ methodKey, value, gender, tooltipContent }: BodyFatCardPr
   
   return (
     <div className="flex-1 p-4 rounded-lg bg-mint-50 border border-mint-100 w-full">
-      <div className="flex items-center justify-between gap-2">
+      <div className="flex items-center gap-2">
         <span className="text-sm text-mint-800 font-medium capitalize">
           {methodKey.replace(/([A-Z])/g, ' $1').trim()}
         </span>
