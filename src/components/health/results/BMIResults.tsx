@@ -7,10 +7,13 @@ interface BMIResultsProps {
     standard: number;
     devine: number;
     athletic: number;
+    bmiBased?: number;
   };
 }
 
 const BMIResults = ({ bmi }: BMIResultsProps) => {
+  console.log("BMIResults received bmi values:", bmi);
+
   const bmiRanges = [
     {
       min: 0,
@@ -61,6 +64,12 @@ const BMIResults = ({ bmi }: BMIResultsProps) => {
         formula: "Standard BMI × 0.9",
         description: "Modified BMI calculation specifically for athletic body types.",
         interpretation: "• Under 16.5: Too lean\n• 16.5-22.5: Athletic build\n• 22.5-27: Muscular build\n• Above 27: May need body composition assessment"
+      },
+      bmiBased: {
+        title: "BMI Based Range",
+        formula: "Based on standard BMI ranges",
+        description: "A range calculation derived from standard BMI categories.",
+        interpretation: "• Under 18.5: Below healthy range\n• 18.5-24.9: Healthy range\n• 25-29.9: Above healthy range\n• 30+: Well above healthy range"
       }
     };
     return descriptions[type as keyof typeof descriptions];
@@ -69,8 +78,9 @@ const BMIResults = ({ bmi }: BMIResultsProps) => {
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-medium text-mint-800">BMI Results</h3>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
         {Object.entries(bmi).map(([key, value]) => {
+          if (value === undefined || value === null) return null;
           const info = getBMIDescription(key);
           return (
             <div key={key} className="p-4 rounded-lg bg-mint-50 border border-mint-100">
