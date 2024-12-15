@@ -24,16 +24,16 @@ export const calculateBodyFat = (metrics: HealthMetrics) => {
   }
 
   // Jackson-Pollock Method
-  if (metrics.chestSkinfold && metrics.umbilicalSkinfold && metrics.thighSkinfold && metrics.age && metrics.gender) {
+  if (metrics.chestSkinfold && metrics.suprailiacSkinfold && metrics.thighSkinfold && metrics.age && metrics.gender) {
     console.log('Calculating Jackson-Pollock with:', {
       chest: metrics.chestSkinfold,
-      umbilical: metrics.umbilicalSkinfold,
+      suprailiac: metrics.suprailiacSkinfold,
       thigh: metrics.thighSkinfold,
       age: metrics.age,
       gender: metrics.gender
     });
 
-    const sum = parseFloat(metrics.chestSkinfold) + parseFloat(metrics.umbilicalSkinfold) + parseFloat(metrics.thighSkinfold);
+    const sum = parseFloat(metrics.chestSkinfold) + parseFloat(metrics.suprailiacSkinfold) + parseFloat(metrics.thighSkinfold);
     if (metrics.gender === 'male') {
       results.jackson = 495 / (1.10938 - 0.0008267 * sum + 0.0000016 * sum * sum - 0.0002574 * parseFloat(metrics.age)) - 450;
     } else {
