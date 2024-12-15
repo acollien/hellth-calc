@@ -58,9 +58,6 @@ const RangeBar = ({ value, ranges, unit = '', max }: RangeBarProps) => {
           style={{ left: `${percentage}%` }}
         />
       </div>
-      <div className="text-right text-sm text-mint-800">
-        Current: {value.toFixed(1)} {unit}
-      </div>
     </div>
   );
 };
