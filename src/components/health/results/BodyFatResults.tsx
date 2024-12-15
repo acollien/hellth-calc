@@ -23,6 +23,8 @@ const getBodyFatColor = (bodyFat: number, gender: 'male' | 'female') => {
 };
 
 const BodyFatResults = ({ bodyFat, gender }: BodyFatResultsProps) => {
+  console.log('BodyFat Results:', bodyFat); // Debug log
+
   const tooltipContent = {
     navy: {
       title: "U.S. Navy Method",
@@ -120,8 +122,9 @@ const BodyFatResults = ({ bodyFat, gender }: BodyFatResultsProps) => {
     <div className="space-y-4 w-full">
       <h3 className="text-lg font-medium text-mint-800">Body Fat Percentage</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 w-full">
-        {Object.entries(bodyFat).map(([key, value]) => (
-          value !== null && (
+        {Object.entries(bodyFat).map(([key, value]) => {
+          console.log(`Rendering ${key} with value:`, value); // Debug log
+          return value !== null && (
             <div key={key} className="flex-1 p-4 rounded-lg bg-mint-50 border border-mint-100 w-full">
               <div className="flex items-center justify-between gap-2">
                 <span className="text-sm text-mint-800 font-medium capitalize">
@@ -155,8 +158,8 @@ const BodyFatResults = ({ bodyFat, gender }: BodyFatResultsProps) => {
                 {value.toFixed(1)}%
               </div>
             </div>
-          )
-        ))}
+          );
+        })}
       </div>
     </div>
   );

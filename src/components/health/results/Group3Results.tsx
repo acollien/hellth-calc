@@ -40,7 +40,7 @@ const Group3Results = ({
   return (
     <div className="w-full space-y-6">
       <h3 className="text-lg font-medium text-mint-800">Advanced Body Measurements</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full mx-auto">
+      <div className="grid grid-cols-1 gap-4 w-full mx-auto">
         {typeof leanMassIndex === 'number' && (
           <div className="p-4 rounded-lg bg-mint-50 border border-mint-100 w-full">
             <Tooltip>
@@ -72,68 +72,70 @@ const Group3Results = ({
           </div>
         )}
 
-        {typeof bodyAdiposityIndex === 'number' && (
-          <div className="p-4 rounded-lg bg-mint-50 border border-mint-100 w-full">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <div className="text-sm text-mint-800 font-medium">Body Adiposity Index</div>
-                    <div className={`text-2xl font-semibold ${getBAIColor(bodyAdiposityIndex)}`}>
-                      {bodyAdiposityIndex.toFixed(1)}%
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {typeof bodyAdiposityIndex === 'number' && (
+            <div className="p-4 rounded-lg bg-mint-50 border border-mint-100 w-full">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <div className="text-sm text-mint-800 font-medium">Body Adiposity Index</div>
+                      <div className={`text-2xl font-semibold ${getBAIColor(bodyAdiposityIndex)}`}>
+                        {bodyAdiposityIndex.toFixed(1)}%
+                      </div>
+                    </div>
+                    <Info className="h-4 w-4 text-mint-500" />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs p-4">
+                  <div className="space-y-2">
+                    <h4 className="font-semibold">Body Adiposity Index (BAI)</h4>
+                    <p>Estimates body fat percentage using hip circumference and height.</p>
+                    <div className="text-sm">
+                      <p className="font-medium">Healthy ranges:</p>
+                      <ul className="list-disc pl-4 space-y-1">
+                        <li>Men: 8-20%</li>
+                        <li>Women: 21-33%</li>
+                      </ul>
                     </div>
                   </div>
-                  <Info className="h-4 w-4 text-mint-500" />
-                </div>
-              </TooltipTrigger>
-              <TooltipContent className="max-w-xs p-4">
-                <div className="space-y-2">
-                  <h4 className="font-semibold">Body Adiposity Index (BAI)</h4>
-                  <p>Estimates body fat percentage using hip circumference and height.</p>
-                  <div className="text-sm">
-                    <p className="font-medium">Healthy ranges:</p>
-                    <ul className="list-disc pl-4 space-y-1">
-                      <li>Men: 8-20%</li>
-                      <li>Women: 21-33%</li>
-                    </ul>
-                  </div>
-                </div>
-              </TooltipContent>
-            </Tooltip>
-          </div>
-        )}
+                </TooltipContent>
+              </Tooltip>
+            </div>
+          )}
 
-        {typeof conicityIndex === 'number' && (
-          <div className="p-4 rounded-lg bg-mint-50 border border-mint-100 w-full">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <div className="text-sm text-mint-800 font-medium">Conicity Index</div>
-                    <div className={`text-2xl font-semibold ${getCIndexColor(conicityIndex)}`}>
-                      {conicityIndex.toFixed(2)}
+          {typeof conicityIndex === 'number' && (
+            <div className="p-4 rounded-lg bg-mint-50 border border-mint-100 w-full">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <div className="text-sm text-mint-800 font-medium">Conicity Index</div>
+                      <div className={`text-2xl font-semibold ${getCIndexColor(conicityIndex)}`}>
+                        {conicityIndex.toFixed(2)}
+                      </div>
+                    </div>
+                    <Info className="h-4 w-4 text-mint-500" />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs p-4">
+                  <div className="space-y-2">
+                    <h4 className="font-semibold">Conicity Index (C-Index)</h4>
+                    <p>Measures abdominal fat distribution and cardiovascular risk.</p>
+                    <div className="text-sm">
+                      <p className="font-medium">Risk levels:</p>
+                      <ul className="list-disc pl-4 space-y-1">
+                        <li>Low risk: &lt; 1.25</li>
+                        <li>Moderate risk: 1.25-1.35</li>
+                        <li>High risk: &gt; 1.35</li>
+                      </ul>
                     </div>
                   </div>
-                  <Info className="h-4 w-4 text-mint-500" />
-                </div>
-              </TooltipTrigger>
-              <TooltipContent className="max-w-xs p-4">
-                <div className="space-y-2">
-                  <h4 className="font-semibold">Conicity Index (C-Index)</h4>
-                  <p>Measures abdominal fat distribution and cardiovascular risk.</p>
-                  <div className="text-sm">
-                    <p className="font-medium">Risk levels:</p>
-                    <ul className="list-disc pl-4 space-y-1">
-                      <li>Low risk: &lt; 1.25</li>
-                      <li>Moderate risk: 1.25-1.35</li>
-                      <li>High risk: &gt; 1.35</li>
-                    </ul>
-                  </div>
-                </div>
-              </TooltipContent>
-            </Tooltip>
-          </div>
-        )}
+                </TooltipContent>
+              </Tooltip>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
