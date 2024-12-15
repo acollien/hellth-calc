@@ -71,8 +71,8 @@ export const exportResults = (results: any, format: 'pdf' | 'json') => {
       styles: {
         fontSize: 8,
         cellPadding: 2,
-        overflow: 'linebreak' as const, // Type assertion to OverflowType
-        cellWidth: 'auto'
+        overflow: 'linebreak' as const,
+        cellWidth: 'auto' as const // Type assertion for CellWidthType
       },
       headStyles: {
         fillColor: [41, 128, 185],
