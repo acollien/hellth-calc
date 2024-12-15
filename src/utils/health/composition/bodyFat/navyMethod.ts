@@ -11,8 +11,10 @@ export const calculateNavyBodyFat = (metrics: HealthMetrics): number | null => {
   const height = Number(metrics.height);
   
   if (metrics.gender === 'male') {
-    return 495 / (1.0324 - 0.19077 * Math.log10(waist - neck) + 0.15456 * Math.log10(height)) - 450;
+    const logValue = Math.log10(waist - neck);
+    return Math.max(0, Math.min(495 / (1.0324 - 0.19077 * logValue + 0.15456 * Math.log10(height)) - 450, 100));
   }
   
-  return 495 / (1.29579 - 0.35004 * Math.log10(waist + hip - neck) + 0.22100 * Math.log10(height)) - 450;
+  const logValue = Math.log10(waist + hip - neck);
+  return Math.max(0, Math.min(495 / (1.29579 - 0.35004 * logValue + 0.22100 * Math.log10(height)) - 450, 100));
 };

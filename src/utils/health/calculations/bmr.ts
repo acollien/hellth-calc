@@ -2,19 +2,19 @@ import { HealthMetrics } from '@/components/health/types';
 
 export const calculateBMR = (metrics: HealthMetrics) => {
   if (!metrics.weight || !metrics.height || !metrics.age || !metrics.gender) {
-    return null;
+    return { bmr: 0 };
   }
 
   // Convert imperial to metric if needed and ensure numbers
-  const weight = Number(metrics.unit === 'imperial' ? Number(metrics.weight) * 0.453592 : metrics.weight);
-  const height = Number(metrics.unit === 'imperial' ? Number(metrics.height) * 2.54 : metrics.height);
+  const weight = metrics.unit === 'imperial' ? Number(metrics.weight) * 0.453592 : Number(metrics.weight);
+  const height = metrics.unit === 'imperial' ? Number(metrics.height) * 2.54 : Number(metrics.height);
   const age = Number(metrics.age);
 
   // Mifflin-St Jeor Equation
   let bmr = (10 * weight) + (6.25 * height) - (5 * age);
   bmr = metrics.gender === 'male' ? bmr + 5 : bmr - 161;
 
-  // Adjust BMR based on activity level
+  // Activity level multipliers
   const activityMultipliers = {
     sedentary: 1.2,
     light: 1.375,
@@ -23,11 +23,17 @@ export const calculateBMR = (metrics: HealthMetrics) => {
     veryActive: 1.9
   };
 
-  // Check if activityLevel exists and is not an empty string
+  // Calculate TDEE if activity level is provided
   if (metrics.activityLevel && metrics.activityLevel in activityMultipliers) {
     const multiplier = activityMultipliers[metrics.activityLevel as keyof typeof activityMultipliers];
-    return Math.round(bmr * multiplier);
+    const tdee = bmr * multiplier;
+    return {
+      bmr: Math.round(bmr),
+      tdee: Math.round(tdee)
+    };
   }
 
-  return Math.round(bmr);
+  return {
+    bmr: Math.round(bmr)
+  };
 };
