@@ -72,13 +72,13 @@ export const exportResults = (results: any, format: 'pdf' | 'json') => {
         fontSize: 8,
         cellPadding: 2,
         overflow: 'linebreak' as const,
-        cellWidth: 'auto' as const // Type assertion for CellWidthType
+        cellWidth: 'auto' as const
       },
       headStyles: {
         fillColor: [41, 128, 185],
         textColor: 255,
         fontSize: 9,
-        fontStyle: 'bold',
+        fontStyle: 'bold' as const, // Type assertion for FontStyle
         cellPadding: 3,
       },
       columnStyles: {
