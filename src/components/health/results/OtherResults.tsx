@@ -132,10 +132,10 @@ const OtherResults = ({ frameSize, waistToHip, biologicalAge }: OtherResultsProp
                   <p>Combines multiple health indicators to estimate physiological age.</p>
                   <p className="font-medium mt-2">Formula:</p>
                   <p className="text-mint-700">Base = Chronological Age</p>
-                  <p className="text-mint-700">If BMI > 25: Add (BMI - 25) × 0.5</p>
-                  <p className="text-mint-700">If BMI < 18.5: Add (18.5 - BMI) × 0.5</p>
-                  <p className="text-mint-700">For men: If WHR > 0.9: Add (WHR - 0.9) × 10</p>
-                  <p className="text-mint-700">For women: If WHR > 0.85: Add (WHR - 0.85) × 10</p>
+                  <p className="text-mint-700">If BMI {'>'} 25: Add (BMI - 25) × 0.5</p>
+                  <p className="text-mint-700">If BMI {'<'} 18.5: Add (18.5 - BMI) × 0.5</p>
+                  <p className="text-mint-700">For men: If WHR {'>'} 0.9: Add (WHR - 0.9) × 10</p>
+                  <p className="text-mint-700">For women: If WHR {'>'} 0.85: Add (WHR - 0.85) × 10</p>
                   <p className="font-medium mt-2">Factors Considered:</p>
                   <ul className="list-disc pl-4 space-y-1">
                     <li>BMI (weight distribution)</li>
