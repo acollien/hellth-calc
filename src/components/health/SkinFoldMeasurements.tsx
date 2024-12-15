@@ -3,7 +3,7 @@ import { Slider } from "@/components/ui/slider";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
 import { HealthMetrics } from "./types";
-import { BodyDiagram } from "./visualizations/BodyDiagram";
+import BodyDiagram from "./visualizations/BodyDiagram";
 
 interface SkinFoldMeasurementsProps {
   metrics: HealthMetrics;

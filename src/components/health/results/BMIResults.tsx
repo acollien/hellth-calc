@@ -1,4 +1,4 @@
-import { RangeBar } from "@/components/health/visualizations/RangeBar";
+import RangeBar from "@/components/health/visualizations/RangeBar";
 
 interface BMIResultsProps {
   bmi: {
