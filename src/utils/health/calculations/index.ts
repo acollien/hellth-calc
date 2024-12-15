@@ -1,6 +1,6 @@
 import { calculateBMI } from './bmi';
-import { calculateBodyFat } from './bodyFat';
-import { calculateBMR } from './metabolic';
+import { calculateBodyFat } from '../bodyFat';
+import { calculateBMR } from '../metabolicCalc';
 import { calculateIdealWeight } from './idealWeight';
 import { calculateBiologicalAge } from './biologicalAge';
 import { calculatePonderalIndex } from './ponderal';
