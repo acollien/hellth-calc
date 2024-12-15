@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { HealthMetrics } from "@/components/health/types";
+import { HealthMetrics, HealthResult } from "@/components/health/types";
 import { useBasicHealthMetrics } from './useBasicHealthMetrics';
 import { useBodyComposition } from './useBodyComposition';
 import { useBodyIndices } from './useBodyIndices';
@@ -11,7 +11,7 @@ import {
 import { calculateFrameSize } from "@/utils/health/metrics/frameSize";
 
 export const useHealthCalculations = () => {
-  const [results, setResults] = useState<any>(null);
+  const [results, setResults] = useState<HealthResult | null>(null);
   const { calculateBasicMetrics } = useBasicHealthMetrics();
   const { calculateComposition } = useBodyComposition();
   const { calculateIndices } = useBodyIndices();

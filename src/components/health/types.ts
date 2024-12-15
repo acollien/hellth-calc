@@ -19,10 +19,52 @@ export interface HealthMetrics {
   calfSkinfold: string;        // Point i
   activityLevel: 'sedentary' | 'light' | 'moderate' | 'active' | 'veryActive' | '';
   unit: 'metric' | 'imperial';
-  bodyFat?: {
-    navy: number | null;
-    jackson: number | null;
-    bmiBased: number | null;
-    army: number | null;
+}
+
+export interface BodyFatResult {
+  navy: number | null;
+  jackson: number | null;
+  bmiBased: number | null;
+  army: number | null;
+}
+
+export interface HealthResult {
+  bodyFat?: BodyFatResult;
+  bmi?: {
+    standard: number;
+    devine: number;
+    athletic: number;
   };
+  bmr?: {
+    bmr: number;
+    tdee?: number;
+  };
+  idealWeight?: {
+    robinson: number;
+    miller: number;
+    devine: number;
+  };
+  frameSize?: string;
+  waistToHip?: number;
+  biologicalAge?: number;
+  ponderalIndex?: {
+    metric: number;
+    imperial: number;
+  };
+  absi?: {
+    metric: number;
+    imperial: number;
+  };
+  bodyRoundnessIndex?: {
+    metric: number;
+    imperial: number;
+  };
+  waistToHeightRatio?: number;
+  leanBodyMass?: number;
+  fatFreeMassIndex?: number;
+  skeletalMuscleMass?: number;
+  bodyFatDistribution?: number;
+  leanMassIndex?: number;
+  bodyAdiposityIndex?: number;
+  conicityIndex?: number;
 }
