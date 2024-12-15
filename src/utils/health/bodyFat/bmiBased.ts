@@ -9,7 +9,8 @@ export const calculateBMIBasedBodyFat = (metrics: HealthMetrics): number | null 
 
   const bmi = metrics.weight / Math.pow(metrics.height / 100, 2);
   
+  // Updated coefficients based on Deurenberg formula
   return metrics.gender === 'male'
-    ? (1.20 * bmi) + (0.23 * metrics.age) - 16.2
+    ? (1.20 * bmi) + (0.23 * metrics.age) - 10.8 - 5.4
     : (1.20 * bmi) + (0.23 * metrics.age) - 5.4;
 };
