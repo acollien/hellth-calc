@@ -24,24 +24,23 @@ const AbsiCard = ({ value, unit }: AbsiCardProps) => {
           <TooltipContent className="max-w-xs p-4">
             <div className="space-y-2">
               <h4 className="font-semibold">A Body Shape Index (ABSI)</h4>
-              <p>ABSI is based on waist circumference adjusted for height and weight. It's designed to be a better predictor of premature mortality than BMI.</p>
-              <div className="text-sm space-y-1">
-                <p className="font-medium">Method:</p>
-                <p>Developed by Krakauer & Krakauer (2012) to quantify the risk associated with central obesity.</p>
-                <p className="font-medium mt-2">Formula:</p>
-                <p className="text-mint-700">ABSI = WC / (BMI^(2/3) × Height^(1/2))</p>
-                <p className="text-mint-700">Where:</p>
-                <ul className="list-disc pl-4">
-                  <li>WC = Waist Circumference (m)</li>
-                  <li>BMI = Body Mass Index (kg/m²)</li>
-                  <li>Height (m)</li>
-                </ul>
-                <p className="font-medium mt-2">Interpretation:</p>
-                <ul className="list-disc pl-4">
-                  <li>Below 0.07: Low mortality risk</li>
-                  <li>0.07-0.08: Average mortality risk</li>
-                  <li>Above 0.08: High mortality risk</li>
-                </ul>
+              <div className="text-sm space-y-2">
+                <div>
+                  <p className="font-medium">Formula:</p>
+                  <p className="text-mint-700">ABSI = WC / (BMI^(2/3) × Height^(1/2))</p>
+                </div>
+                <div>
+                  <p className="font-medium">Description:</p>
+                  <p>Developed by Krakauer & Krakauer (2012) to quantify the risk associated with central obesity.</p>
+                </div>
+                <div>
+                  <p className="font-medium">Interpretation:</p>
+                  <ul className="list-disc pl-4">
+                    <li>Below 0.07: Low mortality risk</li>
+                    <li>0.07-0.08: Average mortality risk</li>
+                    <li>Above 0.08: High mortality risk</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </TooltipContent>

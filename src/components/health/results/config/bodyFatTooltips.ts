@@ -64,7 +64,7 @@ export const bodyFatTooltips: Record<string, TooltipContent> = {
   },
   bmiBased: {
     title: "BMI-Based Method",
-    description: "A simplified estimation using BMI and age to approximate body fat percentage. Less accurate than methods using direct body measurements.",
+    description: "A simplified estimation using BMI and age to approximate body fat percentage.",
     formula: {
       male: "Body Fat % = (1.20 × BMI) + (0.23 × age) - 10.8 - 5.4",
       female: "Body Fat % = (1.20 × BMI) + (0.23 × age) - 5.4"
@@ -88,7 +88,7 @@ export const bodyFatTooltips: Record<string, TooltipContent> = {
   },
   army: {
     title: "U.S. Army Method",
-    description: "The official method used by the U.S. Army for body fat assessment, using circumference measurements and height.",
+    description: "The official method used by the U.S. Army for body fat assessment.",
     formula: {
       male: "86.010 × log₁₀(waist - neck) - 70.041 × log₁₀(height) + 36.76",
       female: "163.205 × log₁₀(waist + hip - neck) - 97.684 × log₁₀(height) - 78.387"

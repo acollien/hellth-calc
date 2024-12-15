@@ -28,15 +28,24 @@ const BodyAdiposityCard = ({ value }: BodyAdiposityCardProps) => {
           </div>
         </TooltipTrigger>
         <TooltipContent align="start" className="max-w-xs p-4">
-          <div className="space-y-2 text-left">
+          <div className="space-y-2">
             <h4 className="font-semibold">Body Adiposity Index (BAI)</h4>
-            <p>Estimates body fat percentage using hip circumference and height.</p>
-            <div className="text-sm">
-              <p className="font-medium">Healthy ranges:</p>
-              <ul className="list-disc pl-4 space-y-1">
-                <li>Men: 8-20%</li>
-                <li>Women: 21-33%</li>
-              </ul>
+            <div className="text-sm space-y-2">
+              <div>
+                <p className="font-medium">Formula:</p>
+                <p className="text-mint-700">BAI = (Hip Circumference / Height^1.5) - 18</p>
+              </div>
+              <div>
+                <p className="font-medium">Description:</p>
+                <p>Estimates body fat percentage using hip circumference and height, without requiring weight measurement.</p>
+              </div>
+              <div>
+                <p className="font-medium">Interpretation:</p>
+                <ul className="list-disc pl-4">
+                  <li>Men: 8-20% (healthy range)</li>
+                  <li>Women: 21-33% (healthy range)</li>
+                </ul>
+              </div>
             </div>
           </div>
         </TooltipContent>

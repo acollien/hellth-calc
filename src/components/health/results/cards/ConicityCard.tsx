@@ -27,16 +27,25 @@ const ConicityCard = ({ value }: ConicityCardProps) => {
           </div>
         </TooltipTrigger>
         <TooltipContent align="start" className="max-w-xs p-4">
-          <div className="space-y-2 text-left">
+          <div className="space-y-2">
             <h4 className="font-semibold">Conicity Index (C-Index)</h4>
-            <p>Measures abdominal fat distribution and cardiovascular risk.</p>
-            <div className="text-sm">
-              <p className="font-medium">Risk levels:</p>
-              <ul className="list-disc pl-4 space-y-1">
-                <li>Low risk: &lt; 1.25</li>
-                <li>Moderate risk: 1.25-1.35</li>
-                <li>High risk: &gt; 1.35</li>
-              </ul>
+            <div className="text-sm space-y-2">
+              <div>
+                <p className="font-medium">Formula:</p>
+                <p className="text-mint-700">C-Index = Waist / (0.109 × √(Weight/Height))</p>
+              </div>
+              <div>
+                <p className="font-medium">Description:</p>
+                <p>Measures abdominal fat distribution and cardiovascular risk by comparing waist circumference to a cylinder generated using height and weight.</p>
+              </div>
+              <div>
+                <p className="font-medium">Interpretation:</p>
+                <ul className="list-disc pl-4">
+                  <li>Low risk: &lt; 1.25</li>
+                  <li>Moderate risk: 1.25-1.35</li>
+                  <li>High risk: &gt; 1.35</li>
+                </ul>
+              </div>
             </div>
           </div>
         </TooltipContent>

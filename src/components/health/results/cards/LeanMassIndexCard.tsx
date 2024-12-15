@@ -28,15 +28,24 @@ const LeanMassIndexCard = ({ value }: LeanMassIndexCardProps) => {
           </div>
         </TooltipTrigger>
         <TooltipContent align="start" className="max-w-xs p-4">
-          <div className="space-y-2 text-left">
+          <div className="space-y-2">
             <h4 className="font-semibold">Lean Mass Index (LMI)</h4>
-            <p>A measure of lean body mass relative to height.</p>
-            <div className="text-sm">
-              <p className="font-medium">Typical ranges:</p>
-              <ul className="list-disc pl-4 space-y-1">
-                <li>Men: 16-20 kg/m²</li>
-                <li>Women: 13-17 kg/m²</li>
-              </ul>
+            <div className="text-sm space-y-2">
+              <div>
+                <p className="font-medium">Formula:</p>
+                <p className="text-mint-700">LMI = Lean Mass / Height²</p>
+              </div>
+              <div>
+                <p className="font-medium">Description:</p>
+                <p>A measure of lean body mass relative to height, similar to BMI but specifically for muscle mass assessment.</p>
+              </div>
+              <div>
+                <p className="font-medium">Interpretation:</p>
+                <ul className="list-disc pl-4">
+                  <li>Men: 16-20 kg/m² (normal range)</li>
+                  <li>Women: 13-17 kg/m² (normal range)</li>
+                </ul>
+              </div>
             </div>
           </div>
         </TooltipContent>

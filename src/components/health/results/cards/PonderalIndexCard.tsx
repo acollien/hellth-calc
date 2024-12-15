@@ -25,25 +25,24 @@ const PonderalIndexCard = ({ value, unit }: PonderalIndexCardProps) => {
           <TooltipContent className="max-w-xs p-4">
             <div className="space-y-2">
               <h4 className="font-semibold">Ponderal Index (PI)</h4>
-              <p>Also known as the corpulence index, PI is a measure of leanness that accounts for the natural scaling of mass with height.</p>
-              <div className="text-sm space-y-1">
-                <p className="font-medium">Method:</p>
-                <p>Developed as an improvement over BMI for taller individuals, as it uses the cube of height instead of square.</p>
-                <p className="font-medium mt-2">Formula:</p>
-                <p className="text-mint-700">PI = Weight / Height³</p>
-                <p className="text-mint-700">Where:</p>
-                <ul className="list-disc pl-4">
-                  <li>Weight in kg (metric) or lb (imperial)</li>
-                  <li>Height in m (metric) or ft (imperial)</li>
-                </ul>
-                <p className="font-medium mt-2">Interpretation:</p>
-                <ul className="list-disc pl-4">
-                  <li>&lt;11: Underweight</li>
-                  <li>11-14: Normal weight</li>
-                  <li>14-17: Overweight</li>
-                  <li>&gt;17: Obese</li>
-                </ul>
-                <p className="mt-2">Values are typically between 11 and 14 for adults with normal build.</p>
+              <div className="text-sm space-y-2">
+                <div>
+                  <p className="font-medium">Formula:</p>
+                  <p className="text-mint-700">PI = Weight / Height³</p>
+                </div>
+                <div>
+                  <p className="font-medium">Description:</p>
+                  <p>A measure of leanness that accounts for the natural scaling of mass with height, developed as an improvement over BMI for taller individuals.</p>
+                </div>
+                <div>
+                  <p className="font-medium">Interpretation:</p>
+                  <ul className="list-disc pl-4">
+                    <li>&lt;11: Underweight</li>
+                    <li>11-14: Normal weight</li>
+                    <li>14-17: Overweight</li>
+                    <li>&gt;17: Obese</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </TooltipContent>
