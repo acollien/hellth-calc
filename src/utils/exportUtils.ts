@@ -81,7 +81,7 @@ export const exportHealthResults = (results: any) => {
   });
   
   // Add footer
-  const pageCount = doc.internal.getNumberOfPages();
+  const pageCount = (doc.internal as any).getNumberOfPages();
   doc.setFontSize(10);
   for (let i = 1; i <= pageCount; i++) {
     doc.setPage(i);
