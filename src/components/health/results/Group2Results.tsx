@@ -70,12 +70,25 @@ const Group2Results = ({
                   <h4 className="font-semibold">Lean Body Mass (LBM)</h4>
                   <p>Your total body weight minus fat weight. Includes muscle, bone, organs, and water.</p>
                   <div className="text-sm space-y-1">
-                    <p className="font-medium">Typical Ranges (Men):</p>
+                    <p className="font-medium">Method:</p>
+                    <p>Uses the Boer Formula, which is considered accurate for most body types.</p>
+                    <p className="font-medium mt-2">Formula:</p>
+                    <p className="text-mint-700">For men:</p>
+                    <p className="text-mint-700">LBM = (0.407 × Weight) + (0.267 × Height) - 19.2</p>
+                    <p className="text-mint-700">For women:</p>
+                    <p className="text-mint-700">LBM = (0.252 × Weight) + (0.473 × Height) - 48.3</p>
+                    <p className="text-mint-700">Where:</p>
+                    <ul className="list-disc pl-4">
+                      <li>Weight in kg</li>
+                      <li>Height in cm</li>
+                    </ul>
+                    <p className="font-medium mt-2">Typical Ranges:</p>
+                    <p>Men:</p>
                     <ul className="list-disc pl-4">
                       <li>Athletes: 55-70 kg (121-154 lbs)</li>
                       <li>Average: 50-65 kg (110-143 lbs)</li>
                     </ul>
-                    <p className="font-medium mt-2">Typical Ranges (Women):</p>
+                    <p className="mt-1">Women:</p>
                     <ul className="list-disc pl-4">
                       <li>Athletes: 45-60 kg (99-132 lbs)</li>
                       <li>Average: 40-55 kg (88-121 lbs)</li>
@@ -106,13 +119,23 @@ const Group2Results = ({
                   <h4 className="font-semibold">Fat-Free Mass Index (FFMI)</h4>
                   <p>A measure of muscle mass relative to height, normalized for different body sizes.</p>
                   <div className="text-sm space-y-1">
-                    <p className="font-medium">Ranges:</p>
+                    <p className="font-medium">Method:</p>
+                    <p>Developed to assess muscularity while accounting for height differences.</p>
+                    <p className="font-medium mt-2">Formula:</p>
+                    <p className="text-mint-700">FFMI = LBM / (height in m)²</p>
+                    <p className="text-mint-700">Where:</p>
+                    <ul className="list-disc pl-4">
+                      <li>LBM = Lean Body Mass (kg)</li>
+                      <li>Height in meters</li>
+                    </ul>
+                    <p className="font-medium mt-2">Ranges:</p>
                     <ul className="list-disc pl-4">
                       <li>Below 18: Low muscle mass</li>
                       <li>18-20: Average</li>
                       <li>20-22: Above average</li>
                       <li>Above 22: Exceptional</li>
                     </ul>
+                    <p className="mt-2">Values above 25 are rare without performance enhancement.</p>
                   </div>
                 </div>
               </TooltipContent>
@@ -139,12 +162,23 @@ const Group2Results = ({
                   <h4 className="font-semibold">Skeletal Muscle Mass (SMM)</h4>
                   <p>The amount of muscle tissue attached to your skeleton, responsible for movement.</p>
                   <div className="text-sm space-y-1">
-                    <p className="font-medium">Typical Ranges (Men):</p>
+                    <p className="font-medium">Method:</p>
+                    <p>Uses the Lee Formula, which estimates SMM based on anthropometric measurements.</p>
+                    <p className="font-medium mt-2">Formula:</p>
+                    <p className="text-mint-700">SMM = (0.244 × Weight) + (0.117 × Height) - (0.127 × Age) + Sex Factor - 2.98</p>
+                    <p className="text-mint-700">Where:</p>
+                    <ul className="list-disc pl-4">
+                      <li>Weight in kg</li>
+                      <li>Height in cm</li>
+                      <li>Sex Factor: Men = 2.29, Women = 0</li>
+                    </ul>
+                    <p className="font-medium mt-2">Typical Ranges:</p>
+                    <p>Men:</p>
                     <ul className="list-disc pl-4">
                       <li>Athletes: 35-45 kg (77-99 lbs)</li>
                       <li>Average: 30-40 kg (66-88 lbs)</li>
                     </ul>
-                    <p className="font-medium mt-2">Typical Ranges (Women):</p>
+                    <p className="mt-1">Women:</p>
                     <ul className="list-disc pl-4">
                       <li>Athletes: 25-35 kg (55-77 lbs)</li>
                       <li>Average: 20-30 kg (44-66 lbs)</li>
@@ -175,11 +209,21 @@ const Group2Results = ({
                   <h4 className="font-semibold">Body Fat Distribution Index</h4>
                   <p>Indicates how your body fat is distributed between central and peripheral regions.</p>
                   <div className="text-sm space-y-1">
-                    <p className="font-medium">Interpretation:</p>
+                    <p className="font-medium">Method:</p>
+                    <p>Calculates the relationship between waist size, hip circumference, and height to determine fat distribution patterns.</p>
+                    <p className="font-medium mt-2">Formula:</p>
+                    <p className="text-mint-700">BFD = (Waist² / (Hip × Height))</p>
+                    <p className="text-mint-700">Where:</p>
                     <ul className="list-disc pl-4">
-                      <li>Below 0.8: Peripheral distribution</li>
+                      <li>Waist circumference in cm</li>
+                      <li>Hip circumference in cm</li>
+                      <li>Height in cm</li>
+                    </ul>
+                    <p className="font-medium mt-2">Interpretation:</p>
+                    <ul className="list-disc pl-4">
+                      <li>Below 0.8: Peripheral distribution (healthier)</li>
                       <li>0.8-1.0: Balanced distribution</li>
-                      <li>Above 1.0: Central distribution</li>
+                      <li>Above 1.0: Central distribution (higher risk)</li>
                     </ul>
                     <p className="mt-2">Lower values generally indicate healthier fat distribution patterns.</p>
                   </div>

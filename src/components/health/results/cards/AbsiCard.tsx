@@ -22,16 +22,27 @@ const AbsiCard = ({ value, unit }: AbsiCardProps) => {
             <Info className="h-4 w-4 text-mint-500" />
           </TooltipTrigger>
           <TooltipContent className="max-w-xs p-4">
-            <h4 className="font-semibold">A Body Shape Index</h4>
-            <p>ABSI is based on waist circumference adjusted for height and weight.</p>
-            <div className="text-sm space-y-1">
-              <p className="font-medium">Interpretation:</p>
-              <ul className="list-disc pl-4">
-                <li>Below 0.07: Low mortality risk</li>
-                <li>0.07-0.08: Average mortality risk</li>
-                <li>Above 0.08: High mortality risk</li>
-              </ul>
-              <p className="mt-2">Lower values generally indicate better health outcomes.</p>
+            <div className="space-y-2">
+              <h4 className="font-semibold">A Body Shape Index (ABSI)</h4>
+              <p>ABSI is based on waist circumference adjusted for height and weight. It's designed to be a better predictor of premature mortality than BMI.</p>
+              <div className="text-sm space-y-1">
+                <p className="font-medium">Method:</p>
+                <p>Developed by Krakauer & Krakauer (2012) to quantify the risk associated with central obesity.</p>
+                <p className="font-medium mt-2">Formula:</p>
+                <p className="text-mint-700">ABSI = WC / (BMI^(2/3) × Height^(1/2))</p>
+                <p className="text-mint-700">Where:</p>
+                <ul className="list-disc pl-4">
+                  <li>WC = Waist Circumference (m)</li>
+                  <li>BMI = Body Mass Index (kg/m²)</li>
+                  <li>Height (m)</li>
+                </ul>
+                <p className="font-medium mt-2">Interpretation:</p>
+                <ul className="list-disc pl-4">
+                  <li>Below 0.07: Low mortality risk</li>
+                  <li>0.07-0.08: Average mortality risk</li>
+                  <li>Above 0.08: High mortality risk</li>
+                </ul>
+              </div>
             </div>
           </TooltipContent>
         </Tooltip>

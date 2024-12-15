@@ -47,7 +47,14 @@ const MetabolicResults = ({ bmr }: MetabolicResultsProps) => {
                 <h4 className="font-semibold">Basal Metabolic Rate (BMR)</h4>
                 <p>The number of calories your body burns at rest to maintain basic life functions.</p>
                 <div className="text-sm space-y-1">
-                  <p className="font-medium">Ranges:</p>
+                  <p className="font-medium">Method:</p>
+                  <p>Uses the Mifflin-St Jeor Equation, which is considered the most accurate for most people.</p>
+                  <p className="font-medium mt-2">Formula:</p>
+                  <p className="text-mint-700">For men:</p>
+                  <p className="text-mint-700">BMR = (10 × weight kg) + (6.25 × height cm) - (5 × age) + 5</p>
+                  <p className="text-mint-700">For women:</p>
+                  <p className="text-mint-700">BMR = (10 × weight kg) + (6.25 × height cm) - (5 × age) - 161</p>
+                  <p className="font-medium mt-2">Ranges:</p>
                   <ul className="list-disc pl-4">
                     <li>Low: &lt;1200 calories</li>
                     <li>Normal: 1200-1800 calories</li>
@@ -80,7 +87,19 @@ const MetabolicResults = ({ bmr }: MetabolicResultsProps) => {
                   <h4 className="font-semibold">Total Daily Energy Expenditure (TDEE)</h4>
                   <p>The total number of calories you burn in a day, including activity.</p>
                   <div className="text-sm space-y-1">
-                    <p className="font-medium">Ranges:</p>
+                    <p className="font-medium">Method:</p>
+                    <p>Calculated by multiplying BMR by an activity factor based on your daily activity level.</p>
+                    <p className="font-medium mt-2">Formula:</p>
+                    <p className="text-mint-700">TDEE = BMR × Activity Multiplier</p>
+                    <p className="font-medium mt-2">Activity Multipliers:</p>
+                    <ul className="list-disc pl-4">
+                      <li>Sedentary: 1.2</li>
+                      <li>Light Activity: 1.375</li>
+                      <li>Moderate Activity: 1.55</li>
+                      <li>Very Active: 1.725</li>
+                      <li>Extra Active: 1.9</li>
+                    </ul>
+                    <p className="font-medium mt-2">Ranges:</p>
                     <ul className="list-disc pl-4">
                       <li>Low: &lt;1500 calories</li>
                       <li>Normal: 1500-2500 calories</li>
