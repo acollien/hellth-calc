@@ -35,16 +35,16 @@ export const exportHealthResults = (results: any) => {
     const bodyFatData = [
       ['Method', 'Value', 'Interpretation'],
       ['Navy Method', 
-       results.bodyFat.navy?.toFixed(1) + '%' || 'N/A', 
+       (results.bodyFat.navy?.toFixed(1) || 'N/A') + '%', 
        'Men:\nEssential: 2-5%\nAthletes: 6-13%\nFitness: 14-17%\nAverage: 18-24%\nObese: 25%+\n\nWomen:\nEssential: 10-13%\nAthletes: 14-20%\nFitness: 21-24%\nAverage: 25-31%\nObese: 32%+'],
       ['Jackson-Pollock Method', 
-       results.bodyFat.jackson?.toFixed(1) + '%' || 'N/A', 
+       (results.bodyFat.jackson?.toFixed(1) || 'N/A') + '%', 
        'Men:\nEssential: 2-5%\nAthletes: 6-13%\nFitness: 14-17%\nAverage: 18-24%\nObese: 25%+\n\nWomen:\nEssential: 10-13%\nAthletes: 14-20%\nFitness: 21-24%\nAverage: 25-31%\nObese: 32%+'],
       ['BMI-Based Method', 
-       results.bodyFat.bmiBased?.toFixed(1) + '%' || 'N/A', 
+       (results.bodyFat.bmiBased?.toFixed(1) || 'N/A') + '%', 
        'Men:\nVery Low: <8%\nLow: 8-15%\nNormal: 15-20%\nModerate: 20-25%\nHigh: >25%\n\nWomen:\nVery Low: <15%\nLow: 15-22%\nNormal: 22-27%\nModerate: 27-32%\nHigh: >32%'],
       ['U.S. Army Method', 
-       results.bodyFat.army?.toFixed(1) + '%' || 'N/A', 
+       (results.bodyFat.army?.toFixed(1) || 'N/A') + '%', 
        'Men:\n17-20 years: <20%\n21-27 years: <22%\n28-39 years: <24%\n40+ years: <26%\n\nWomen:\n17-20 years: <30%\n21-27 years: <32%\n28-39 years: <34%\n40+ years: <36%']
     ];
     
@@ -70,18 +70,6 @@ export const exportHealthResults = (results: any) => {
   
   const indicesData = [
     ['Index', 'Value', 'Interpretation'],
-    ['Ponderal Index', 
-     results.ponderalIndex?.metric?.toFixed(2) || 'N/A', 
-     'Underweight: <11\nNormal weight: 11-14\nOverweight: 14-17\nObese: >17'],
-    ['A Body Shape Index (ABSI)', 
-     results.absi?.metric?.toFixed(3) || 'N/A', 
-     'Low mortality risk: <0.07\nAverage mortality risk: 0.07-0.08\nHigh mortality risk: >0.08'],
-    ['Body Roundness Index', 
-     results.bodyRoundnessIndex?.metric?.toFixed(2) || 'N/A', 
-     'Very lean: <1\nNormal: 1-2\nOverweight: 2-3\nObese: >3'],
-    ['Waist-Height Ratio', 
-     results.waistToHeightRatio?.toFixed(2) || 'N/A', 
-     'Underweight: <0.4\nHealthy: 0.4-0.5\nOverweight: 0.5-0.6\nObese: >0.6'],
     ['Lean Body Mass', 
      `${results.leanBodyMass?.toFixed(1) || 'N/A'} kg`, 
      'Low: <35 kg\nNormal: 35-65 kg\nHigh: 65-80 kg\nVery High: >80 kg'],
@@ -91,46 +79,18 @@ export const exportHealthResults = (results: any) => {
     ['Skeletal Muscle Mass', 
      `${results.skeletalMuscleMass?.toFixed(1) || 'N/A'} kg`, 
      'Low: <25 kg\nNormal: 25-45 kg\nAthletic: 45-55 kg\nElite: >55 kg'],
-    ['Body Fat Distribution Index', 
+    ['Body Fat Distribution', 
      results.bodyFatDistribution?.toFixed(2) || 'N/A', 
-     'Optimal: <0.5\nModerate: 0.5-0.8\nHigh Risk: >0.8']
+     'Optimal: <0.5\nModerate: 0.5-0.8\nHigh Risk: >0.8'],
+    ['Waist-to-Hip Ratio', 
+     results.waistToHip?.toFixed(2) || 'N/A', 
+     'Men:\nHealthy: <0.9\nIncreased Risk: >0.9\n\nWomen:\nHealthy: <0.85\nIncreased Risk: >0.85']
   ];
   
   autoTable(doc, {
     startY: currentY + 20,
     head: [indicesData[0]],
     body: indicesData.slice(1),
-    theme: 'striped',
-    headStyles: { fillColor: [42, 149, 135] },
-    columnStyles: {
-      2: { cellWidth: 80 }
-    },
-    styles: { cellPadding: 5 }
-  });
-  
-  currentY = (doc as ExtendedJsPDF).lastAutoTable?.finalY || currentY + 40;
-
-  // Other Metrics
-  doc.setFontSize(16);
-  doc.text('Additional Health Metrics', 20, currentY + 15);
-  
-  const otherData = [
-    ['Metric', 'Value', 'Interpretation'],
-    ['Frame Size', 
-     results.frameSize || 'N/A', 
-     'Small: Height/Wrist > 10.4\nMedium: Height/Wrist 9.6-10.4\nLarge: Height/Wrist < 9.6'],
-    ['Waist-to-Hip Ratio', 
-     results.waistToHip?.toFixed(2) || 'N/A', 
-     'Men:\nHealthy: <0.9\nIncreased Risk: >0.9\n\nWomen:\nHealthy: <0.85\nIncreased Risk: >0.85'],
-    ['Biological Age', 
-     results.biologicalAge ? `${results.biologicalAge} years` : 'N/A', 
-     'Compares physiological age to chronological age based on health metrics']
-  ];
-  
-  autoTable(doc, {
-    startY: currentY + 20,
-    head: [otherData[0]],
-    body: otherData.slice(1),
     theme: 'striped',
     headStyles: { fillColor: [42, 149, 135] },
     columnStyles: {
