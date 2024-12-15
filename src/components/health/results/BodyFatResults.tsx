@@ -24,10 +24,88 @@ const getBodyFatColor = (bodyFat: number, gender: 'male' | 'female') => {
 
 const BodyFatResults = ({ bodyFat, gender }: BodyFatResultsProps) => {
   const tooltipContent = {
-    navy: "U.S. Navy Method: Uses circumference measurements.\nMen: 86.010×log10(abdomen-neck) - 70.041×log10(height) + 36.76\nWomen: 163.205×log10(waist+hip-neck) - 97.684×log10(height) - 78.387",
-    jackson: "Jackson-Pollock Method: Uses multiple skinfold measurements.\nConsidered one of the most accurate non-invasive methods.\nUses 3-7 site measurements for calculation.",
-    bmiBased: "BMI-Based Estimation: Rough estimation using BMI correlation.\nLess accurate but requires minimal measurements.",
-    army: "U.S. Army Method: Official method used by the U.S. Army.\nUses circumference measurements similar to Navy method but with different coefficients.\nUsed for military fitness standards assessment."
+    navy: {
+      title: "U.S. Navy Method",
+      description: "Uses circumference measurements.",
+      formula: "Men: 86.010×log10(abdomen-neck) - 70.041×log10(height) + 36.76\nWomen: 163.205×log10(waist+hip-neck) - 97.684×log10(height) - 78.387",
+      ranges: {
+        male: [
+          "Essential Fat: 2-5%",
+          "Athletes: 6-13%",
+          "Fitness: 14-17%",
+          "Average: 18-24%",
+          "Obese: 25%+"
+        ],
+        female: [
+          "Essential Fat: 10-13%",
+          "Athletes: 14-20%",
+          "Fitness: 21-24%",
+          "Average: 25-31%",
+          "Obese: 32%+"
+        ]
+      }
+    },
+    jackson: {
+      title: "Jackson-Pollock Method",
+      description: "Uses multiple skinfold measurements.",
+      formula: "Based on 3-7 site measurements",
+      ranges: {
+        male: [
+          "Essential Fat: 2-5%",
+          "Athletes: 6-13%",
+          "Fitness: 14-17%",
+          "Average: 18-24%",
+          "Obese: 25%+"
+        ],
+        female: [
+          "Essential Fat: 10-13%",
+          "Athletes: 14-20%",
+          "Fitness: 21-24%",
+          "Average: 25-31%",
+          "Obese: 32%+"
+        ]
+      }
+    },
+    bmiBased: {
+      title: "BMI-Based Estimation",
+      description: "Rough estimation using BMI correlation.",
+      formula: "Based on BMI and demographic factors",
+      ranges: {
+        male: [
+          "Very Low: <8%",
+          "Low: 8-15%",
+          "Normal: 15-20%",
+          "Moderate: 20-25%",
+          "High: >25%"
+        ],
+        female: [
+          "Very Low: <15%",
+          "Low: 15-22%",
+          "Normal: 22-27%",
+          "Moderate: 27-32%",
+          "High: >32%"
+        ]
+      }
+    },
+    army: {
+      title: "U.S. Army Method",
+      description: "Official method used by the U.S. Army.",
+      formula: "Similar to Navy method but with different coefficients",
+      ranges: {
+        male: [
+          "17-20 years: 17-20%",
+          "21-27 years: 19-22%",
+          "28-39 years: 21-24%",
+          "40+ years: 23-26%"
+        ],
+        female: [
+          "17-20 years: 24-27%",
+          "21-27 years: 26-29%",
+          "28-39 years: 28-31%",
+          "40+ years: 30-33%"
+        ]
+      }
+    }
   };
 
   return (
@@ -49,8 +127,21 @@ const BodyFatResults = ({ bodyFat, gender }: BodyFatResultsProps) => {
                     <Info className="h-4 w-4 ml-1 text-mint-500" />
                   </button>
                 </TooltipTrigger>
-                <TooltipContent className="max-w-xs whitespace-pre-line">
-                  <p className="text-sm">{tooltipContent[key as keyof typeof tooltipContent]}</p>
+                <TooltipContent className="max-w-xs p-4">
+                  <div className="space-y-2">
+                    <h4 className="font-semibold">{tooltipContent[key as keyof typeof tooltipContent].title}</h4>
+                    <p>{tooltipContent[key as keyof typeof tooltipContent].description}</p>
+                    <div className="text-sm space-y-1">
+                      <p className="font-medium">Formula:</p>
+                      <p className="text-mint-700 whitespace-pre-line">{tooltipContent[key as keyof typeof tooltipContent].formula}</p>
+                      <p className="font-medium mt-2">Ranges ({gender === 'male' ? 'Men' : 'Women'}):</p>
+                      <ul className="list-disc pl-4">
+                        {tooltipContent[key as keyof typeof tooltipContent].ranges[gender].map((range, index) => (
+                          <li key={index}>{range}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
                 </TooltipContent>
               </Tooltip>
             </div>

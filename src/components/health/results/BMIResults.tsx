@@ -53,14 +53,14 @@ const BMIResults = ({ bmi }: BMIResultsProps) => {
       devine: {
         title: "Devine BMI",
         formula: "(Weight / Ideal Weight) × 21.7",
-        description: "Adjusted BMI calculation that considers frame size and gender. More accurate for athletic builds.",
-        interpretation: "Interpretation ranges are similar to standard BMI but better account for muscular builds."
+        description: "Adjusted BMI calculation that considers frame size and gender.",
+        interpretation: "• Under 19: Underweight\n• 19-24: Ideal range\n• 24-29: Slightly overweight\n• 29-34: Overweight\n• 34+: Significantly overweight"
       },
       athletic: {
         title: "Athletic BMI",
         formula: "Standard BMI × 0.9",
-        description: "Modified BMI calculation specifically for athletic body types. Accounts for higher muscle mass.",
-        interpretation: "Allows for 10% higher values than standard BMI due to muscle weight."
+        description: "Modified BMI calculation specifically for athletic body types.",
+        interpretation: "• Under 16.5: Too lean\n• 16.5-22.5: Athletic build\n• 22.5-27: Muscular build\n• Above 27: May need body composition assessment"
       }
     };
     return descriptions[type as keyof typeof descriptions];

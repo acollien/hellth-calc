@@ -85,10 +85,15 @@ const Group1Results = ({ ponderalIndex, absi, bodyRoundnessIndex, waistToHeightR
             <TooltipContent className="max-w-xs p-4">
               <div className="space-y-2">
                 <h4 className="font-semibold">A Body Shape Index</h4>
-                <p>ABSI is based on waist circumference adjusted for height and weight. Higher values indicate higher risk.</p>
+                <p>ABSI is based on waist circumference adjusted for height and weight.</p>
                 <div className="text-sm space-y-1">
-                  <p className="font-medium">Formula:</p>
-                  <p>WC / (BMI²/³ × Height½)</p>
+                  <p className="font-medium">Interpretation:</p>
+                  <ul className="list-disc pl-4">
+                    <li>Below 0.07: Low mortality risk</li>
+                    <li>0.07-0.08: Average mortality risk</li>
+                    <li>Above 0.08: High mortality risk</li>
+                  </ul>
+                  <p className="mt-2">Lower values generally indicate better health outcomes.</p>
                 </div>
               </div>
             </TooltipContent>
@@ -113,10 +118,16 @@ const Group1Results = ({ ponderalIndex, absi, bodyRoundnessIndex, waistToHeightR
             <TooltipContent className="max-w-xs p-4">
               <div className="space-y-2">
                 <h4 className="font-semibold">Body Roundness Index (BRI)</h4>
-                <p>BRI combines height and waist circumference to predict body fat percentage and visceral adipose tissue.</p>
+                <p>BRI combines height and waist circumference to predict body fat and visceral adipose tissue.</p>
                 <div className="text-sm space-y-1">
                   <p className="font-medium">Interpretation:</p>
-                  <p>Lower values indicate less rounded body shapes.</p>
+                  <ul className="list-disc pl-4">
+                    <li>Below 1: Very lean body shape</li>
+                    <li>1-2: Normal body shape</li>
+                    <li>2-3: Overweight body shape</li>
+                    <li>Above 3: Obese body shape</li>
+                  </ul>
+                  <p className="mt-2">Lower values indicate less rounded body shapes and generally better health outcomes.</p>
                 </div>
               </div>
             </TooltipContent>
