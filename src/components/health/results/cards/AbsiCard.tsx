@@ -8,9 +8,9 @@ interface AbsiCardProps {
 
 const AbsiCard = ({ value, unit }: AbsiCardProps) => {
   const getValueColor = (value: number) => {
-    return value < 0.07 ? "text-green-600" : 
-           value < 0.08 ? "text-yellow-600" : 
-           "text-red-600";
+    if (value < 0.07) return "text-green-600";
+    if (value < 0.08) return "text-yellow-600";
+    return "text-red-600";
   };
 
   return (

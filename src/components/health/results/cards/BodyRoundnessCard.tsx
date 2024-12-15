@@ -8,10 +8,10 @@ interface BodyRoundnessCardProps {
 
 const BodyRoundnessCard = ({ value, unit }: BodyRoundnessCardProps) => {
   const getValueColor = (value: number) => {
-    return value < 1 ? "text-blue-600" : 
-           value < 2 ? "text-green-600" : 
-           value < 3 ? "text-yellow-600" : 
-           "text-red-600";
+    if (value < 1) return "text-blue-600";
+    if (value < 2) return "text-green-600";
+    if (value < 3) return "text-yellow-600";
+    return "text-red-600";
   };
 
   return (

@@ -8,10 +8,10 @@ interface PonderalIndexCardProps {
 
 const PonderalIndexCard = ({ value, unit }: PonderalIndexCardProps) => {
   const getValueColor = (value: number) => {
-    return value < 11 ? "text-blue-600" : 
-           value < 14 ? "text-green-600" : 
-           value < 17 ? "text-yellow-600" : 
-           "text-red-600";
+    if (value < 11) return "text-blue-600";
+    if (value < 14) return "text-green-600";
+    if (value < 17) return "text-yellow-600";
+    return "text-red-600";
   };
 
   return (
