@@ -18,7 +18,9 @@ const Group2Results = ({
   bodyFatDistribution,
   unit 
 }: Group2ResultsProps) => {
-  if (!leanBodyMass && !fatFreeMassIndex && !skeletalMuscleMass && !bodyFatDistribution) return null;
+  const hasAnyResults = leanBodyMass || fatFreeMassIndex || skeletalMuscleMass || bodyFatDistribution;
+  
+  if (!hasAnyResults) return null;
 
   return (
     <div className="space-y-6">

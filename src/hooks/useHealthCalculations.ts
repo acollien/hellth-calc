@@ -11,6 +11,12 @@ import {
   calculateBodyRoundnessIndex,
   calculateWaistToHeightRatio
 } from "@/utils/health/calculations";
+import {
+  calculateLeanBodyMass,
+  calculateFatFreeMassIndex,
+  calculateSkeletalMuscleMass,
+  calculateBodyFatDistribution
+} from "@/utils/health/bodyComposition";
 
 export const useHealthCalculations = () => {
   const [results, setResults] = useState<any>(null);
@@ -51,6 +57,12 @@ export const useHealthCalculations = () => {
         numericMetrics.weight,
         currentMetrics.unit
       );
+      
+      // Add new calculations
+      results.leanBodyMass = calculateLeanBodyMass(numericMetrics);
+      results.fatFreeMassIndex = calculateFatFreeMassIndex(numericMetrics);
+      results.skeletalMuscleMass = calculateSkeletalMuscleMass(numericMetrics);
+      results.bodyFatDistribution = calculateBodyFatDistribution(numericMetrics);
     }
 
     if (numericMetrics.gender) {
