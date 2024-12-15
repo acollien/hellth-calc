@@ -75,10 +75,10 @@ export const exportResults = (results: any, format: 'pdf' | 'json') => {
         cellWidth: 'auto' as const
       },
       headStyles: {
-        fillColor: [41, 128, 185],
+        fillColor: [41, 128, 185] as [number, number, number], // Fixed: Explicitly type as RGB tuple
         textColor: 255,
         fontSize: 9,
-        fontStyle: 'bold' as const, // Type assertion for FontStyle
+        fontStyle: 'bold' as const,
         cellPadding: 3,
       },
       columnStyles: {
