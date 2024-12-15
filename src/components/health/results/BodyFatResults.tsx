@@ -101,16 +101,16 @@ const BodyFatResults = ({ bodyFat, gender }: BodyFatResultsProps) => {
         : "163.205 × log₁₀(waist + hip - neck) - 97.684 × log₁₀(height) - 78.387",
       ranges: {
         male: [
-          "17-20 years: 17-20%",
-          "21-27 years: 19-22%",
-          "28-39 years: 21-24%",
-          "40+ years: 23-26%"
+          "17-20 years: <20%",
+          "21-27 years: <22%",
+          "28-39 years: <24%",
+          "40+ years: <26%"
         ],
         female: [
-          "17-20 years: 24-27%",
-          "21-27 years: 26-29%",
-          "28-39 years: 28-31%",
-          "40+ years: 30-33%"
+          "17-20 years: <30%",
+          "21-27 years: <32%",
+          "28-39 years: <34%",
+          "40+ years: <36%"
         ]
       }
     }
@@ -124,7 +124,9 @@ const BodyFatResults = ({ bodyFat, gender }: BodyFatResultsProps) => {
           value !== null && (
             <div key={key} className="p-4 rounded-lg bg-mint-50 border border-mint-100">
               <div className="flex items-center gap-2">
-                <span className="text-sm text-mint-800 font-medium capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</span>
+                <span className="text-sm text-mint-800 font-medium capitalize">
+                  {key.replace(/([A-Z])/g, ' $1').trim()}
+                </span>
                 <Tooltip>
                   <TooltipTrigger>
                     <Info className="h-4 w-4 text-mint-500" />
@@ -135,7 +137,9 @@ const BodyFatResults = ({ bodyFat, gender }: BodyFatResultsProps) => {
                       <p>{tooltipContent[key as keyof typeof tooltipContent].description}</p>
                       <div className="text-sm space-y-1">
                         <p className="font-medium">Formula:</p>
-                        <p className="text-mint-700 whitespace-pre-line">{tooltipContent[key as keyof typeof tooltipContent].formula}</p>
+                        <p className="text-mint-700 whitespace-pre-line">
+                          {tooltipContent[key as keyof typeof tooltipContent].formula}
+                        </p>
                         <p className="font-medium mt-2">Ranges ({gender === 'male' ? 'Men' : 'Women'}):</p>
                         <ul className="list-disc pl-4">
                           {tooltipContent[key as keyof typeof tooltipContent].ranges[gender].map((range, index) => (
