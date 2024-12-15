@@ -68,22 +68,22 @@ export const exportResults = (results: any, format: 'pdf' | 'json') => {
       "Lean Mass Index": `${formatValue(results.leanMassIndex)} - ${getRangeForMetric("Lean Mass Index", results.leanMassIndex)}`
     },
     "Body Indices": {
-      "Ponderal Index": `${results.ponderalIndex?.metric?.toFixed(2) || 'N/A'} - ${getRangeForMetric("Ponderal Index", results.ponderalIndex?.metric)}`,
-      "ABSI": `${results.absi?.metric?.toFixed(3) || 'N/A'} - ${getRangeForMetric("ABSI", results.absi?.metric)}`,
-      "Body Roundness Index": `${results.bodyRoundnessIndex?.metric?.toFixed(2) || 'N/A'} - ${getRangeForMetric("Body Roundness Index", results.bodyRoundnessIndex?.metric)}`,
-      "Body Adiposity Index": `${results.bodyAdiposityIndex?.toFixed(2) || 'N/A'} - ${getRangeForMetric("Body Adiposity Index", results.bodyAdiposityIndex)}`,
-      "Conicity Index": `${results.conicityIndex?.toFixed(3) || 'N/A'} - ${getRangeForMetric("Conicity Index", results.conicityIndex)}`
+      "Ponderal Index": `${formatValue(results.ponderalIndex?.metric)} - ${getRangeForMetric("Ponderal Index", results.ponderalIndex?.metric)}`,
+      "ABSI": `${formatValue(results.absi?.metric)} - ${getRangeForMetric("ABSI", results.absi?.metric)}`,
+      "Body Roundness Index": `${formatValue(results.bodyRoundnessIndex?.metric)} - ${getRangeForMetric("Body Roundness Index", results.bodyRoundnessIndex?.metric)}`,
+      "Body Adiposity Index": `${formatValue(results.bodyAdiposityIndex)} - ${getRangeForMetric("Body Adiposity Index", results.bodyAdiposityIndex)}`,
+      "Conicity Index": `${formatValue(results.conicityIndex)} - ${getRangeForMetric("Conicity Index", results.conicityIndex)}`
     },
     "Health Ratios": {
-      "Waist-to-Hip Ratio": `${results.waistToHip?.toFixed(3) || 'N/A'} - ${getRangeForMetric("Waist-to-Hip Ratio", results.waistToHip)}`,
-      "Waist-to-Height Ratio": `${results.waistToHeightRatio?.toFixed(3) || 'N/A'} - ${getRangeForMetric("Waist-to-Height Ratio", results.waistToHeightRatio)}`
+      "Waist-to-Hip Ratio": `${formatValue(results.waistToHip)} - ${getRangeForMetric("Waist-to-Hip Ratio", results.waistToHip)}`,
+      "Waist-to-Height Ratio": `${formatValue(results.waistToHeightRatio)} - ${getRangeForMetric("Waist-to-Height Ratio", results.waistToHeightRatio)}`
     },
     "Ideal Weight Ranges": {
-      "Robinson Formula": `${results.idealWeight?.robinson?.toFixed(1) || 'N/A'} kg`,
-      "Miller Formula": `${results.idealWeight?.miller?.toFixed(1) || 'N/A'} kg`,
-      "Devine Formula": `${results.idealWeight?.devine?.toFixed(1) || 'N/A'} kg`,
-      "Athletic Formula": `${results.idealWeight?.athletic?.toFixed(1) || 'N/A'} kg`,
-      "BMI Based Range": `${results.idealWeight?.bmiBased?.toFixed(1) || 'N/A'} kg`
+      "Robinson Formula": `${formatValue(results.idealWeight?.robinson)} kg`,
+      "Miller Formula": `${formatValue(results.idealWeight?.miller)} kg`,
+      "Devine Formula": `${formatValue(results.idealWeight?.devine)} kg`,
+      "Athletic Formula": `${formatValue(results.idealWeight?.athletic)} kg`,
+      "BMI Based Range": `${formatValue(results.idealWeight?.bmiBased)} kg`
     }
   };
 
@@ -107,7 +107,6 @@ export const exportResults = (results: any, format: 'pdf' | 'json') => {
 
     let startY = 25;
     
-    // Configure table settings for full-page layout
     const tableConfig = {
       startY,
       head: [['Metric', 'Value']],
@@ -132,16 +131,13 @@ export const exportResults = (results: any, format: 'pdf' | 'json') => {
       tableWidth: 182
     };
 
-    // Add each section to the PDF
     Object.entries(data).forEach(([section, metrics], index) => {
       const tableData = Object.entries(metrics).map(([key, value]) => [key, value]);
       
-      // Add section header
       doc.setFontSize(9);
       doc.setTextColor(41, 128, 185);
       doc.text(section, 14, startY - 3);
       
-      // Add table
       autoTable(doc, {
         ...tableConfig,
         startY,
