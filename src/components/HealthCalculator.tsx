@@ -4,6 +4,7 @@ import * as basicIndices from "@/utils/health/basicIndices";
 import * as bodyComposition from "@/utils/health/bodyComposition";
 import * as metabolicCalc from "@/utils/health/metabolicCalculations";
 import * as otherMetrics from "@/utils/health/otherMetrics";
+import * as advancedMetrics from "@/utils/health/advancedMetrics";
 import HealthResults from "./HealthResults";
 import BasicMeasurements from "./health/BasicMeasurements";
 import BodyMeasurements from "./health/BodyMeasurements";
@@ -13,6 +14,7 @@ import { HealthMetrics } from "./health/types";
 import Header from "./health/Header";
 import Group1Results from "./health/results/Group1Results";
 import Group2Results from "./health/results/Group2Results";
+import Group3Results from "./health/results/Group3Results";
 
 const initialMetrics: HealthMetrics = {
   height: "",
@@ -114,6 +116,11 @@ const HealthCalculator = () => {
     results.waistToHip = otherMetrics.calculateWaistToHip(numericMetrics);
     results.biologicalAge = otherMetrics.calculateBiologicalAge(numericMetrics);
 
+    // Calculate advanced metrics
+    results.leanMassIndex = advancedMetrics.calculateLeanMassIndex(numericMetrics);
+    results.bodyAdiposityIndex = advancedMetrics.calculateBodyAdiposityIndex(numericMetrics);
+    results.conicityIndex = advancedMetrics.calculateConicityIndex(numericMetrics);
+
     setResults(results);
   };
 
@@ -145,6 +152,12 @@ const HealthCalculator = () => {
                 fatFreeMassIndex={results.fatFreeMassIndex}
                 skeletalMuscleMass={results.skeletalMuscleMass}
                 bodyFatDistribution={results.bodyFatDistribution}
+                unit={metrics.unit}
+              />
+              <Group3Results
+                leanMassIndex={results.leanMassIndex}
+                bodyAdiposityIndex={results.bodyAdiposityIndex}
+                conicityIndex={results.conicityIndex}
                 unit={metrics.unit}
               />
             </div>
