@@ -4,6 +4,7 @@ import BodyFatResults from "./health/results/BodyFatResults";
 import MetabolicResults from "./health/results/MetabolicResults";
 import IdealWeightResults from "./health/results/IdealWeightResults";
 import OtherResults from "./health/results/OtherResults";
+import BiologicalAgeResults from "./health/results/BiologicalAgeResults";
 
 interface ResultsProps {
   results: any;
@@ -29,10 +30,13 @@ const HealthResults = ({ results }: ResultsProps) => {
 
       {results.idealWeight && <IdealWeightResults idealWeight={results.idealWeight} />}
 
+      {results.biologicalAge && (
+        <BiologicalAgeResults biologicalAge={results.biologicalAge} />
+      )}
+
       <OtherResults 
         frameSize={results.frameSize}
         waistToHip={results.waistToHip}
-        biologicalAge={results.biologicalAge}
       />
     </div>
   );

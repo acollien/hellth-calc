@@ -119,10 +119,10 @@ const BodyFatResults = ({ bodyFat, gender }: BodyFatResultsProps) => {
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-medium text-mint-800">Body Fat Percentage</h3>
-      <div className="grid gap-4 sm:grid-cols-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
         {Object.entries(bodyFat).map(([key, value]) => (
           value !== null && (
-            <div key={key} className="p-4 rounded-lg bg-mint-50 border border-mint-100">
+            <div key={key} className="p-4 rounded-lg bg-mint-50 border border-mint-100 w-full">
               <div className="flex items-center gap-2">
                 <span className="text-sm text-mint-800 font-medium capitalize">
                   {key.replace(/([A-Z])/g, ' $1').trim()}
