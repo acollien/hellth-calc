@@ -6,16 +6,11 @@ interface WaistHeightCardProps {
 }
 
 const WaistHeightCard = ({ value }: WaistHeightCardProps) => {
-  const getBackgroundColor = (ratio: number) => {
-    if (ratio < 0.4) return "bg-[#D3E4FD]"; // Very Low
-    if (ratio < 0.5) return "bg-[#F2FCE2]"; // Healthy
-    if (ratio < 0.6) return "bg-[#FEC6A1]"; // Overweight
-    return "bg-[#ea384c]"; // Obese
-  };
-
   const getTextColor = (ratio: number) => {
-    if (ratio >= 0.6) return "text-white";
-    return "text-mint-900";
+    if (ratio < 0.4) return "text-blue-600";
+    if (ratio < 0.5) return "text-green-600";
+    if (ratio < 0.6) return "text-yellow-600";
+    return "text-red-600";
   };
 
   const getLabel = (ratio: number) => {
@@ -26,10 +21,10 @@ const WaistHeightCard = ({ value }: WaistHeightCardProps) => {
   };
 
   return (
-    <div className={`p-4 rounded-lg ${getBackgroundColor(value)} transition-colors duration-300`}>
+    <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
       <Tooltip>
         <TooltipTrigger asChild>
-          <div className="flex items-center gap-2">
+          <div className="flex items-start gap-2">
             <div className="flex-1">
               <div className="text-sm text-mint-800 font-medium flex items-center gap-2">
                 Waist-to-Height Ratio
@@ -38,7 +33,7 @@ const WaistHeightCard = ({ value }: WaistHeightCardProps) => {
               <div className={`text-2xl font-semibold ${getTextColor(value)}`}>
                 {value.toFixed(3)}
               </div>
-              <div className={`text-sm font-medium mt-1 ${getTextColor(value)}`}>
+              <div className="text-sm font-medium text-mint-700 mt-1">
                 {getLabel(value)}
               </div>
             </div>
