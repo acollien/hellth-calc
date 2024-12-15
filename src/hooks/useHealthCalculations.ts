@@ -15,7 +15,8 @@ import {
   calculateLeanBodyMass,
   calculateFatFreeMassIndex,
   calculateSkeletalMuscleMass,
-  calculateBodyFatDistribution
+  calculateBodyFatDistribution,
+  calculateLeanMassIndex
 } from "@/utils/health/bodyComposition";
 
 export const useHealthCalculations = () => {
@@ -63,6 +64,7 @@ export const useHealthCalculations = () => {
       results.fatFreeMassIndex = calculateFatFreeMassIndex(numericMetrics);
       results.skeletalMuscleMass = calculateSkeletalMuscleMass(numericMetrics);
       results.bodyFatDistribution = calculateBodyFatDistribution(numericMetrics);
+      results.leanMassIndex = calculateLeanMassIndex(numericMetrics);
     }
 
     if (numericMetrics.gender) {
