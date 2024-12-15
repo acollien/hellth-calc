@@ -17,6 +17,8 @@ const Group3Results = ({
   conicityIndex,
   unit 
 }: Group3ResultsProps) => {
+  console.log("Group3Results received leanMassIndex:", leanMassIndex);
+  
   // Only render if at least one value is present and not null
   if (!leanMassIndex && !bodyAdiposityIndex && !conicityIndex) return null;
 
