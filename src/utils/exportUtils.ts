@@ -5,7 +5,7 @@ import autoTable from 'jspdf-autotable';
 export const exportResults = (results: any, format: 'pdf' | 'json') => {
   if (!results) return;
 
-  console.log("Exporting results:", results);
+  console.log("Full results object received in exportResults:", results);
 
   const getRangeForMetric = (metric: string, value: number): string => {
     const ranges: { [key: string]: string } = {
@@ -79,6 +79,12 @@ export const exportResults = (results: any, format: 'pdf' | 'json') => {
       "BMI Based Range": `${results.idealWeight?.bmiBased?.toFixed(1) || 'N/A'} kg`
     }
   };
+
+  console.log("Processed data for export:", data);
+  console.log("Specific values being checked:");
+  console.log("Lean Mass Index:", results.leanMassIndex);
+  console.log("Athletic Formula:", results.idealWeight?.athletic);
+  console.log("BMI Based Range:", results.idealWeight?.bmiBased);
 
   if (format === 'json') {
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
