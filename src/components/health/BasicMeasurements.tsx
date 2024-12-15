@@ -80,7 +80,7 @@ const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) 
             value={[Number(metrics.height) || getHeightRange().min]}
             min={getHeightRange().min}
             max={getHeightRange().max}
-            step={getHeightRange().step}
+            step={0.1}
             onValueChange={(value) => onMetricChange('height', value[0].toString())}
             className="mt-2"
           />
@@ -92,7 +92,7 @@ const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) 
             value={[Number(metrics.weight) || getWeightRange().min]}
             min={getWeightRange().min}
             max={getWeightRange().max}
-            step={getWeightRange().step}
+            step={0.1}
             onValueChange={(value) => onMetricChange('weight', value[0].toString())}
             className="mt-2"
           />
@@ -104,7 +104,7 @@ const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) 
             value={[Number(metrics.age) || 0]}
             min={0}
             max={123}
-            step={1}
+            step={0.1}
             onValueChange={(value) => onMetricChange('age', value[0].toString())}
             className="mt-2"
           />

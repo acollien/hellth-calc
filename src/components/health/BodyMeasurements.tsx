@@ -12,11 +12,11 @@ interface BodyMeasurementsProps {
 const BodyMeasurements = ({ metrics, onMetricChange }: BodyMeasurementsProps) => {
   const getRange = (measurement: string) => {
     const ranges = {
-      neck: metrics.unit === "metric" ? { min: 20, max: 60, step: 0.5 } : { min: 8, max: 24, step: 0.25 },
-      waist: metrics.unit === "metric" ? { min: 40, max: 200, step: 0.5 } : { min: 16, max: 79, step: 0.25 },
-      hip: metrics.unit === "metric" ? { min: 50, max: 200, step: 0.5 } : { min: 20, max: 79, step: 0.25 },
-      wrist: metrics.unit === "metric" ? { min: 10, max: 25, step: 0.5 } : { min: 4, max: 10, step: 0.25 },
-      forearm: metrics.unit === "metric" ? { min: 15, max: 50, step: 0.5 } : { min: 6, max: 20, step: 0.25 }
+      neck: metrics.unit === "metric" ? { min: 20, max: 60, step: 0.1 } : { min: 8, max: 24, step: 0.1 },
+      waist: metrics.unit === "metric" ? { min: 40, max: 200, step: 0.1 } : { min: 16, max: 79, step: 0.1 },
+      hip: metrics.unit === "metric" ? { min: 50, max: 200, step: 0.1 } : { min: 20, max: 79, step: 0.1 },
+      wrist: metrics.unit === "metric" ? { min: 10, max: 25, step: 0.1 } : { min: 4, max: 10, step: 0.1 },
+      forearm: metrics.unit === "metric" ? { min: 15, max: 50, step: 0.1 } : { min: 6, max: 20, step: 0.1 }
     };
     return ranges[measurement as keyof typeof ranges];
   };
@@ -44,7 +44,7 @@ const BodyMeasurements = ({ metrics, onMetricChange }: BodyMeasurementsProps) =>
           value={[Number(metrics[key]) || range.min]}
           min={range.min}
           max={range.max}
-          step={range.step}
+          step={0.1}
           onValueChange={(value) => onMetricChange(key, value[0].toString())}
           className="mt-2"
         />

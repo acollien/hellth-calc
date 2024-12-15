@@ -14,8 +14,8 @@ interface SkinfoldPointProps {
 
 const SkinfoldPoint = ({ label, value, point, tooltip, onChange, unit }: SkinfoldPointProps) => {
   const range = unit === 'metric' 
-    ? { min: 1, max: 100, step: 0.5 }    // mm
-    : { min: 0.04, max: 4, step: 0.02 };  // inches
+    ? { min: 1, max: 100, step: 0.1 }    // mm
+    : { min: 0.04, max: 4, step: 0.1 };  // inches
 
   const formatValue = (val: number) => {
     return `${val} ${unit === "metric" ? "mm" : "in"}`;
@@ -50,7 +50,7 @@ const SkinfoldPoint = ({ label, value, point, tooltip, onChange, unit }: Skinfol
         value={[Number(value) || range.min]}
         min={range.min}
         max={range.max}
-        step={range.step}
+        step={0.1}
         onValueChange={(value) => onChange(value[0].toString())}
         className="mt-2"
       />
