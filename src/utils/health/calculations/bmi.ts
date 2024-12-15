@@ -1,33 +1,37 @@
-import { HealthMetrics } from '../types';
+import {
+  calculateStandardBMI,
+  calculateAthleticBMI,
+  calculateDevineBMI,
+  calculateBMIBasedRange
+} from './bmiFormulas';
 
 export const calculateBMI = (height: number, weight: number) => {
-  console.log('Calculating BMI with height:', height, 'and weight:', weight);
+  console.log('Starting BMI calculations with height:', height, 'and weight:', weight);
   
-  if (!height || !weight || height <= 0 || weight <= 0) {
-    console.log('Invalid height or weight values');
-    return null;
+  const standardBMI = calculateStandardBMI(height, weight);
+  console.log('Standard BMI calculated:', standardBMI);
+
+  if (!standardBMI) {
+    console.log('Failed to calculate standard BMI, returning null results');
+    return {
+      standard: null,
+      athletic: null,
+      devine: null,
+      bmiBased: null
+    };
   }
 
-  const heightInM = height / 100;
-  const standardBMI = weight / (heightInM * heightInM);
-  
-  // Athletic BMI calculation
-  const athleticBMI = standardBMI * 0.9;
-
-  // Devine Formula BMI calculation
-  const devineIdealWeight = 45.5 + 2.3 * ((height / 2.54) - 60);
-  const devineBMI = (weight / devineIdealWeight) * 21.7;
-
-  // BMI Based calculation
-  const bmiBased = standardBMI;
+  const athleticBMI = calculateAthleticBMI(standardBMI);
+  const devineBMI = calculateDevineBMI(height, weight);
+  const bmiBasedRange = calculateBMIBasedRange(standardBMI);
 
   const results = {
     standard: standardBMI,
     athletic: athleticBMI,
     devine: devineBMI,
-    bmiBased: bmiBased
+    bmiBased: bmiBasedRange
   };
 
-  console.log('BMI calculation results:', results);
+  console.log('Final BMI calculation results:', results);
   return results;
 };
