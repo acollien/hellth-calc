@@ -17,10 +17,10 @@ const OtherResults = ({ frameSize, waistToHip }: OtherResultsProps) => {
 
   const shouldShowFrameSize = frameSize && 
     frameSize !== 'undefined' && 
-    frameSize !== 'null' &&
+    frameSize !== 'null' && 
     ['small', 'medium', 'large'].includes(frameSize.toLowerCase());
 
-  console.log("Should show frame size:", shouldShowFrameSize);
+  console.log("Should show frame size:", shouldShowFrameSize, "with value:", frameSize);
 
   return (
     <div className="grid gap-4 sm:grid-cols-2">

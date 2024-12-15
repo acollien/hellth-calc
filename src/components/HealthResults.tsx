@@ -16,16 +16,25 @@ const HealthResults = ({ results }: ResultsProps) => {
   // Extract frameSize value, ensuring we handle all possible cases
   const frameSize = (() => {
     console.log("Processing frameSize from:", results.frameSize);
-    if (!results.frameSize) return null;
-    if (typeof results.frameSize === 'string') return results.frameSize;
-    if (typeof results.frameSize === 'object') {
-      if (results.frameSize.value) return results.frameSize.value;
-      if (results.frameSize._type === 'small' || 
-          results.frameSize._type === 'medium' || 
-          results.frameSize._type === 'large') {
+    
+    // If frameSize is directly a string, use it
+    if (typeof results.frameSize === 'string') {
+      return results.frameSize;
+    }
+    
+    // If frameSize is an object with _type property
+    if (results.frameSize && typeof results.frameSize === 'object') {
+      // First check for direct value
+      if (results.frameSize.value && results.frameSize.value !== 'undefined') {
+        return results.frameSize.value;
+      }
+      
+      // Then check for _type
+      if (results.frameSize._type && results.frameSize._type !== 'undefined') {
         return results.frameSize._type;
       }
     }
+    
     return null;
   })();
   
