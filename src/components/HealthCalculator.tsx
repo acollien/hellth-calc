@@ -86,10 +86,12 @@ const HealthCalculator = () => {
     <div className="w-full max-w-4xl mx-auto p-6 animate-fade-in">
       <Card className="p-6 backdrop-blur-sm bg-white/90 shadow-lg">
         <div className="space-y-8">
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col space-y-4">
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant="outline" size="sm" className="text-xs">Legal Information</Button>
+                <Button variant="outline" size="sm" className="text-xs self-start">
+                  Legal Information
+                </Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
@@ -109,11 +111,11 @@ const HealthCalculator = () => {
                 </DialogHeader>
               </DialogContent>
             </Dialog>
+            
             <div className="text-center">
               <h1 className="text-3xl font-semibold text-mint-800">Hellth Calculator</h1>
               <p className="text-gray-600">Calculate various health metrics based on your measurements</p>
             </div>
-            <div className="w-[100px]"></div> {/* Spacer for alignment */}
           </div>
 
           <div className="grid gap-6">

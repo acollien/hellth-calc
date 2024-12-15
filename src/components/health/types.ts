@@ -14,9 +14,9 @@ export interface HealthMetrics {
   thighSkinfold: string;       // Point d
   umbilicalSkinfold: string;   // Point e
   tricepsSkinfold: string;     // Point f
+  midaxillarySkinfold2: string; // Point g
   subscapularSkinfold: string; // Point h
   calfSkinfold: string;        // Point i
-  midaxillarySkinfold2: string; // Point g
   activityLevel: 'sedentary' | 'light' | 'moderate' | 'active' | 'veryActive' | '';
   unit: 'metric' | 'imperial';
 }
