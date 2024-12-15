@@ -1,45 +1,44 @@
-interface HealthMetrics {
-  height: number;
-  weight?: number;
-  hip?: number;
-  waist?: number;
-  unit?: 'metric' | 'imperial';
-}
+import { HealthMetrics } from "@/components/health/types";
 
-export const calculateLeanMassIndex = (metrics: HealthMetrics) => {
-  if (!metrics.weight || !metrics.height) return null;
+export const calculateBodyRoundnessIndex = (waist: number, height: number, unit: 'metric' | 'imperial') => {
+  const waistInM = unit === 'imperial' ? (waist * 0.0254) : (waist / 100);
+  const heightInM = unit === 'imperial' ? (height * 0.0254) : (height / 100);
   
-  // Convert imperial to metric if needed
-  const weight = metrics.unit === 'imperial' ? metrics.weight * 0.453592 : metrics.weight;
-  const height = metrics.unit === 'imperial' ? metrics.height * 2.54 : metrics.height;
+  const bri = 364.2 - (365.5 * Math.sqrt(1 - ((Math.pow(waistInM / (2 * Math.PI), 2)) / (0.09 * Math.pow(heightInM, 2)))));
   
-  // LMI = weight / (height^2) * (1 - body fat percentage)
-  const heightInM = height / 100;
-  return weight / (heightInM * heightInM);
+  return {
+    metric: bri,
+    imperial: bri // BRI is unitless
+  };
 };
 
-export const calculateBodyAdiposityIndex = (metrics: HealthMetrics) => {
-  if (!metrics.hip || !metrics.height) return null;
-  
-  // Convert imperial to metric if needed
-  const hip = metrics.unit === 'imperial' ? metrics.hip * 2.54 : metrics.hip;
-  const height = metrics.unit === 'imperial' ? metrics.height * 2.54 : metrics.height;
-  
-  // BAI = (hip circumference / height^1.5) - 18
-  const heightInM = height / 100;
-  return (hip / Math.pow(heightInM, 1.5)) - 18;
+export const calculateWaistToHeightRatio = (waist: number, height: number) => {
+  return waist / height;
 };
 
-export const calculateConicityIndex = (metrics: HealthMetrics) => {
-  if (!metrics.waist || !metrics.weight || !metrics.height) return null;
-  
-  // Convert imperial to metric if needed
-  const waist = metrics.unit === 'imperial' ? metrics.waist * 2.54 : metrics.waist;
-  const weight = metrics.unit === 'imperial' ? metrics.weight * 0.453592 : metrics.weight;
-  const height = metrics.unit === 'imperial' ? metrics.height * 2.54 : metrics.height;
-  
-  // C-Index = waist / (0.109 * sqrt(weight/height))
-  const waistInM = waist / 100;
-  const heightInM = height / 100;
-  return waistInM / (0.109 * Math.sqrt(weight / heightInM));
+export const calculateBiologicalAge = (metrics: HealthMetrics) => {
+  if (!metrics.age || !metrics.weight || !metrics.height) return null;
+
+  const age = parseFloat(metrics.age);
+  const weight = parseFloat(metrics.weight);
+  const height = parseFloat(metrics.height);
+
+  const bmi = weight / Math.pow(height / 100, 2);
+  let bioAge = age;
+
+  // Adjust for BMI
+  if (bmi > 25) bioAge += (bmi - 25) * 0.5;
+  if (bmi < 18.5) bioAge += (18.5 - bmi) * 0.5;
+
+  // Adjust for waist-to-hip ratio if available
+  if (metrics.waist && metrics.hip) {
+    const waist = parseFloat(metrics.waist);
+    const hip = parseFloat(metrics.hip);
+    const whr = waist / hip;
+    
+    if (metrics.gender === 'male' && whr > 0.9) bioAge += (whr - 0.9) * 10;
+    if (metrics.gender === 'female' && whr > 0.85) bioAge += (whr - 0.85) * 10;
+  }
+
+  return Math.round(bioAge);
 };

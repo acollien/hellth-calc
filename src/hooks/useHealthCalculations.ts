@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import * as basicIndices from "@/utils/health/basicIndices";
-import * as bodyComposition from "@/utils/health/bodyComposition";
-import * as metabolicCalc from "@/utils/health/metabolicCalculations";
-import * as otherMetrics from "@/utils/health/otherMetrics";
-import * as advancedMetrics from "@/utils/health/advancedMetrics";
 import { HealthMetrics } from "@/components/health/types";
+import * as basicCalc from "@/utils/health/basicCalculations";
+import * as bodyComp from "@/utils/health/bodyCompositionCalc";
+import * as metabolicCalc from "@/utils/health/metabolicCalc";
+import * as advancedMetrics from "@/utils/health/advancedMetrics";
 
 export const useHealthCalculations = () => {
   const [results, setResults] = useState<any>(null);
@@ -33,8 +32,14 @@ export const useHealthCalculations = () => {
 
     // Calculate basic indices
     if (numericMetrics.height && numericMetrics.weight) {
-      results.bmi = basicIndices.calculateBMI(numericMetrics.height, numericMetrics.weight);
-      results.ponderalIndex = basicIndices.calculatePonderalIndex(
+      results.bmi = basicCalc.calculateBMI(numericMetrics.height, numericMetrics.weight);
+      results.ponderalIndex = basicCalc.calculatePonderalIndex(
+        numericMetrics.height,
+        numericMetrics.weight,
+        currentMetrics.unit
+      );
+      results.absi = basicCalc.calculateABSI(
+        numericMetrics.waist,
         numericMetrics.height,
         numericMetrics.weight,
         currentMetrics.unit
@@ -43,32 +48,31 @@ export const useHealthCalculations = () => {
 
     // Calculate body composition metrics
     if (numericMetrics.gender) {
-      const bodyFatResults = bodyComposition.calculateBodyFat(numericMetrics);
-      const armyBodyFat = bodyComposition.calculateArmyBodyFat(numericMetrics);
-      
-      results.bodyFat = {
-        ...bodyFatResults,
-        army: armyBodyFat
-      };
-
-      results.leanBodyMass = bodyComposition.calculateLeanBodyMass(numericMetrics);
-      results.fatFreeMassIndex = bodyComposition.calculateFatFreeMassIndex(numericMetrics);
-      results.skeletalMuscleMass = bodyComposition.calculateSkeletalMuscleMass(numericMetrics);
-      results.bodyFatDistribution = bodyComposition.calculateBodyFatDistributionIndex(numericMetrics);
+      results.bodyFat = bodyComp.calculateBodyFat(numericMetrics);
+      if (numericMetrics.height) {
+        results.idealWeight = bodyComp.calculateIdealWeight(numericMetrics.height, numericMetrics.gender);
+      }
     }
 
-    // Calculate metabolic and other metrics
+    // Calculate metabolic metrics
     results.bmr = metabolicCalc.calculateBMR(numericMetrics);
-    results.frameSize = otherMetrics.calculateFrameSize(numericMetrics);
-    results.waistToHip = otherMetrics.calculateWaistToHip(numericMetrics);
-    results.biologicalAge = otherMetrics.calculateBiologicalAge(numericMetrics);
 
     // Calculate advanced metrics
-    results.leanMassIndex = advancedMetrics.calculateLeanMassIndex(numericMetrics);
-    results.bodyAdiposityIndex = advancedMetrics.calculateBodyAdiposityIndex(numericMetrics);
-    results.conicityIndex = advancedMetrics.calculateConicityIndex(numericMetrics);
+    if (numericMetrics.waist && numericMetrics.height) {
+      results.bodyRoundnessIndex = advancedMetrics.calculateBodyRoundnessIndex(
+        numericMetrics.waist,
+        numericMetrics.height,
+        currentMetrics.unit
+      );
+      results.waistToHeightRatio = advancedMetrics.calculateWaistToHeightRatio(
+        numericMetrics.waist,
+        numericMetrics.height
+      );
+    }
 
-    console.log('Body Fat Results:', results.bodyFat); // Debug log
+    results.biologicalAge = advancedMetrics.calculateBiologicalAge(numericMetrics);
+
+    console.log('Calculated results:', results);
     setResults(results);
   };
 
