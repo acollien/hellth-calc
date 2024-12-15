@@ -1,23 +1,16 @@
-interface HealthMetrics {
-  height: number;
-  weight: number;
-  age?: number;
-  gender?: 'male' | 'female';
-  activityLevel?: 'sedentary' | 'light' | 'moderate' | 'active' | 'veryActive';
-  unit?: 'metric' | 'imperial';
-}
+import { HealthMetrics } from './types';
+import { convertToMetric } from './conversions';
 
 export const calculateBMR = (metrics: HealthMetrics) => {
+  console.log('Calculating BMR with metrics:', metrics);
   if (!metrics.height || !metrics.weight || !metrics.age || !metrics.gender) return null;
 
-  // Convert to metric if needed
-  const weightInKg = metrics.unit === 'imperial' ? metrics.weight * 0.453592 : metrics.weight;
-  const heightInCm = metrics.unit === 'imperial' ? metrics.height * 2.54 : metrics.height;
+  const metricMetrics = convertToMetric(metrics);
 
   // Mifflin-St Jeor Equation
-  const bmr = metrics.gender === 'male'
-    ? (10 * weightInKg) + (6.25 * heightInCm) - (5 * metrics.age) + 5
-    : (10 * weightInKg) + (6.25 * heightInCm) - (5 * metrics.age) - 161;
+  const bmr = metricMetrics.gender === 'male'
+    ? (10 * metricMetrics.weight) + (6.25 * metricMetrics.height) - (5 * metricMetrics.age) + 5
+    : (10 * metricMetrics.weight) + (6.25 * metricMetrics.height) - (5 * metricMetrics.age) - 161;
 
   const activityMultipliers = {
     sedentary: 1.2,
@@ -31,5 +24,6 @@ export const calculateBMR = (metrics: HealthMetrics) => {
     ? bmr * activityMultipliers[metrics.activityLevel]
     : null;
 
+  console.log('BMR calculation results:', { bmr, tdee });
   return { bmr, tdee };
 };

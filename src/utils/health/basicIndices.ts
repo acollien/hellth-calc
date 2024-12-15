@@ -1,4 +1,8 @@
-export const calculateBMI = (height: number, weight: number) => {
+import { BMIResult, MetricImperialResult } from './types';
+import { convertToMetric } from './conversions';
+
+export const calculateBMI = (height: number, weight: number): BMIResult => {
+  console.log('Calculating BMI with height:', height, 'weight:', weight);
   const heightInM = height / 100;
   return {
     standard: weight / (heightInM * heightInM),
@@ -7,7 +11,8 @@ export const calculateBMI = (height: number, weight: number) => {
   };
 };
 
-export const calculatePonderalIndex = (height: number, weight: number, unit: 'metric' | 'imperial') => {
+export const calculatePonderalIndex = (height: number, weight: number, unit: 'metric' | 'imperial'): MetricImperialResult => {
+  console.log('Calculating Ponderal Index with height:', height, 'weight:', weight, 'unit:', unit);
   const heightInM = unit === 'imperial' ? (height * 0.0254) : (height / 100);
   const weightInKg = unit === 'imperial' ? (weight * 0.453592) : weight;
   
