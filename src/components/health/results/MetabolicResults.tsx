@@ -48,7 +48,7 @@ const MetabolicResults = ({ bmr }: MetabolicResultsProps) => {
                 <p>The number of calories your body burns at rest to maintain basic life functions.</p>
                 <div className="text-sm space-y-1">
                   <p className="font-medium">Method:</p>
-                  <p>Uses the Mifflin-St Jeor Equation, which is considered the most accurate for most people.</p>
+                  <p>Uses the Mifflin-St Jeor Equation, considered the most accurate for most people.</p>
                   <p className="font-medium mt-2">Formula:</p>
                   <p className="text-mint-700">For men:</p>
                   <p className="text-mint-700">BMR = (10 × weight kg) + (6.25 × height cm) - (5 × age) + 5</p>

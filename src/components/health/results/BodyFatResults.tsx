@@ -26,8 +26,10 @@ const BodyFatResults = ({ bodyFat, gender }: BodyFatResultsProps) => {
   const tooltipContent = {
     navy: {
       title: "U.S. Navy Method",
-      description: "Uses circumference measurements.",
-      formula: "Men: 86.010×log10(abdomen-neck) - 70.041×log10(height) + 36.76\nWomen: 163.205×log10(waist+hip-neck) - 97.684×log10(height) - 78.387",
+      description: "Uses circumference measurements for accurate body fat estimation.",
+      formula: gender === 'male' 
+        ? "495 / (1.0324 - 0.19077 × log₁₀(waist - neck) + 0.15456 × log₁₀(height)) - 450"
+        : "495 / (1.29579 - 0.35004 × log₁₀(waist + hip - neck) + 0.22100 × log₁₀(height)) - 450",
       ranges: {
         male: [
           "Essential Fat: 2-5%",
@@ -47,8 +49,10 @@ const BodyFatResults = ({ bodyFat, gender }: BodyFatResultsProps) => {
     },
     jackson: {
       title: "Jackson-Pollock Method",
-      description: "Uses multiple skinfold measurements.",
-      formula: "Based on 3-7 site measurements",
+      description: "Uses multiple skinfold measurements for precise body fat calculation.",
+      formula: gender === 'male'
+        ? "Body Density = 1.10938 - (0.0008267 × sum) + (0.0000016 × sum²) - (0.0002574 × age)\nBody Fat % = (495 / Body Density) - 450"
+        : "Body Density = 1.089733 - (0.0009245 × sum) + (0.0000025 × sum²) - (0.0000979 × age)\nBody Fat % = (495 / Body Density) - 450",
       ranges: {
         male: [
           "Essential Fat: 2-5%",
@@ -68,8 +72,10 @@ const BodyFatResults = ({ bodyFat, gender }: BodyFatResultsProps) => {
     },
     bmiBased: {
       title: "BMI-Based Estimation",
-      description: "Rough estimation using BMI correlation.",
-      formula: "Based on BMI and demographic factors",
+      description: "Estimates body fat using BMI correlation and demographic factors.",
+      formula: gender === 'male'
+        ? "Body Fat % = (1.20 × BMI) + (0.23 × age) - 16.2"
+        : "Body Fat % = (1.20 × BMI) + (0.23 × age) - 5.4",
       ranges: {
         male: [
           "Very Low: <8%",
@@ -89,8 +95,10 @@ const BodyFatResults = ({ bodyFat, gender }: BodyFatResultsProps) => {
     },
     army: {
       title: "U.S. Army Method",
-      description: "Official method used by the U.S. Army.",
-      formula: "Similar to Navy method but with different coefficients",
+      description: "Official method used by the U.S. Army for body fat assessment.",
+      formula: gender === 'male'
+        ? "86.010 × log₁₀(waist - neck) - 70.041 × log₁₀(height) + 36.76"
+        : "163.205 × log₁₀(waist + hip - neck) - 97.684 × log₁₀(height) - 78.387",
       ranges: {
         male: [
           "17-20 years: 17-20%",
