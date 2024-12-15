@@ -1,5 +1,4 @@
-import { Info } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { RangeBar } from "@/components/health/visualizations/RangeBar";
 
 interface BMIResultsProps {
   bmi: {
@@ -9,42 +8,56 @@ interface BMIResultsProps {
   };
 }
 
-const getBMIColor = (bmi: number) => {
-  if (bmi < 18.5) return "text-blue-600";
-  if (bmi < 25) return "text-green-600";
-  if (bmi < 30) return "text-yellow-600";
-  return "text-red-600";
-};
-
 const BMIResults = ({ bmi }: BMIResultsProps) => {
-  const tooltipContent = {
-    standard: "Standard BMI Formula: weight (kg) / (height (m))²\nWidely used but doesn't account for muscle mass or body composition.",
-    devine: "Devine Formula: Adjusted BMI calculation that considers frame size.\nFormula: (weight × 703) / (height in inches)²",
-    athletic: "Athletic BMI: Modified formula for athletes and highly active individuals.\nConsiders higher muscle mass typical in athletes."
-  };
+  const bmiRanges = [
+    {
+      min: 0,
+      max: 18.5,
+      label: "Underweight",
+      color: "#D3E4FD",
+      description: "BMI less than 18.5"
+    },
+    {
+      min: 18.5,
+      max: 24.9,
+      label: "Normal",
+      color: "#F2FCE2",
+      description: "BMI between 18.5 and 24.9"
+    },
+    {
+      min: 25,
+      max: 29.9,
+      label: "Overweight",
+      color: "#FEC6A1",
+      description: "BMI between 25 and 29.9"
+    },
+    {
+      min: 30,
+      max: 40,
+      label: "Obese",
+      color: "#ea384c",
+      description: "BMI 30 or greater"
+    }
+  ];
 
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-medium text-mint-800">BMI Results</h3>
-      <div className="grid gap-4 sm:grid-cols-3">
+      <div className="grid gap-4">
         {Object.entries(bmi).map(([key, value]) => (
           <div key={key} className="p-4 rounded-lg bg-mint-50 border border-mint-100">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button type="button" className="inline-flex items-center w-full">
-                  <div className="w-full">
-                    <div className="text-sm text-mint-800 font-medium capitalize">{key} BMI</div>
-                    <div className={`text-2xl font-semibold ${getBMIColor(value)}`}>
-                      {value.toFixed(1)}
-                    </div>
-                  </div>
-                  <Info className="h-4 w-4 ml-1 text-mint-500" />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent className="max-w-xs whitespace-pre-line">
-                <p className="text-sm">{tooltipContent[key as keyof typeof tooltipContent]}</p>
-              </TooltipContent>
-            </Tooltip>
+            <div className="mb-2">
+              <div className="text-sm text-mint-800 font-medium capitalize">{key} BMI</div>
+              <div className="text-2xl font-semibold text-mint-900">
+                {value.toFixed(1)}
+              </div>
+            </div>
+            <RangeBar
+              value={value}
+              ranges={bmiRanges}
+              max={40}
+              unit="BMI"
+            />
           </div>
         ))}
       </div>

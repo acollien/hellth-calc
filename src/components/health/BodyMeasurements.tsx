@@ -3,6 +3,7 @@ import { Slider } from "@/components/ui/slider";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
 import { HealthMetrics } from "./types";
+import { BodyDiagram } from "./visualizations/BodyDiagram";
 
 interface BodyMeasurementsProps {
   metrics: HealthMetrics;
@@ -35,7 +36,11 @@ const BodyMeasurements = ({ metrics, onMetricChange }: BodyMeasurementsProps) =>
             <TooltipTrigger>
               <Info className="h-4 w-4 text-mint-500" />
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent className="flex gap-4 p-4">
+              <BodyDiagram 
+                gender={metrics.gender || 'male'} 
+                measurementType={key} 
+              />
               <p className="max-w-xs">{tooltip}</p>
             </TooltipContent>
           </Tooltip>
