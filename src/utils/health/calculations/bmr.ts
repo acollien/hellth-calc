@@ -23,9 +23,10 @@ export const calculateBMR = (metrics: HealthMetrics) => {
     veryActive: 1.9
   };
 
-  if (metrics.activityLevel && metrics.activityLevel !== '') {
-    const multiplier = activityMultipliers[metrics.activityLevel];
-    bmr *= multiplier;
+  // Check if activityLevel exists and is not an empty string
+  if (metrics.activityLevel && metrics.activityLevel in activityMultipliers) {
+    const multiplier = activityMultipliers[metrics.activityLevel as keyof typeof activityMultipliers];
+    return Math.round(bmr * multiplier);
   }
 
   return Math.round(bmr);

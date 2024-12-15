@@ -5,8 +5,13 @@ export const calculateBodyAdiposityIndex = (metrics: HealthMetrics): number | nu
     return null;
   }
 
-  const hipInM = Number(metrics.unit === 'imperial' ? Number(metrics.hip) * 0.0254 : metrics.hip / 100);
-  const heightInM = Number(metrics.unit === 'imperial' ? Number(metrics.height) * 0.0254 : metrics.height / 100);
+  const hipInM = metrics.unit === 'imperial' ? 
+    Number(metrics.hip) * 0.0254 : 
+    Number(metrics.hip) / 100;
+    
+  const heightInM = metrics.unit === 'imperial' ? 
+    Number(metrics.height) * 0.0254 : 
+    Number(metrics.height) / 100;
 
   return (hipInM / Math.pow(heightInM, 1.5)) - 18;
 };
