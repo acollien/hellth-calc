@@ -38,7 +38,7 @@ const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) 
             value={metrics.unit}
             onValueChange={(value: 'metric' | 'imperial') => onMetricChange('unit', value)}
           >
-            <SelectTrigger>
+            <SelectTrigger className="w-full">
               <SelectValue placeholder="Select unit system" />
             </SelectTrigger>
             <SelectContent>
@@ -52,10 +52,8 @@ const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) 
           <div className="flex items-center gap-2">
             <Label htmlFor="gender">Biological Sex at Birth</Label>
             <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="ghost" size="icon" className="h-4 w-4 p-0">
-                  <Info className="h-4 w-4 text-mint-500" />
-                </Button>
+              <TooltipTrigger>
+                <Info className="h-4 w-4 text-mint-500" />
               </TooltipTrigger>
               <TooltipContent className="max-w-xs">
                 <p>We acknowledge that gender exists on a spectrum. Due to the historical nature of available medical calculation methods, this application currently requires biological sex at birth for accurate results. We are committed to updating our methods as more inclusive research becomes available.</p>
@@ -66,7 +64,7 @@ const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) 
             value={metrics.gender}
             onValueChange={(value: 'male' | 'female') => onMetricChange('gender', value)}
           >
-            <SelectTrigger>
+            <SelectTrigger className="w-full">
               <SelectValue placeholder="Select biological sex at birth" />
             </SelectTrigger>
             <SelectContent>
