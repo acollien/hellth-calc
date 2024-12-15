@@ -55,7 +55,7 @@ const Group3Results = ({
                   <Info className="h-4 w-4 text-mint-500" />
                 </div>
               </TooltipTrigger>
-              <TooltipContent className="max-w-xs p-4">
+              <TooltipContent side="top" align="start" className="max-w-xs p-4">
                 <div className="space-y-2">
                   <h4 className="font-semibold">Lean Mass Index (LMI)</h4>
                   <p>A measure of lean body mass relative to height.</p>
