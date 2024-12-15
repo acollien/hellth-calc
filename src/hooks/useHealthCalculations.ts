@@ -1,9 +1,16 @@
 import { useState } from 'react';
 import { HealthMetrics } from "@/components/health/types";
-import * as basicCalc from "@/utils/health/basicCalculations";
-import * as bodyComp from "@/utils/health/bodyCompositionCalc";
-import * as metabolicCalc from "@/utils/health/metabolicCalc";
-import * as advancedMetrics from "@/utils/health/advancedMetrics";
+import {
+  calculateBMI,
+  calculateBodyFat,
+  calculateBMR,
+  calculateIdealWeight,
+  calculateBiologicalAge,
+  calculatePonderalIndex,
+  calculateABSI,
+  calculateBodyRoundnessIndex,
+  calculateWaistToHeightRatio
+} from "@/utils/health/calculations";
 
 export const useHealthCalculations = () => {
   const [results, setResults] = useState<any>(null);
@@ -30,15 +37,15 @@ export const useHealthCalculations = () => {
       if (numericMetrics.wrist) numericMetrics.wrist *= 2.54;
     }
 
-    // Calculate basic indices
+    // Calculate all metrics
     if (numericMetrics.height && numericMetrics.weight) {
-      results.bmi = basicCalc.calculateBMI(numericMetrics.height, numericMetrics.weight);
-      results.ponderalIndex = basicCalc.calculatePonderalIndex(
+      results.bmi = calculateBMI(numericMetrics.height, numericMetrics.weight);
+      results.ponderalIndex = calculatePonderalIndex(
         numericMetrics.height,
         numericMetrics.weight,
         currentMetrics.unit
       );
-      results.absi = basicCalc.calculateABSI(
+      results.absi = calculateABSI(
         numericMetrics.waist,
         numericMetrics.height,
         numericMetrics.weight,
@@ -46,31 +53,28 @@ export const useHealthCalculations = () => {
       );
     }
 
-    // Calculate body composition metrics
     if (numericMetrics.gender) {
-      results.bodyFat = bodyComp.calculateBodyFat(numericMetrics);
+      results.bodyFat = calculateBodyFat(numericMetrics);
       if (numericMetrics.height) {
-        results.idealWeight = bodyComp.calculateIdealWeight(numericMetrics.height, numericMetrics.gender);
+        results.idealWeight = calculateIdealWeight(numericMetrics.height, numericMetrics.gender);
       }
     }
 
-    // Calculate metabolic metrics
-    results.bmr = metabolicCalc.calculateBMR(numericMetrics);
+    results.bmr = calculateBMR(numericMetrics);
 
-    // Calculate advanced metrics
     if (numericMetrics.waist && numericMetrics.height) {
-      results.bodyRoundnessIndex = advancedMetrics.calculateBodyRoundnessIndex(
+      results.bodyRoundnessIndex = calculateBodyRoundnessIndex(
         numericMetrics.waist,
         numericMetrics.height,
         currentMetrics.unit
       );
-      results.waistToHeightRatio = advancedMetrics.calculateWaistToHeightRatio(
+      results.waistToHeightRatio = calculateWaistToHeightRatio(
         numericMetrics.waist,
         numericMetrics.height
       );
     }
 
-    results.biologicalAge = advancedMetrics.calculateBiologicalAge(numericMetrics);
+    results.biologicalAge = calculateBiologicalAge(numericMetrics);
 
     console.log('Calculated results:', results);
     setResults(results);
