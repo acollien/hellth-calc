@@ -10,6 +10,15 @@ interface IdealWeightResultsProps {
 }
 
 const IdealWeightResults = ({ idealWeight }: IdealWeightResultsProps) => {
+  const getValueColor = (value: number) => {
+    // Color coding based on general weight ranges (in kg)
+    if (value < 45) return "text-blue-600"; // Very low
+    if (value < 55) return "text-green-600"; // Low normal
+    if (value < 75) return "text-mint-600"; // Normal
+    if (value < 85) return "text-yellow-600"; // High normal
+    return "text-red-600"; // High
+  };
+
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-medium text-mint-800">Ideal Weight Range (kg)</h3>
@@ -24,7 +33,7 @@ const IdealWeightResults = ({ idealWeight }: IdealWeightResultsProps) => {
                       {formula} Formula
                       <Info className="h-4 w-4 text-mint-500" />
                     </div>
-                    <div className="text-2xl font-semibold text-mint-900">
+                    <div className={`text-2xl font-semibold ${getValueColor(value)}`}>
                       {value.toFixed(1)}
                     </div>
                   </div>
