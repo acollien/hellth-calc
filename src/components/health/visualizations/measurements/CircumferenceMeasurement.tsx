@@ -10,19 +10,24 @@ const CircumferenceMeasurement = ({ type }: CircumferenceMeasurementProps) => {
       case 'neck':
         return (
           <>
-            {/* Head and neck */}
+            {/* Full head and upper torso */}
             <path
-              d="M35 15 C35 10 65 10 65 15 C65 25 35 25 35 15"
+              d="M35 10 C35 5 65 5 65 10 L65 15 C65 20 35 20 35 15 Z"
               className="stroke-mint-800 stroke-2 fill-none"
             />
-            {/* Shoulders */}
+            {/* Neck */}
             <path
-              d="M25 35 L75 35"
+              d="M40 20 L60 20 L58 30 L42 30"
+              className="stroke-mint-800 stroke-2 fill-none"
+            />
+            {/* Shoulders and upper chest */}
+            <path
+              d="M25 35 L42 30 L58 30 L75 35 L70 50 L30 50"
               className="stroke-mint-800 stroke-2 fill-none"
             />
             {/* Measurement line */}
             <path
-              d="M40 20 C40 30 60 30 60 20"
+              d="M40 25 C40 28 60 28 60 25"
               className="stroke-mint-500 stroke-[1.5] stroke-dashed"
             />
           </>
@@ -30,14 +35,29 @@ const CircumferenceMeasurement = ({ type }: CircumferenceMeasurementProps) => {
       case 'waist':
         return (
           <>
-            {/* Torso outline */}
+            {/* Head */}
             <path
-              d="M35 20 L65 20 L70 50 L30 50 Z"
+              d="M40 5 C40 2 60 2 60 5 L60 10 C60 13 40 13 40 10 Z"
+              className="stroke-mint-800 stroke-2 fill-none"
+            />
+            {/* Neck and shoulders */}
+            <path
+              d="M25 25 L40 15 L60 15 L75 25"
+              className="stroke-mint-800 stroke-2 fill-none"
+            />
+            {/* Torso */}
+            <path
+              d="M25 25 L30 60 L40 70 M75 25 L70 60 L60 70"
+              className="stroke-mint-800 stroke-2 fill-none"
+            />
+            {/* Arms */}
+            <path
+              d="M25 25 L20 45 M75 25 L80 45"
               className="stroke-mint-800 stroke-2 fill-none"
             />
             {/* Measurement line */}
             <path
-              d="M30 35 C30 45 70 45 70 35"
+              d="M30 40 C30 43 70 43 70 40"
               className="stroke-mint-500 stroke-[1.5] stroke-dashed"
             />
           </>
@@ -45,14 +65,29 @@ const CircumferenceMeasurement = ({ type }: CircumferenceMeasurementProps) => {
       case 'hip':
         return (
           <>
-            {/* Hip area outline */}
+            {/* Upper body outline */}
             <path
-              d="M30 20 L70 20 L75 40 C75 50 25 50 25 40 Z"
+              d="M40 5 L60 5 L65 20 L35 20"
+              className="stroke-mint-800 stroke-2 fill-none"
+            />
+            {/* Torso */}
+            <path
+              d="M35 20 L30 50 M65 20 L70 50"
+              className="stroke-mint-800 stroke-2 fill-none"
+            />
+            {/* Hip area */}
+            <path
+              d="M30 50 C30 65 70 65 70 50"
+              className="stroke-mint-800 stroke-2 fill-none"
+            />
+            {/* Legs */}
+            <path
+              d="M35 65 L35 80 M65 65 L65 80"
               className="stroke-mint-800 stroke-2 fill-none"
             />
             {/* Measurement line */}
             <path
-              d="M25 40 C25 50 75 50 75 40"
+              d="M30 55 C30 60 70 60 70 55"
               className="stroke-mint-500 stroke-[1.5] stroke-dashed"
             />
           </>
@@ -60,14 +95,24 @@ const CircumferenceMeasurement = ({ type }: CircumferenceMeasurementProps) => {
       case 'wrist':
         return (
           <>
-            {/* Forearm and wrist */}
+            {/* Shoulder and upper arm */}
             <path
-              d="M40 20 L60 20 L65 50 L35 50"
+              d="M30 10 L70 10 L65 30"
+              className="stroke-mint-800 stroke-2 fill-none"
+            />
+            {/* Forearm */}
+            <path
+              d="M65 30 L55 60"
+              className="stroke-mint-800 stroke-2 fill-none"
+            />
+            {/* Hand */}
+            <path
+              d="M50 60 L45 70 C40 75 60 75 55 70 L50 60"
               className="stroke-mint-800 stroke-2 fill-none"
             />
             {/* Measurement line */}
             <path
-              d="M35 45 C35 48 65 48 65 45"
+              d="M45 55 C45 58 55 58 55 55"
               className="stroke-mint-500 stroke-[1.5] stroke-dashed"
             />
           </>
@@ -75,20 +120,28 @@ const CircumferenceMeasurement = ({ type }: CircumferenceMeasurementProps) => {
       case 'forearm':
         return (
           <>
+            {/* Shoulder and upper arm */}
+            <path
+              d="M30 10 L70 10 L65 30"
+              className="stroke-mint-800 stroke-2 fill-none"
+            />
             {/* Forearm */}
             <path
-              d="M35 20 L65 20 L70 50 L30 50"
+              d="M65 30 L55 60"
+              className="stroke-mint-800 stroke-2 fill-none"
+            />
+            {/* Hand */}
+            <path
+              d="M50 60 L45 70 C40 75 60 75 55 70 L50 60"
               className="stroke-mint-800 stroke-2 fill-none"
             />
             {/* Measurement line */}
             <path
-              d="M30 35 C30 40 70 40 70 35"
+              d="M50 40 C50 43 65 43 65 40"
               className="stroke-mint-500 stroke-[1.5] stroke-dashed"
             />
           </>
         );
-      default:
-        return null;
     }
   };
 
