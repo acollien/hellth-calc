@@ -23,7 +23,7 @@ const getBodyFatColor = (bodyFat: number, gender: 'male' | 'female') => {
 };
 
 const BodyFatResults = ({ bodyFat, gender }: BodyFatResultsProps) => {
-  console.log('BodyFat Results:', bodyFat); // Debug log
+  console.log('BodyFat Results Props:', { bodyFat, gender }); // Debug log for entire props
 
   const tooltipContent = {
     navy: {
@@ -123,9 +123,9 @@ const BodyFatResults = ({ bodyFat, gender }: BodyFatResultsProps) => {
       <h3 className="text-lg font-medium text-mint-800">Body Fat Percentage</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 w-full">
         {Object.entries(bodyFat).map(([key, value]) => {
-          console.log(`Checking ${key} with value:`, value); // Debug log
+          console.log(`Checking ${key} with value:`, value); // Debug log for each entry
           if (value === null || value === undefined) {
-            console.log(`Skipping ${key} - null or undefined value`); // Debug log
+            console.log(`Skipping ${key} - null or undefined value`); // Debug log for skipped entries
             return null;
           }
           
