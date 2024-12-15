@@ -1,7 +1,7 @@
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Info } from "lucide-react";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface SkinfoldPointProps {
   label: string;
@@ -25,11 +25,11 @@ const SkinfoldPoint = ({ label, value, point, tooltip, onChange, unit }: Skinfol
     <div className="space-y-4">
       <div className="flex items-center gap-2">
         <Label>{label} {formatValue(Number(value) || range.min)}</Label>
-        <Popover>
-          <PopoverTrigger>
+        <Tooltip>
+          <TooltipTrigger>
             <Info className="h-4 w-4 text-mint-500" />
-          </PopoverTrigger>
-          <PopoverContent className="w-80">
+          </TooltipTrigger>
+          <TooltipContent className="w-80">
             <div className="space-y-2">
               <p className="text-sm font-medium">Point {point} - {tooltip}</p>
               <div className="relative aspect-[2/3] w-full">
@@ -43,8 +43,8 @@ const SkinfoldPoint = ({ label, value, point, tooltip, onChange, unit }: Skinfol
                 Image source: measurement-toolkit.org/anthropometry/objective-methods/simple-measures-skinfolds
               </p>
             </div>
-          </PopoverContent>
-        </Popover>
+          </TooltipContent>
+        </Tooltip>
       </div>
       <Slider
         value={[Number(value) || range.min]}
