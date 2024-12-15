@@ -9,12 +9,22 @@ interface OtherResultsProps {
 const OtherResults = ({ frameSize, waistToHip }: OtherResultsProps) => {
   console.log("OtherResults received frameSize:", frameSize);
   
-  // Only render if we have at least one value to show
-  if (!frameSize && !waistToHip) return null;
+  // Only render if we have valid data to show
+  if (!frameSize && !waistToHip) {
+    console.log("No data to display in OtherResults");
+    return null;
+  }
+
+  const shouldShowFrameSize = frameSize && 
+    frameSize !== 'undefined' && 
+    frameSize !== 'null' &&
+    ['small', 'medium', 'large'].includes(frameSize.toLowerCase());
+
+  console.log("Should show frame size:", shouldShowFrameSize);
 
   return (
     <div className="grid gap-4 sm:grid-cols-2">
-      {frameSize && frameSize !== 'undefined' && <FrameSizeCard frameSize={frameSize} />}
+      {shouldShowFrameSize && <FrameSizeCard frameSize={frameSize} />}
       {waistToHip && <WaistToHipCard value={waistToHip} />}
     </div>
   );

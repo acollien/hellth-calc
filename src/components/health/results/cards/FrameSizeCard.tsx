@@ -6,6 +6,8 @@ interface FrameSizeCardProps {
 }
 
 const FrameSizeCard = ({ frameSize }: FrameSizeCardProps) => {
+  console.log("FrameSizeCard received frameSize:", frameSize);
+
   const getFrameSizeColor = (size: string) => {
     switch (size.toLowerCase()) {
       case 'small': return "text-blue-600";
@@ -26,7 +28,7 @@ const FrameSizeCard = ({ frameSize }: FrameSizeCardProps) => {
                 <Info className="h-4 w-4 text-mint-500" />
               </div>
               <div className={`text-2xl font-semibold ${getFrameSizeColor(frameSize)} capitalize`}>
-                {frameSize}
+                {frameSize.toLowerCase()}
               </div>
             </div>
           </div>

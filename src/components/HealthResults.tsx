@@ -13,17 +13,23 @@ interface ResultsProps {
 const HealthResults = ({ results }: ResultsProps) => {
   console.log("HealthResults received results:", results);
   
-  // Extract frameSize value properly, ensuring we handle all possible cases
+  // Extract frameSize value, ensuring we handle all possible cases
   const frameSize = (() => {
+    console.log("Processing frameSize from:", results.frameSize);
     if (!results.frameSize) return null;
     if (typeof results.frameSize === 'string') return results.frameSize;
-    if (typeof results.frameSize === 'object' && results.frameSize.value) {
-      return results.frameSize.value;
+    if (typeof results.frameSize === 'object') {
+      if (results.frameSize.value) return results.frameSize.value;
+      if (results.frameSize._type === 'small' || 
+          results.frameSize._type === 'medium' || 
+          results.frameSize._type === 'large') {
+        return results.frameSize._type;
+      }
     }
     return null;
   })();
   
-  console.log("Processed frameSize:", frameSize);
+  console.log("Final processed frameSize:", frameSize);
   
   return (
     <div className="space-y-6 animate-fade-in">
