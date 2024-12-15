@@ -13,41 +13,9 @@ interface ResultsProps {
 const HealthResults = ({ results }: ResultsProps) => {
   console.log("HealthResults received full results:", results);
   
-  // Extract frameSize value, ensuring we handle all possible cases
-  const frameSize = (() => {
-    if (!results) return null;
-    
-    // Direct access to frameSize property
-    const rawFrameSize = results.frameSize;
-    console.log("Raw frameSize value:", rawFrameSize);
-    
-    // If it's a string and valid, return it
-    if (typeof rawFrameSize === 'string' && 
-        ['small', 'medium', 'large'].includes(rawFrameSize.toLowerCase())) {
-      return rawFrameSize;
-    }
-    
-    // If it's an object, try to get the value
-    if (rawFrameSize && typeof rawFrameSize === 'object') {
-      // Check value property
-      if (rawFrameSize.value && 
-          typeof rawFrameSize.value === 'string' && 
-          rawFrameSize.value !== 'undefined') {
-        return rawFrameSize.value;
-      }
-      
-      // Check _type property
-      if (rawFrameSize._type && 
-          typeof rawFrameSize._type === 'string' && 
-          rawFrameSize._type !== 'undefined') {
-        return rawFrameSize._type;
-      }
-    }
-    
-    return null;
-  })();
-  
-  console.log("Final processed frameSize:", frameSize);
+  // Extract frameSize value directly from results
+  const frameSize = results?.frameSize || null;
+  console.log("Frame size value:", frameSize);
   
   return (
     <div className="space-y-6 animate-fade-in">

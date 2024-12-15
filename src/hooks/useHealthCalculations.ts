@@ -8,6 +8,7 @@ import {
   calculateWaistToHipRatio,
   calculateWaistToHeightRatio,
 } from "@/utils/health/metrics";
+import { calculateFrameSize } from "@/utils/health/metrics/frameSize";
 
 export const useHealthCalculations = () => {
   const [results, setResults] = useState<any>(null);
@@ -30,11 +31,31 @@ export const useHealthCalculations = () => {
       if (metrics.wrist) metrics.wrist = `${parseFloat(metrics.wrist) * 2.54}`;
     }
 
+    // Convert string values to numbers for calculations
+    const numericMetrics: any = {};
+    Object.entries(metrics).forEach(([key, value]) => {
+      if (key !== 'unit' && key !== 'gender' && key !== 'activityLevel') {
+        numericMetrics[key] = value ? parseFloat(value) : undefined;
+      } else {
+        numericMetrics[key] = value;
+      }
+    });
+
     // Calculate all metrics using specialized hooks
     const basicResults = calculateBasicMetrics(metrics);
     const compositionResults = calculateComposition(metrics);
     const indicesResults = calculateIndices(metrics);
     const metabolicResults = calculateMetabolicRates(metrics);
+
+    // Calculate frame size
+    const frameSize = calculateFrameSize({
+      height: numericMetrics.height,
+      wrist: numericMetrics.wrist,
+      gender: metrics.gender,
+      unit: metrics.unit
+    });
+
+    console.log('Calculated frame size:', frameSize);
 
     // Calculate additional ratios
     const additionalResults: any = {};
@@ -55,7 +76,8 @@ export const useHealthCalculations = () => {
       ...compositionResults,
       ...indicesResults,
       ...metabolicResults,
-      ...additionalResults
+      ...additionalResults,
+      frameSize
     };
 
     console.log('Final combined results:', combinedResults);
