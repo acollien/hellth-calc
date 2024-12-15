@@ -13,10 +13,17 @@ interface ResultsProps {
 const HealthResults = ({ results }: ResultsProps) => {
   console.log("HealthResults received results:", results);
   
-  // Extract frameSize value properly
-  const frameSize = typeof results.frameSize === 'object' ? 
-    (results.frameSize?.value !== 'undefined' ? results.frameSize.value : null) : 
-    (results.frameSize || null);
+  // Extract frameSize value properly, ensuring we handle all possible cases
+  const frameSize = (() => {
+    if (!results.frameSize) return null;
+    if (typeof results.frameSize === 'string') return results.frameSize;
+    if (typeof results.frameSize === 'object' && results.frameSize.value) {
+      return results.frameSize.value;
+    }
+    return null;
+  })();
+  
+  console.log("Processed frameSize:", frameSize);
   
   return (
     <div className="space-y-6 animate-fade-in">
