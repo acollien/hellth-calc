@@ -7,43 +7,35 @@ export const exportResults = (results: any, format: 'pdf' | 'json') => {
 
   const data = {
     "Body Composition": {
-      "Body Fat Percentage": results.bodyFat?.navy || 'N/A',
-      "Body Fat (Jackson-Pollock)": results.bodyFat?.jackson || 'N/A',
-      "Body Fat (BMI-based)": results.bodyFat?.bmiBased || 'N/A',
-      "Body Fat (Army Method)": results.bodyFat?.army || 'N/A',
-      "Lean Body Mass": results.leanBodyMass || 'N/A',
-      "Fat Free Mass Index": results.fatFreeMassIndex || 'N/A',
-      "Skeletal Muscle Mass": results.skeletalMuscleMass || 'N/A',
-      "Body Fat Distribution": results.bodyFatDistribution || 'N/A',
-      "Lean Mass Index": results.leanMassIndex || 'N/A',
+      "BMI (Standard)": results.bmi?.standard?.toFixed(1) || 'N/A',
+      "Body Fat % (Navy)": results.bodyFat?.navy?.toFixed(1) || 'N/A',
+      "Body Fat % (Jackson)": results.bodyFat?.jackson?.toFixed(1) || 'N/A',
+      "Lean Body Mass": `${results.leanBodyMass?.toFixed(1) || 'N/A'} kg`,
+      "Fat Free Mass Index": results.fatFreeMassIndex?.toFixed(1) || 'N/A',
+      "Skeletal Muscle Mass": `${results.skeletalMuscleMass?.toFixed(1) || 'N/A'} kg`,
       "Frame Size": results.frameSize || 'N/A'
     },
-    "Body Indices": {
-      "BMI (Standard)": results.bmi?.standard || 'N/A',
-      "BMI (Devine)": results.bmi?.devine || 'N/A',
-      "BMI (Athletic)": results.bmi?.athletic || 'N/A',
-      "Ponderal Index": results.ponderalIndex || 'N/A',
-      "ABSI": results.absi || 'N/A',
-      "Body Roundness Index": results.bodyRoundnessIndex || 'N/A',
-      "Body Adiposity Index": results.bodyAdiposityIndex || 'N/A',
-      "Conicity Index": results.conicityIndex || 'N/A'
+    "Body Shape Indices": {
+      "Ponderal Index": results.ponderalIndex?.metric?.toFixed(2) || 'N/A',
+      "ABSI": results.absi?.metric?.toFixed(3) || 'N/A',
+      "Body Roundness": results.bodyRoundnessIndex?.metric?.toFixed(2) || 'N/A',
+      "Body Adiposity": results.bodyAdiposityIndex?.toFixed(2) || 'N/A',
+      "Conicity Index": results.conicityIndex?.toFixed(3) || 'N/A',
+      "Body Fat Distribution": results.bodyFatDistribution?.toFixed(2) || 'N/A'
     },
-    "Metabolic & Other Metrics": {
-      "BMR": results.bmr?.bmr || 'N/A',
-      "TDEE": results.bmr?.tdee || 'N/A',
-      "Waist to Hip Ratio": results.waistToHip || 'N/A',
-      "Waist to Height Ratio": results.waistToHeightRatio || 'N/A',
-      "Biological Age": results.biologicalAge || 'N/A'
+    "Health Ratios": {
+      "Waist-to-Hip": results.waistToHip?.toFixed(3) || 'N/A',
+      "Waist-to-Height": results.waistToHeightRatio?.toFixed(3) || 'N/A'
+    },
+    "Metabolic Data": {
+      "BMR": `${results.bmr?.bmr || 'N/A'} kcal`,
+      "TDEE": `${results.bmr?.tdee || 'N/A'} kcal`,
+      "Biological Age": `${results.biologicalAge || 'N/A'} years`
     },
     "Ideal Weight Ranges": {
-      "Robinson Formula": results.idealWeight?.robinson || 'N/A',
-      "Miller Formula": results.idealWeight?.miller || 'N/A',
-      "Devine Formula": results.idealWeight?.devine || 'N/A'
-    },
-    "Trend Metrics (3-Month Projection)": {
-      "Projected BMI": results.bmi ? (results.bmi.standard * 0.95).toFixed(1) : 'N/A',
-      "Projected Body Fat %": results.bodyFat?.navy ? (results.bodyFat.navy * 0.93).toFixed(1) : 'N/A',
-      "Projected BMR": results.bmr?.bmr ? Math.round(results.bmr.bmr * 1.04) : 'N/A'
+      "Robinson Formula": `${results.idealWeight?.robinson?.toFixed(1) || 'N/A'} kg`,
+      "Miller Formula": `${results.idealWeight?.miller?.toFixed(1) || 'N/A'} kg`,
+      "Devine Formula": `${results.idealWeight?.devine?.toFixed(1) || 'N/A'} kg`
     }
   };
 
@@ -53,32 +45,56 @@ export const exportResults = (results: any, format: 'pdf' | 'json') => {
   } else {
     const doc = new jsPDF();
     
-    // Add title
+    // Title
     doc.setFontSize(16);
+    doc.setTextColor(41, 128, 185); // Mint color
     doc.text('Health Metrics Report', 14, 15);
-    doc.setFontSize(10);
     
     let yOffset = 25;
+    const pageWidth = doc.internal.pageSize.width;
+    
+    // Configure smaller font and row sizes for compact layout
+    const tableConfig = {
+      styles: { 
+        fontSize: 8,
+        cellPadding: 1
+      },
+      headStyles: { 
+        fillColor: [41, 128, 185],
+        fontSize: 8,
+        cellPadding: 1
+      },
+      columnStyles: {
+        0: { cellWidth: 60 },
+        1: { cellWidth: 40 }
+      },
+      margin: { left: 14 }
+    };
     
     // Convert data to format suitable for autoTable
-    Object.entries(data).forEach(([section, metrics]) => {
+    Object.entries(data).forEach(([section, metrics], index) => {
       // Add section header
-      doc.setFontSize(12);
+      doc.setFontSize(10);
+      doc.setTextColor(41, 128, 185);
       doc.text(section, 14, yOffset);
-      yOffset += 5;
       
       const tableData = Object.entries(metrics).map(([key, value]) => [key, value]);
       
       autoTable(doc, {
-        startY: yOffset,
+        ...tableConfig,
+        startY: yOffset + 2,
         head: [['Metric', 'Value']],
         body: tableData,
-        margin: { left: 14 },
-        headStyles: { fillColor: [41, 128, 185] },
       });
       
-      yOffset = (doc as any).lastAutoTable.finalY + 10;
+      yOffset = (doc as any).lastAutoTable.finalY + 5;
     });
+    
+    // Add footer with date
+    const date = new Date().toLocaleDateString();
+    doc.setFontSize(8);
+    doc.setTextColor(128, 128, 128);
+    doc.text(`Generated on ${date}`, 14, doc.internal.pageSize.height - 10);
     
     doc.save('health-metrics.pdf');
   }
