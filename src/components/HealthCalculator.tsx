@@ -8,6 +8,7 @@ import SkinFoldMeasurements from "./health/SkinFoldMeasurements";
 import ActivityLevel from "./health/ActivityLevel";
 import { HealthMetrics } from "./health/types";
 import Header from "./health/Header";
+import Group1Results from "./health/results/Group1Results";
 
 const initialMetrics: HealthMetrics = {
   height: "",
@@ -63,7 +64,7 @@ const HealthCalculator = () => {
       if (numericMetrics.wrist) numericMetrics.wrist *= 2.54;
     }
 
-    // Calculate all available metrics
+    // Calculate existing metrics
     if (numericMetrics.height && numericMetrics.weight) {
       results.bmi = healthCalc.calculateBMI(numericMetrics.height, numericMetrics.weight);
     }
@@ -77,6 +78,36 @@ const HealthCalculator = () => {
     results.frameSize = healthCalc.calculateFrameSize(numericMetrics);
     results.waistToHip = healthCalc.calculateWaistToHip(numericMetrics);
     results.biologicalAge = healthCalc.calculateBiologicalAge(numericMetrics);
+
+    // Calculate new Group 1 metrics
+    if (numericMetrics.height && numericMetrics.weight) {
+      results.ponderalIndex = healthCalc.calculatePonderalIndex(
+        numericMetrics.height,
+        numericMetrics.weight,
+        currentMetrics.unit
+      );
+    }
+
+    if (numericMetrics.height && numericMetrics.weight && numericMetrics.waist) {
+      results.absi = healthCalc.calculateABSI(
+        numericMetrics.waist,
+        numericMetrics.height,
+        numericMetrics.weight,
+        currentMetrics.unit
+      );
+    }
+
+    if (numericMetrics.height && numericMetrics.waist) {
+      results.bodyRoundnessIndex = healthCalc.calculateBodyRoundnessIndex(
+        numericMetrics.waist,
+        numericMetrics.height,
+        currentMetrics.unit
+      );
+      results.waistToHeightRatio = healthCalc.calculateWaistToHeightRatio(
+        numericMetrics.waist,
+        numericMetrics.height
+      );
+    }
 
     setResults(results);
   };
@@ -94,7 +125,18 @@ const HealthCalculator = () => {
             <ActivityLevel metrics={metrics} onMetricChange={handleMetricChange} />
           </div>
 
-          {results && <HealthResults results={results} />}
+          {results && (
+            <div className="space-y-8">
+              <HealthResults results={results} />
+              <Group1Results
+                ponderalIndex={results.ponderalIndex}
+                absi={results.absi}
+                bodyRoundnessIndex={results.bodyRoundnessIndex}
+                waistToHeightRatio={results.waistToHeightRatio}
+                unit={metrics.unit}
+              />
+            </div>
+          )}
         </div>
       </Card>
     </div>
