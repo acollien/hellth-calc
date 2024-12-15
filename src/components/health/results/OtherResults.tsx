@@ -2,7 +2,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import { Info } from "lucide-react";
 
 interface OtherResultsProps {
-  frameSize?: string;
+  frameSize: string | null;
   waistToHip?: number;
 }
 
@@ -10,7 +10,7 @@ const OtherResults = ({ frameSize, waistToHip }: OtherResultsProps) => {
   console.log("OtherResults received frameSize:", frameSize);
   
   const getFrameSizeColor = (size: string) => {
-    switch (size.toLowerCase()) {
+    switch (size?.toLowerCase()) {
       case 'small': return "text-blue-600";
       case 'medium': return "text-green-600";
       case 'large': return "text-yellow-600";
@@ -32,7 +32,7 @@ const OtherResults = ({ frameSize, waistToHip }: OtherResultsProps) => {
 
   return (
     <div className="grid gap-4 sm:grid-cols-2">
-      {frameSize && (
+      {frameSize && frameSize !== "undefined" && (
         <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
           <Tooltip>
             <TooltipTrigger asChild>
