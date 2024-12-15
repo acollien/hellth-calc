@@ -17,10 +17,17 @@ const Group3Results = ({
   conicityIndex,
   unit 
 }: Group3ResultsProps) => {
-  console.log("Group3Results received leanMassIndex:", leanMassIndex);
+  console.log("Group3Results received values:", {
+    leanMassIndex,
+    bodyAdiposityIndex,
+    conicityIndex
+  });
   
   // Only render if at least one value is present and not null
-  if (!leanMassIndex && !bodyAdiposityIndex && !conicityIndex) return null;
+  if (!leanMassIndex && !bodyAdiposityIndex && !conicityIndex) {
+    console.log("No values present in Group3Results, not rendering");
+    return null;
+  }
 
   return (
     <div className="w-full space-y-6">
@@ -36,15 +43,15 @@ const Group3Results = ({
         </Tooltip>
       </div>
       <div className="grid grid-cols-1 gap-4 w-full mx-auto">
-        {typeof leanMassIndex === 'number' && (
+        {typeof leanMassIndex === 'number' && !isNaN(leanMassIndex) && (
           <LeanMassIndexCard value={leanMassIndex} />
         )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {typeof bodyAdiposityIndex === 'number' && (
+          {typeof bodyAdiposityIndex === 'number' && !isNaN(bodyAdiposityIndex) && (
             <BodyAdiposityCard value={bodyAdiposityIndex} />
           )}
-          {typeof conicityIndex === 'number' && (
+          {typeof conicityIndex === 'number' && !isNaN(conicityIndex) && (
             <ConicityCard value={conicityIndex} />
           )}
         </div>

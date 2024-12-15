@@ -5,7 +5,7 @@ import autoTable from 'jspdf-autotable';
 export const exportResults = (results: any, format: 'pdf' | 'json') => {
   if (!results) return;
 
-  console.log("Full results object received in exportResults:", results);
+  console.log("Full results object received in exportUtils:", results);
 
   const getRangeForMetric = (metric: string, value: number): string => {
     const ranges: { [key: string]: string } = {
@@ -44,6 +44,7 @@ export const exportResults = (results: any, format: 'pdf' | 'json') => {
       "BMI (Standard)": `${results.bmi?.standard?.toFixed(1) || 'N/A'} - ${getRangeForMetric("BMI", results.bmi?.standard)}`,
       "BMI (Athletic)": `${results.bmi?.athletic?.toFixed(1) || 'N/A'}`,
       "BMI (Devine)": `${results.bmi?.devine?.toFixed(1) || 'N/A'}`,
+      "BMI (Based)": `${results.bmi?.bmiBased?.toFixed(1) || 'N/A'}`,
       "Body Fat % (Navy)": `${results.bodyFat?.navy?.toFixed(1) || 'N/A'} - ${getRangeForMetric("Body Fat %", results.bodyFat?.navy)}`,
       "Body Fat % (Jackson)": `${results.bodyFat?.jackson?.toFixed(1) || 'N/A'}`,
       "Body Fat % (BMI Based)": `${results.bodyFat?.bmiBased?.toFixed(1) || 'N/A'}`,

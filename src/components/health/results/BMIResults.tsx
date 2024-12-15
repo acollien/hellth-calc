@@ -7,7 +7,7 @@ interface BMIResultsProps {
     standard: number;
     devine: number;
     athletic: number;
-    bmiBased?: number;
+    bmiBased: number;
   };
 }
 
