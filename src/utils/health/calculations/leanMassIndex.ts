@@ -13,8 +13,18 @@ export const calculateLeanMassIndex = (metrics: HealthMetrics): number | null =>
   const heightInM = Number(height) / 100;
   const weightInKg = Number(weight);
   
+  // Convert metrics to the format expected by calculateBodyFat
+  const convertedMetrics = {
+    ...metrics,
+    height: Number(height),
+    weight: Number(weight),
+    neck: metrics.neck ? Number(metrics.neck) : undefined,
+    waist: metrics.waist ? Number(metrics.waist) : undefined,
+    hip: metrics.hip ? Number(metrics.hip) : undefined
+  };
+  
   // Calculate body fat using the Navy method as it's generally most reliable
-  const bodyFatResults = calculateBodyFat(metrics);
+  const bodyFatResults = calculateBodyFat(convertedMetrics);
   const bodyFatPercentage = bodyFatResults?.navy || null;
   
   if (bodyFatPercentage === null) {
