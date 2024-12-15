@@ -26,49 +26,30 @@ export const exportHealthResults = (results: any) => {
   
   let currentY = 45;
 
-  // Basic Metrics Section
-  doc.setFontSize(16);
-  doc.setTextColor(42, 149, 135);
-  doc.text('Body Mass Index (BMI)', 20, currentY);
-  
-  if (results.bmi) {
-    const bmiData = [
-      ['Metric', 'Value', 'Interpretation'],
-      ['Standard BMI', results.bmi.standard?.toFixed(1) || 'N/A', 'Under 18.5: Underweight\n18.5-24.9: Normal\n25-29.9: Overweight\n30+: Obese'],
-      ['Devine BMI', results.bmi.devine?.toFixed(1) || 'N/A', 'Under 19: Underweight\n19-24: Ideal\n24-29: Slightly overweight\n29+: Overweight'],
-      ['Athletic BMI', results.bmi.athletic?.toFixed(1) || 'N/A', 'Under 16.5: Too lean\n16.5-22.5: Athletic\n22.5-27: Muscular\n27+: May need assessment'],
+  // Body Fat Section
+  if (results.bodyFat) {
+    doc.setFontSize(16);
+    doc.setTextColor(42, 149, 135);
+    doc.text('Body Fat Percentage', 20, currentY);
+    
+    const bodyFatData = [
+      ['Method', 'Value', 'Interpretation'],
+      ['Navy Method', 
+       results.bodyFat.navy?.toFixed(1) + '%' || 'N/A', 
+       'Men:\nEssential: 2-5%\nAthletes: 6-13%\nFitness: 14-17%\nAverage: 18-24%\nObese: 25%+\n\nWomen:\nEssential: 10-13%\nAthletes: 14-20%\nFitness: 21-24%\nAverage: 25-31%\nObese: 32%+'],
+      ['Jackson-Pollock Method', 
+       results.bodyFat.jackson?.toFixed(1) + '%' || 'N/A', 
+       'Men:\nEssential: 2-5%\nAthletes: 6-13%\nFitness: 14-17%\nAverage: 18-24%\nObese: 25%+\n\nWomen:\nEssential: 10-13%\nAthletes: 14-20%\nFitness: 21-24%\nAverage: 25-31%\nObese: 32%+'],
+      ['BMI-Based Method', 
+       results.bodyFat.bmiBased?.toFixed(1) + '%' || 'N/A', 
+       'Men:\nVery Low: <8%\nLow: 8-15%\nNormal: 15-20%\nModerate: 20-25%\nHigh: >25%\n\nWomen:\nVery Low: <15%\nLow: 15-22%\nNormal: 22-27%\nModerate: 27-32%\nHigh: >32%'],
+      ['U.S. Army Method', 
+       results.bodyFat.army?.toFixed(1) + '%' || 'N/A', 
+       'Men:\n17-20 years: <20%\n21-27 years: <22%\n28-39 years: <24%\n40+ years: <26%\n\nWomen:\n17-20 years: <30%\n21-27 years: <32%\n28-39 years: <34%\n40+ years: <36%']
     ];
     
     autoTable(doc, {
       startY: currentY + 5,
-      head: [bmiData[0]],
-      body: bmiData.slice(1),
-      theme: 'striped',
-      headStyles: { fillColor: [42, 149, 135] },
-      columnStyles: {
-        2: { cellWidth: 80 }
-      },
-      styles: { cellPadding: 5 }
-    });
-  }
-  
-  currentY = (doc as ExtendedJsPDF).lastAutoTable?.finalY || currentY + 40;
-
-  // Body Fat Section
-  if (results.bodyFat) {
-    doc.setFontSize(16);
-    doc.text('Body Fat Percentage', 20, currentY + 15);
-    
-    const bodyFatData = [
-      ['Method', 'Value', 'Interpretation'],
-      ['Navy Method', results.bodyFat.navy?.toFixed(1) + '%' || 'N/A', 'Men:\nEssential: 2-5%\nAthletes: 6-13%\nFitness: 14-17%\nAverage: 18-24%\nObese: 25%+\n\nWomen:\nEssential: 10-13%\nAthletes: 14-20%\nFitness: 21-24%\nAverage: 25-31%\nObese: 32%+'],
-      ['Jackson-Pollock', results.bodyFat.jackson?.toFixed(1) + '%' || 'N/A', 'Uses multiple skinfold measurements for precise calculation'],
-      ['BMI-Based', results.bodyFat.bmiBased?.toFixed(1) + '%' || 'N/A', 'Estimates based on BMI correlation'],
-      ['Army Method', results.bodyFat.army?.toFixed(1) + '%' || 'N/A', 'Official U.S. Army assessment method'],
-    ];
-    
-    autoTable(doc, {
-      startY: currentY + 20,
       head: [bodyFatData[0]],
       body: bodyFatData.slice(1),
       theme: 'striped',
@@ -82,43 +63,37 @@ export const exportHealthResults = (results: any) => {
   
   currentY = (doc as ExtendedJsPDF).lastAutoTable?.finalY || currentY + 40;
 
-  // Metabolic Rates Section
-  if (results.bmr) {
-    doc.setFontSize(16);
-    doc.text('Metabolic Rates', 20, currentY + 15);
-    
-    const bmrData = [
-      ['Metric', 'Value', 'Description'],
-      ['BMR', `${Math.round(results.bmr.bmr)} cal/day`, 'Basal Metabolic Rate - calories burned at rest'],
-      ['TDEE', results.bmr.tdee ? `${Math.round(results.bmr.tdee)} cal/day` : 'N/A', 'Total Daily Energy Expenditure with activity'],
-    ];
-    
-    autoTable(doc, {
-      startY: currentY + 20,
-      head: [bmrData[0]],
-      body: bmrData.slice(1),
-      theme: 'striped',
-      headStyles: { fillColor: [42, 149, 135] },
-      styles: { cellPadding: 5 }
-    });
-  }
-  
-  currentY = (doc as ExtendedJsPDF).lastAutoTable?.finalY || currentY + 40;
-
   // Body Composition Indices
   doc.setFontSize(16);
+  doc.setTextColor(42, 149, 135);
   doc.text('Body Composition Indices', 20, currentY + 15);
   
   const indicesData = [
     ['Index', 'Value', 'Interpretation'],
-    ['Ponderal Index', results.ponderalIndex?.metric?.toFixed(2) || 'N/A', 'Measures leanness relative to height'],
-    ['ABSI', results.absi?.metric?.toFixed(3) || 'N/A', 'Body Shape Index - mortality risk indicator'],
-    ['Body Roundness', results.bodyRoundnessIndex?.metric?.toFixed(2) || 'N/A', 'Indicates cardiovascular health risk'],
-    ['Waist-Height Ratio', results.waistToHeightRatio?.toFixed(2) || 'N/A', 'Under 0.5: Healthy\n0.5-0.6: Elevated Risk\nOver 0.6: High Risk'],
-    ['Lean Body Mass', results.leanBodyMass?.toFixed(1) || 'N/A', 'Total weight minus body fat'],
-    ['Fat-Free Mass Index', results.fatFreeMassIndex?.toFixed(1) || 'N/A', 'Under 16: Low\n16-20: Normal\n20-25: Athletic\nOver 25: Exceptional'],
-    ['Skeletal Muscle Mass', results.skeletalMuscleMass?.toFixed(1) || 'N/A', 'Amount of muscle attached to bones'],
-    ['Body Fat Distribution', results.bodyFatDistribution?.toFixed(2) || 'N/A', 'Under 0.5: Optimal\n0.5-0.8: Moderate\nOver 0.8: High Risk'],
+    ['Ponderal Index', 
+     results.ponderalIndex?.metric?.toFixed(2) || 'N/A', 
+     'Underweight: <11\nNormal weight: 11-14\nOverweight: 14-17\nObese: >17'],
+    ['A Body Shape Index (ABSI)', 
+     results.absi?.metric?.toFixed(3) || 'N/A', 
+     'Low mortality risk: <0.07\nAverage mortality risk: 0.07-0.08\nHigh mortality risk: >0.08'],
+    ['Body Roundness Index', 
+     results.bodyRoundnessIndex?.metric?.toFixed(2) || 'N/A', 
+     'Very lean: <1\nNormal: 1-2\nOverweight: 2-3\nObese: >3'],
+    ['Waist-Height Ratio', 
+     results.waistToHeightRatio?.toFixed(2) || 'N/A', 
+     'Underweight: <0.4\nHealthy: 0.4-0.5\nOverweight: 0.5-0.6\nObese: >0.6'],
+    ['Lean Body Mass', 
+     `${results.leanBodyMass?.toFixed(1) || 'N/A'} kg`, 
+     'Low: <35 kg\nNormal: 35-65 kg\nHigh: 65-80 kg\nVery High: >80 kg'],
+    ['Fat-Free Mass Index', 
+     results.fatFreeMassIndex?.toFixed(1) || 'N/A', 
+     'Low: <16\nNormal: 16-20\nAthletic: 20-25\nExceptional: >25'],
+    ['Skeletal Muscle Mass', 
+     `${results.skeletalMuscleMass?.toFixed(1) || 'N/A'} kg`, 
+     'Low: <25 kg\nNormal: 25-45 kg\nAthletic: 45-55 kg\nElite: >55 kg'],
+    ['Body Fat Distribution Index', 
+     results.bodyFatDistribution?.toFixed(2) || 'N/A', 
+     'Optimal: <0.5\nModerate: 0.5-0.8\nHigh Risk: >0.8']
   ];
   
   autoTable(doc, {
@@ -136,29 +111,33 @@ export const exportHealthResults = (results: any) => {
   currentY = (doc as ExtendedJsPDF).lastAutoTable?.finalY || currentY + 40;
 
   // Other Metrics
-  if (results.frameSize || results.waistToHip || results.biologicalAge) {
-    doc.setFontSize(16);
-    doc.text('Additional Health Metrics', 20, currentY + 15);
-    
-    const otherData = [
-      ['Metric', 'Value', 'Interpretation'],
-      ['Frame Size', results.frameSize || 'N/A', 'Based on wrist circumference relative to height'],
-      ['Waist-to-Hip Ratio', results.waistToHip?.toFixed(2) || 'N/A', 'Men:\nUnder 0.9: Healthy\nOver 0.9: Increased Risk\n\nWomen:\nUnder 0.85: Healthy\nOver 0.85: Increased Risk'],
-      ['Biological Age', results.biologicalAge ? `${results.biologicalAge} years` : 'N/A', 'Estimated physiological age based on health metrics'],
-    ];
-    
-    autoTable(doc, {
-      startY: currentY + 20,
-      head: [otherData[0]],
-      body: otherData.slice(1),
-      theme: 'striped',
-      headStyles: { fillColor: [42, 149, 135] },
-      columnStyles: {
-        2: { cellWidth: 80 }
-      },
-      styles: { cellPadding: 5 }
-    });
-  }
+  doc.setFontSize(16);
+  doc.text('Additional Health Metrics', 20, currentY + 15);
+  
+  const otherData = [
+    ['Metric', 'Value', 'Interpretation'],
+    ['Frame Size', 
+     results.frameSize || 'N/A', 
+     'Small: Height/Wrist > 10.4\nMedium: Height/Wrist 9.6-10.4\nLarge: Height/Wrist < 9.6'],
+    ['Waist-to-Hip Ratio', 
+     results.waistToHip?.toFixed(2) || 'N/A', 
+     'Men:\nHealthy: <0.9\nIncreased Risk: >0.9\n\nWomen:\nHealthy: <0.85\nIncreased Risk: >0.85'],
+    ['Biological Age', 
+     results.biologicalAge ? `${results.biologicalAge} years` : 'N/A', 
+     'Compares physiological age to chronological age based on health metrics']
+  ];
+  
+  autoTable(doc, {
+    startY: currentY + 20,
+    head: [otherData[0]],
+    body: otherData.slice(1),
+    theme: 'striped',
+    headStyles: { fillColor: [42, 149, 135] },
+    columnStyles: {
+      2: { cellWidth: 80 }
+    },
+    styles: { cellPadding: 5 }
+  });
 
   // Add footer with page numbers
   const pageCount = (doc.internal as any).getNumberOfPages();
