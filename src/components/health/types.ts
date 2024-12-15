@@ -19,4 +19,10 @@ export interface HealthMetrics {
   calfSkinfold: string;        // Point i
   activityLevel: 'sedentary' | 'light' | 'moderate' | 'active' | 'veryActive' | '';
   unit: 'metric' | 'imperial';
+  bodyFat?: {
+    navy: number | null;
+    jackson: number | null;
+    bmiBased: number | null;
+    army: number | null;
+  };
 }
