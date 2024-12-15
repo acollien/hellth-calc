@@ -50,8 +50,16 @@ const Group2Results = ({
                   <h4 className="font-semibold">Lean Body Mass (LBM)</h4>
                   <p>Your total body weight minus fat weight. Includes muscle, bone, organs, and water.</p>
                   <div className="text-sm space-y-1">
-                    <p className="font-medium">Calculation Method:</p>
-                    <p>Uses the Boer Formula, which is accurate for most body types.</p>
+                    <p className="font-medium">Typical Ranges (Men):</p>
+                    <ul className="list-disc pl-4">
+                      <li>Athletes: 55-70 kg (121-154 lbs)</li>
+                      <li>Average: 50-65 kg (110-143 lbs)</li>
+                    </ul>
+                    <p className="font-medium mt-2">Typical Ranges (Women):</p>
+                    <ul className="list-disc pl-4">
+                      <li>Athletes: 45-60 kg (99-132 lbs)</li>
+                      <li>Average: 40-55 kg (88-121 lbs)</li>
+                    </ul>
                   </div>
                 </div>
               </TooltipContent>
@@ -110,8 +118,17 @@ const Group2Results = ({
                 <div className="space-y-2">
                   <h4 className="font-semibold">Skeletal Muscle Mass (SMM)</h4>
                   <p>The amount of muscle tissue attached to your skeleton, responsible for movement.</p>
-                  <div className="text-sm">
-                    <p>Calculated using the Lee Formula, which considers height, weight, age, and gender.</p>
+                  <div className="text-sm space-y-1">
+                    <p className="font-medium">Typical Ranges (Men):</p>
+                    <ul className="list-disc pl-4">
+                      <li>Athletes: 35-45 kg (77-99 lbs)</li>
+                      <li>Average: 30-40 kg (66-88 lbs)</li>
+                    </ul>
+                    <p className="font-medium mt-2">Typical Ranges (Women):</p>
+                    <ul className="list-disc pl-4">
+                      <li>Athletes: 25-35 kg (55-77 lbs)</li>
+                      <li>Average: 20-30 kg (44-66 lbs)</li>
+                    </ul>
                   </div>
                 </div>
               </TooltipContent>
@@ -125,7 +142,7 @@ const Group2Results = ({
               <TooltipTrigger asChild>
                 <div className="flex items-start justify-between">
                   <div>
-                    <div className="text-sm text-mint-800 font-medium">Body Fat Distribution Index</div>
+                    <div className="text-sm text-mint-800 font-medium">Body Fat Distribution</div>
                     <div className="text-2xl font-semibold text-mint-900">
                       {bodyFatDistribution.toFixed(2)}
                     </div>
@@ -136,9 +153,15 @@ const Group2Results = ({
               <TooltipContent className="max-w-xs p-4">
                 <div className="space-y-2">
                   <h4 className="font-semibold">Body Fat Distribution Index</h4>
-                  <p>Indicates how your body fat is distributed, particularly in relation to your waist and hips.</p>
-                  <div className="text-sm">
-                    <p>A higher value indicates more central (abdominal) fat distribution.</p>
+                  <p>Indicates how your body fat is distributed between central and peripheral regions.</p>
+                  <div className="text-sm space-y-1">
+                    <p className="font-medium">Interpretation:</p>
+                    <ul className="list-disc pl-4">
+                      <li>Below 0.8: Peripheral distribution</li>
+                      <li>0.8-1.0: Balanced distribution</li>
+                      <li>Above 1.0: Central distribution</li>
+                    </ul>
+                    <p className="mt-2">Lower values generally indicate healthier fat distribution patterns.</p>
                   </div>
                 </div>
               </TooltipContent>
