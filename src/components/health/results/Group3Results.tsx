@@ -2,9 +2,9 @@ import { Info } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface Group3ResultsProps {
-  leanMassIndex?: number;
-  bodyAdiposityIndex?: number;
-  conicityIndex?: number;
+  leanMassIndex?: number | null;
+  bodyAdiposityIndex?: number | null;
+  conicityIndex?: number | null;
   unit: 'metric' | 'imperial';
 }
 
@@ -14,6 +14,7 @@ const Group3Results = ({
   conicityIndex,
   unit 
 }: Group3ResultsProps) => {
+  // Only render if at least one value is present and not null
   if (!leanMassIndex && !bodyAdiposityIndex && !conicityIndex) return null;
 
   const getLMIColor = (value: number) => {
@@ -40,7 +41,7 @@ const Group3Results = ({
     <div className="w-full space-y-6">
       <h3 className="text-lg font-medium text-mint-800">Advanced Body Measurements</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full mx-auto">
-        {leanMassIndex !== null && (
+        {typeof leanMassIndex === 'number' && (
           <div className="p-4 rounded-lg bg-mint-50 border border-mint-100 w-full">
             <Tooltip>
               <TooltipTrigger asChild>
@@ -71,7 +72,7 @@ const Group3Results = ({
           </div>
         )}
 
-        {bodyAdiposityIndex !== null && (
+        {typeof bodyAdiposityIndex === 'number' && (
           <div className="p-4 rounded-lg bg-mint-50 border border-mint-100 w-full">
             <Tooltip>
               <TooltipTrigger asChild>
@@ -102,7 +103,7 @@ const Group3Results = ({
           </div>
         )}
 
-        {conicityIndex !== null && (
+        {typeof conicityIndex === 'number' && (
           <div className="p-4 rounded-lg bg-mint-50 border border-mint-100 w-full">
             <Tooltip>
               <TooltipTrigger asChild>
