@@ -1,23 +1,30 @@
 import { useState } from 'react';
 import { HealthMetrics } from "@/components/health/types";
+
 import {
   calculateBMI,
-  calculateBodyFat,
   calculateBMR,
   calculateIdealWeight,
   calculateBiologicalAge,
-  calculatePonderalIndex,
-  calculateABSI,
-  calculateBodyRoundnessIndex,
-  calculateWaistToHeightRatio
 } from "@/utils/health/calculations";
+
 import {
+  calculateBodyFat,
   calculateLeanBodyMass,
   calculateFatFreeMassIndex,
   calculateSkeletalMuscleMass,
-  calculateBodyFatDistribution,
-  calculateLeanMassIndex
-} from "@/utils/health/bodyComposition";
+} from "@/utils/health/composition";
+
+import {
+  calculateABSI,
+  calculateBodyRoundnessIndex,
+  calculatePonderalIndex,
+} from "@/utils/health/indices";
+
+import {
+  calculateWaistToHipRatio,
+  calculateWaistToHeightRatio,
+} from "@/utils/health/metrics";
 
 export const useHealthCalculations = () => {
   const [results, setResults] = useState<any>(null);
@@ -52,19 +59,26 @@ export const useHealthCalculations = () => {
         numericMetrics.weight,
         currentMetrics.unit
       );
-      results.absi = calculateABSI(
-        numericMetrics.waist,
-        numericMetrics.height,
-        numericMetrics.weight,
-        currentMetrics.unit
-      );
       
-      // Add new calculations
+      if (numericMetrics.waist) {
+        results.absi = calculateABSI(
+          numericMetrics.waist,
+          numericMetrics.height,
+          numericMetrics.weight,
+          currentMetrics.unit
+        );
+        
+        results.bodyRoundnessIndex = calculateBodyRoundnessIndex(
+          numericMetrics.waist,
+          numericMetrics.height,
+          currentMetrics.unit
+        );
+      }
+      
+      // Add composition calculations
       results.leanBodyMass = calculateLeanBodyMass(numericMetrics);
       results.fatFreeMassIndex = calculateFatFreeMassIndex(numericMetrics);
       results.skeletalMuscleMass = calculateSkeletalMuscleMass(numericMetrics);
-      results.bodyFatDistribution = calculateBodyFatDistribution(numericMetrics);
-      results.leanMassIndex = calculateLeanMassIndex(numericMetrics);
     }
 
     if (numericMetrics.gender) {
@@ -77,15 +91,14 @@ export const useHealthCalculations = () => {
     results.bmr = calculateBMR(numericMetrics);
 
     if (numericMetrics.waist && numericMetrics.height) {
-      results.bodyRoundnessIndex = calculateBodyRoundnessIndex(
-        numericMetrics.waist,
-        numericMetrics.height,
-        currentMetrics.unit
-      );
       results.waistToHeightRatio = calculateWaistToHeightRatio(
         numericMetrics.waist,
         numericMetrics.height
       );
+    }
+
+    if (numericMetrics.waist && numericMetrics.hip) {
+      results.waistToHip = calculateWaistToHipRatio(numericMetrics);
     }
 
     results.biologicalAge = calculateBiologicalAge(numericMetrics);
