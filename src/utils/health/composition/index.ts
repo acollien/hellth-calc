@@ -11,7 +11,9 @@ export const calculateBodyFatDistribution = (metrics: HealthMetrics) => {
   const hip = parseFloat(metrics.hip);
   const height = parseFloat(metrics.height);
   
-  return (Math.pow(waist, 2) * height) / (Math.pow(hip, 2) * Math.sqrt(height));
+  const result = (Math.pow(waist, 2) * height) / (Math.pow(hip, 2) * Math.sqrt(height));
+  console.log('Calculated Body Fat Distribution:', result);
+  return result;
 };
 
 export const calculateComposition = (metrics: HealthMetrics) => {

@@ -28,7 +28,7 @@ const ResultsContainer = ({ results, metrics }: ResultsContainerProps) => {
         leanBodyMass={results.leanBodyMass}
         fatFreeMassIndex={results.fatFreeMassIndex}
         skeletalMuscleMass={results.skeletalMuscleMass}
-        bodyFatDistribution={results.bodyFatDistribution}
+        bodyFatDistribution={results.bodyFatDistribution?.bodyFatDistribution}
         unit={metrics.unit}
       />
       <Group3Results
