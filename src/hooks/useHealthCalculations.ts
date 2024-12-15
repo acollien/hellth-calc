@@ -41,35 +41,16 @@ export const useHealthCalculations = () => {
       );
     }
 
-    if (numericMetrics.height && numericMetrics.weight && numericMetrics.waist) {
-      results.absi = basicIndices.calculateABSI(
-        numericMetrics.waist,
-        numericMetrics.height,
-        numericMetrics.weight,
-        currentMetrics.unit
-      );
-    }
-
-    if (numericMetrics.height && numericMetrics.waist) {
-      results.bodyRoundnessIndex = basicIndices.calculateBodyRoundnessIndex(
-        numericMetrics.waist,
-        numericMetrics.height,
-        currentMetrics.unit
-      );
-      results.waistToHeightRatio = basicIndices.calculateWaistToHeightRatio(
-        numericMetrics.waist,
-        numericMetrics.height
-      );
-    }
-
     // Calculate body composition metrics
     if (numericMetrics.gender) {
       const bodyFatResults = bodyComposition.calculateBodyFat(numericMetrics);
-      // Include army method in the bodyFat results
+      const armyBodyFat = bodyComposition.calculateArmyBodyFat(numericMetrics);
+      
       results.bodyFat = {
         ...bodyFatResults,
-        army: bodyComposition.calculateArmyBodyFat(numericMetrics)
+        army: armyBodyFat
       };
+
       results.leanBodyMass = bodyComposition.calculateLeanBodyMass(numericMetrics);
       results.fatFreeMassIndex = bodyComposition.calculateFatFreeMassIndex(numericMetrics);
       results.skeletalMuscleMass = bodyComposition.calculateSkeletalMuscleMass(numericMetrics);

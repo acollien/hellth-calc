@@ -11,19 +11,46 @@ interface HealthMetrics {
   unit?: 'metric' | 'imperial';
 }
 
+export const calculateArmyBodyFat = (metrics: HealthMetrics): number | null => {
+  if (!metrics.gender || !metrics.neck || !metrics.waist || !metrics.height || 
+      (metrics.gender === 'female' && !metrics.hip)) {
+    return null;
+  }
+
+  // Convert measurements to inches if they're in metric
+  const heightInInches = metrics.unit === 'metric' ? metrics.height / 2.54 : metrics.height;
+  const neckInInches = metrics.unit === 'metric' ? metrics.neck / 2.54 : metrics.neck;
+  const waistInInches = metrics.unit === 'metric' ? metrics.waist / 2.54 : metrics.waist;
+  const hipInInches = metrics.gender === 'female' ? 
+    (metrics.unit === 'metric' ? metrics.hip / 2.54 : metrics.hip) : 0;
+
+  let bodyFat: number;
+  
+  if (metrics.gender === 'male') {
+    bodyFat = 86.010 * Math.log10(waistInInches - neckInInches) - 
+              70.041 * Math.log10(heightInInches) + 36.76;
+  } else {
+    bodyFat = 163.205 * Math.log10(waistInInches + hipInInches - neckInInches) - 
+              97.684 * Math.log10(heightInInches) - 78.387;
+  }
+
+  return Math.max(0, Math.min(bodyFat, 100)); // Ensure result is between 0 and 100
+};
+
 export const calculateBodyFat = (metrics: HealthMetrics) => {
   const results: { [key: string]: number | null } = {
     navy: null,
     jackson: null,
-    bmiBased: null,
-    army: null
+    bmiBased: null
   };
 
   if (metrics.neck && metrics.waist && metrics.hip && metrics.height && metrics.gender) {
     if (metrics.gender === 'male') {
-      results.navy = 495 / (1.0324 - 0.19077 * Math.log10(metrics.waist - metrics.neck) + 0.15456 * Math.log10(metrics.height)) - 450;
+      results.navy = 495 / (1.0324 - 0.19077 * Math.log10(metrics.waist - metrics.neck) + 
+                    0.15456 * Math.log10(metrics.height)) - 450;
     } else {
-      results.navy = 495 / (1.29579 - 0.35004 * Math.log10(metrics.waist + metrics.hip - metrics.neck) + 0.22100 * Math.log10(metrics.height)) - 450;
+      results.navy = 495 / (1.29579 - 0.35004 * Math.log10(metrics.waist + metrics.hip - metrics.neck) + 
+                    0.22100 * Math.log10(metrics.height)) - 450;
     }
   }
 
