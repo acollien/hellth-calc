@@ -50,7 +50,7 @@ const PonderalIndexCard = ({ value, unit }: PonderalIndexCardProps) => {
         </Tooltip>
       </div>
       <div className={`text-2xl font-semibold ${getValueColor(value[unit])}`}>
-        {value[unit].toFixed(2)} {unit === 'metric' ? 'kg/m³' : 'lb/ft³'}
+        {value[unit].toFixed(2)}
       </div>
     </div>
   );
