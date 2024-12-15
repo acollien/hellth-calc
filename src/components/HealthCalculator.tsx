@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
-import * as healthCalc from "@/utils/healthCalculations";
+import * as basicIndices from "@/utils/health/basicIndices";
+import * as bodyComposition from "@/utils/health/bodyComposition";
+import * as metabolicCalc from "@/utils/health/metabolicCalculations";
+import * as otherMetrics from "@/utils/health/otherMetrics";
 import HealthResults from "./HealthResults";
 import BasicMeasurements from "./health/BasicMeasurements";
 import BodyMeasurements from "./health/BodyMeasurements";
@@ -9,6 +12,7 @@ import ActivityLevel from "./health/ActivityLevel";
 import { HealthMetrics } from "./health/types";
 import Header from "./health/Header";
 import Group1Results from "./health/results/Group1Results";
+import Group2Results from "./health/results/Group2Results";
 
 const initialMetrics: HealthMetrics = {
   height: "",
@@ -64,24 +68,10 @@ const HealthCalculator = () => {
       if (numericMetrics.wrist) numericMetrics.wrist *= 2.54;
     }
 
-    // Calculate existing metrics
+    // Calculate basic indices
     if (numericMetrics.height && numericMetrics.weight) {
-      results.bmi = healthCalc.calculateBMI(numericMetrics.height, numericMetrics.weight);
-    }
-
-    if (numericMetrics.gender) {
-      results.bodyFat = healthCalc.calculateBodyFat(numericMetrics);
-      results.idealWeight = healthCalc.calculateIdealWeight(numericMetrics.height, numericMetrics.gender);
-    }
-
-    results.bmr = healthCalc.calculateBMR(numericMetrics);
-    results.frameSize = healthCalc.calculateFrameSize(numericMetrics);
-    results.waistToHip = healthCalc.calculateWaistToHip(numericMetrics);
-    results.biologicalAge = healthCalc.calculateBiologicalAge(numericMetrics);
-
-    // Calculate new Group 1 metrics
-    if (numericMetrics.height && numericMetrics.weight) {
-      results.ponderalIndex = healthCalc.calculatePonderalIndex(
+      results.bmi = basicIndices.calculateBMI(numericMetrics.height, numericMetrics.weight);
+      results.ponderalIndex = basicIndices.calculatePonderalIndex(
         numericMetrics.height,
         numericMetrics.weight,
         currentMetrics.unit
@@ -89,7 +79,7 @@ const HealthCalculator = () => {
     }
 
     if (numericMetrics.height && numericMetrics.weight && numericMetrics.waist) {
-      results.absi = healthCalc.calculateABSI(
+      results.absi = basicIndices.calculateABSI(
         numericMetrics.waist,
         numericMetrics.height,
         numericMetrics.weight,
@@ -98,16 +88,31 @@ const HealthCalculator = () => {
     }
 
     if (numericMetrics.height && numericMetrics.waist) {
-      results.bodyRoundnessIndex = healthCalc.calculateBodyRoundnessIndex(
+      results.bodyRoundnessIndex = basicIndices.calculateBodyRoundnessIndex(
         numericMetrics.waist,
         numericMetrics.height,
         currentMetrics.unit
       );
-      results.waistToHeightRatio = healthCalc.calculateWaistToHeightRatio(
+      results.waistToHeightRatio = basicIndices.calculateWaistToHeightRatio(
         numericMetrics.waist,
         numericMetrics.height
       );
     }
+
+    // Calculate body composition metrics
+    if (numericMetrics.gender) {
+      results.bodyFat = bodyComposition.calculateBodyFat(numericMetrics);
+      results.leanBodyMass = bodyComposition.calculateLeanBodyMass(numericMetrics);
+      results.fatFreeMassIndex = bodyComposition.calculateFatFreeMassIndex(numericMetrics);
+      results.skeletalMuscleMass = bodyComposition.calculateSkeletalMuscleMass(numericMetrics);
+      results.bodyFatDistribution = bodyComposition.calculateBodyFatDistributionIndex(numericMetrics);
+    }
+
+    // Calculate metabolic and other metrics
+    results.bmr = metabolicCalc.calculateBMR(numericMetrics);
+    results.frameSize = otherMetrics.calculateFrameSize(numericMetrics);
+    results.waistToHip = otherMetrics.calculateWaistToHip(numericMetrics);
+    results.biologicalAge = otherMetrics.calculateBiologicalAge(numericMetrics);
 
     setResults(results);
   };
@@ -133,6 +138,13 @@ const HealthCalculator = () => {
                 absi={results.absi}
                 bodyRoundnessIndex={results.bodyRoundnessIndex}
                 waistToHeightRatio={results.waistToHeightRatio}
+                unit={metrics.unit}
+              />
+              <Group2Results
+                leanBodyMass={results.leanBodyMass}
+                fatFreeMassIndex={results.fatFreeMassIndex}
+                skeletalMuscleMass={results.skeletalMuscleMass}
+                bodyFatDistribution={results.bodyFatDistribution}
                 unit={metrics.unit}
               />
             </div>
