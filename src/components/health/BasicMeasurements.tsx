@@ -3,8 +3,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
 import { HealthMetrics } from "./types";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Slider } from "@/components/ui/slider";
 
 interface BasicMeasurementsProps {
@@ -112,29 +110,6 @@ const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) 
           />
         </div>
       </div>
-
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button variant="outline" size="sm" className="text-xs">Legal Information</Button>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Legal Information</DialogTitle>
-            <DialogDescription className="space-y-4">
-              <p>This application ("Hellth") is provided for informational purposes only and should not be considered medical advice. Always consult with healthcare professionals for medical decisions.</p>
-              
-              <h4 className="font-semibold">Data Privacy</h4>
-              <p>We do not collect, store, or sell any personal information. All calculations are performed locally in your browser.</p>
-              
-              <h4 className="font-semibold">Cookies</h4>
-              <p>This application does not use cookies or tracking mechanisms.</p>
-              
-              <h4 className="font-semibold">Disclaimer</h4>
-              <p>The calculations and results provided are based on general formulas and may not account for individual variations or specific medical conditions. Use at your own discretion.</p>
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };
