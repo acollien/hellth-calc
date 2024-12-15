@@ -1,5 +1,5 @@
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer } from 'recharts';
 
 interface Group4ResultsProps {
@@ -41,7 +41,7 @@ const Group4Results = ({ bmi, bodyFat, bmr, unit }: Group4ResultsProps) => {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center gap-2">
         <h3 className="text-lg font-medium text-mint-800">Health Metrics Visualization</h3>
         <Tooltip>
           <TooltipTrigger>
