@@ -40,7 +40,7 @@ const SkinfoldPoint = ({ label, value, point, tooltip, onChange, unit }: Skinfol
                 />
               </div>
               <p className="text-xs text-gray-500 mt-2">
-                Image source: measurement-toolkit.org - Anthropometry/Objective Methods/Simple Measures
+                Image source: measurement-toolkit.org/anthropometry/objective-methods/simple-measures-skinfolds
               </p>
             </div>
           </PopoverContent>
