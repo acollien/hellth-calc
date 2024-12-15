@@ -31,15 +31,24 @@ const SkeletalMuscleMassCard = ({ value, unit }: SkeletalMuscleMassCardProps) =>
         <TooltipContent className="max-w-xs p-4">
           <div className="space-y-2">
             <h4 className="font-semibold">Skeletal Muscle Mass (SMM)</h4>
-            <p>The amount of muscle attached to bones that you can voluntarily control.</p>
-            <div className="text-sm">
-              <p className="font-medium">Typical ranges:</p>
-              <ul className="list-disc pl-4">
-                <li>Low: &lt;25 kg</li>
-                <li>Normal: 25-45 kg</li>
-                <li>Athletic: 45-55 kg</li>
-                <li>Elite: &gt;55 kg</li>
-              </ul>
+            <div className="text-sm space-y-2">
+              <div>
+                <p className="font-medium">Formula:</p>
+                <p className="text-mint-700">SMM = Height² × (0.244 × Weight + 7.8)</p>
+              </div>
+              <div>
+                <p className="font-medium">Description:</p>
+                <p>The total mass of all muscles that are voluntarily controlled and attached to the skeleton, crucial for movement and metabolism.</p>
+              </div>
+              <div>
+                <p className="font-medium">Interpretation:</p>
+                <ul className="list-disc pl-4">
+                  <li>Below 25 kg: Low muscle mass</li>
+                  <li>25-45 kg: Normal muscle mass</li>
+                  <li>45-55 kg: Athletic muscle mass</li>
+                  <li>Above 55 kg: Elite muscle mass</li>
+                </ul>
+              </div>
             </div>
           </div>
         </TooltipContent>

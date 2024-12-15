@@ -31,17 +31,33 @@ const SkinfoldPoint = ({ label, value, point, tooltip, onChange, unit }: Skinfol
           </TooltipTrigger>
           <TooltipContent className="w-80">
             <div className="space-y-2">
-              <p className="text-sm font-medium">Point {point} - {tooltip}</p>
-              <div className="relative aspect-[2/3] w-full">
-                <img 
-                  src="/lovable-uploads/9f167f2d-afc8-40ac-a2b0-95f97593c5da.png" 
-                  alt="Skinfold measurement points diagram" 
-                  className="w-full h-full object-contain"
-                />
+              <h4 className="font-semibold">Skinfold Measurement - {label}</h4>
+              <div className="text-sm space-y-2">
+                <div>
+                  <p className="font-medium">Method:</p>
+                  <p className="text-mint-700">Vertical fold measurement using caliper at point {point}</p>
+                </div>
+                <div>
+                  <p className="font-medium">Description:</p>
+                  <p>{tooltip}</p>
+                </div>
+                <div>
+                  <p className="font-medium">Interpretation:</p>
+                  <ul className="list-disc pl-4">
+                    <li>Low: Below 5mm</li>
+                    <li>Normal: 5-15mm</li>
+                    <li>Moderate: 15-25mm</li>
+                    <li>High: Above 25mm</li>
+                  </ul>
+                </div>
+                <div className="relative aspect-[2/3] w-full mt-4">
+                  <img 
+                    src="/lovable-uploads/9f167f2d-afc8-40ac-a2b0-95f97593c5da.png" 
+                    alt="Skinfold measurement points diagram" 
+                    className="w-full h-full object-contain"
+                  />
+                </div>
               </div>
-              <p className="text-xs text-gray-500 mt-2">
-                Image source: measurement-toolkit.org/anthropometry/objective-methods/simple-measures-skinfolds
-              </p>
             </div>
           </TooltipContent>
         </Tooltip>

@@ -32,15 +32,15 @@ const PonderalIndexCard = ({ value, unit }: PonderalIndexCardProps) => {
                 </div>
                 <div>
                   <p className="font-medium">Description:</p>
-                  <p>A measure of leanness that accounts for the natural scaling of mass with height, developed as an improvement over BMI for taller individuals.</p>
+                  <p>A measure of leanness that accounts for the natural scaling of mass with height, particularly useful for taller individuals where BMI may be less accurate.</p>
                 </div>
                 <div>
                   <p className="font-medium">Interpretation:</p>
                   <ul className="list-disc pl-4">
-                    <li>&lt;11: Underweight</li>
-                    <li>11-14: Normal weight</li>
-                    <li>14-17: Overweight</li>
-                    <li>&gt;17: Obese</li>
+                    <li>Below 11: Underweight status</li>
+                    <li>11-14: Normal weight range</li>
+                    <li>14-17: Overweight range</li>
+                    <li>Above 17: Obese range</li>
                   </ul>
                 </div>
               </div>

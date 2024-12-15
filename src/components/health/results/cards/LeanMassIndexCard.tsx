@@ -37,13 +37,15 @@ const LeanMassIndexCard = ({ value }: LeanMassIndexCardProps) => {
               </div>
               <div>
                 <p className="font-medium">Description:</p>
-                <p>A measure of lean body mass relative to height, similar to BMI but specifically for muscle mass assessment.</p>
+                <p>A measure that assesses lean body mass relative to height, providing insight into muscle mass distribution independent of body fat.</p>
               </div>
               <div>
                 <p className="font-medium">Interpretation:</p>
                 <ul className="list-disc pl-4">
-                  <li>Men: 16-20 kg/m² (normal range)</li>
-                  <li>Women: 13-17 kg/m² (normal range)</li>
+                  <li>Below 16: Low muscle mass relative to height</li>
+                  <li>16-19: Normal muscle mass</li>
+                  <li>19-22: Athletic muscle mass</li>
+                  <li>Above 22: Exceptional muscle mass</li>
                 </ul>
               </div>
             </div>

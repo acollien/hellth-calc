@@ -36,14 +36,14 @@ const ConicityCard = ({ value }: ConicityCardProps) => {
               </div>
               <div>
                 <p className="font-medium">Description:</p>
-                <p>Measures abdominal fat distribution and cardiovascular risk by comparing waist circumference to a cylinder generated using height and weight.</p>
+                <p>A measure that evaluates abdominal fat distribution by comparing your waist circumference to a theoretical cylindrical shape.</p>
               </div>
               <div>
                 <p className="font-medium">Interpretation:</p>
                 <ul className="list-disc pl-4">
-                  <li>Low risk: &lt; 1.25</li>
-                  <li>Moderate risk: 1.25-1.35</li>
-                  <li>High risk: &gt; 1.35</li>
+                  <li>Below 1.25: Low cardiovascular risk</li>
+                  <li>1.25-1.35: Moderate cardiovascular risk</li>
+                  <li>Above 1.35: High cardiovascular risk</li>
                 </ul>
               </div>
             </div>

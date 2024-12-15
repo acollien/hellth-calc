@@ -30,15 +30,24 @@ const FatFreeMassCard = ({ value }: FatFreeMassCardProps) => {
         <TooltipContent className="max-w-xs p-4">
           <div className="space-y-2">
             <h4 className="font-semibold">Fat-Free Mass Index (FFMI)</h4>
-            <p>A measure of lean mass relative to height, similar to BMI but for muscle mass.</p>
-            <div className="text-sm">
-              <p className="font-medium">Ranges:</p>
-              <ul className="list-disc pl-4">
-                <li>Low: &lt;16</li>
-                <li>Normal: 16-20</li>
-                <li>Athletic: 20-25</li>
-                <li>Exceptional: &gt;25</li>
-              </ul>
+            <div className="text-sm space-y-2">
+              <div>
+                <p className="font-medium">Formula:</p>
+                <p className="text-mint-700">FFMI = (Lean Mass in kg) / (Height in meters)²</p>
+              </div>
+              <div>
+                <p className="font-medium">Description:</p>
+                <p>A measure that evaluates lean body mass relative to height, providing insight into muscular development independent of body fat.</p>
+              </div>
+              <div>
+                <p className="font-medium">Interpretation:</p>
+                <ul className="list-disc pl-4">
+                  <li>Below 16: Low muscle mass</li>
+                  <li>16-20: Normal muscle mass</li>
+                  <li>20-25: Above average/athletic</li>
+                  <li>Above 25: Exceptional muscle mass</li>
+                </ul>
+              </div>
             </div>
           </div>
         </TooltipContent>

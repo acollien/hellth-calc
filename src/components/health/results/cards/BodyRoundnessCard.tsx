@@ -32,15 +32,15 @@ const BodyRoundnessCard = ({ value, unit }: BodyRoundnessCardProps) => {
                 </div>
                 <div>
                   <p className="font-medium">Description:</p>
-                  <p>Uses an elliptical model of human body shape to quantify the roundness of the body and predict body fat percentage.</p>
+                  <p>A measure that uses an elliptical model of human body shape to predict body fat percentage and evaluate overall body shape.</p>
                 </div>
                 <div>
                   <p className="font-medium">Interpretation:</p>
                   <ul className="list-disc pl-4">
-                    <li>Below 1: Very lean body shape</li>
-                    <li>1-2: Normal body shape</li>
-                    <li>2-3: Overweight body shape</li>
-                    <li>Above 3: Obese body shape</li>
+                    <li>Below 1: Very lean body composition</li>
+                    <li>1-2: Normal/healthy body composition</li>
+                    <li>2-3: Overweight body composition</li>
+                    <li>Above 3: Obese body composition</li>
                   </ul>
                 </div>
               </div>

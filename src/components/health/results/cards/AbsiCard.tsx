@@ -31,14 +31,14 @@ const AbsiCard = ({ value, unit }: AbsiCardProps) => {
                 </div>
                 <div>
                   <p className="font-medium">Description:</p>
-                  <p>Developed by Krakauer & Krakauer (2012) to quantify the risk associated with central obesity.</p>
+                  <p>A measure that evaluates body shape independent of height and weight, focusing on the health implications of central obesity.</p>
                 </div>
                 <div>
                   <p className="font-medium">Interpretation:</p>
                   <ul className="list-disc pl-4">
-                    <li>Below 0.07: Low mortality risk</li>
-                    <li>0.07-0.08: Average mortality risk</li>
-                    <li>Above 0.08: High mortality risk</li>
+                    <li>Below 0.07: Low health risk</li>
+                    <li>0.07-0.08: Average health risk</li>
+                    <li>Above 0.08: Elevated health risk</li>
                   </ul>
                 </div>
               </div>

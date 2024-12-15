@@ -31,15 +31,24 @@ const LeanBodyMassCard = ({ value, unit }: LeanBodyMassCardProps) => {
         <TooltipContent className="max-w-xs p-4">
           <div className="space-y-2">
             <h4 className="font-semibold">Lean Body Mass (LBM)</h4>
-            <p>The weight of your body excluding fat.</p>
-            <div className="text-sm">
-              <p className="font-medium">Typical ranges:</p>
-              <ul className="list-disc pl-4">
-                <li>Low: &lt;35 kg</li>
-                <li>Normal: 35-65 kg</li>
-                <li>High: 65-80 kg</li>
-                <li>Very High: &gt;80 kg</li>
-              </ul>
+            <div className="text-sm space-y-2">
+              <div>
+                <p className="font-medium">Formula:</p>
+                <p className="text-mint-700">LBM = Total Body Weight - (Body Weight × Body Fat Percentage)</p>
+              </div>
+              <div>
+                <p className="font-medium">Description:</p>
+                <p>The total mass of all body components except fat, including muscle, bone, organs, and body water.</p>
+              </div>
+              <div>
+                <p className="font-medium">Interpretation:</p>
+                <ul className="list-disc pl-4">
+                  <li>Below 35 kg: Low lean mass</li>
+                  <li>35-65 kg: Normal lean mass</li>
+                  <li>65-80 kg: Athletic lean mass</li>
+                  <li>Above 80 kg: High lean mass</li>
+                </ul>
+              </div>
             </div>
           </div>
         </TooltipContent>

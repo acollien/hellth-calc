@@ -37,13 +37,15 @@ const BodyAdiposityCard = ({ value }: BodyAdiposityCardProps) => {
               </div>
               <div>
                 <p className="font-medium">Description:</p>
-                <p>Estimates body fat percentage using hip circumference and height, without requiring weight measurement.</p>
+                <p>A method to estimate body fat percentage using hip circumference and height measurements, without requiring weight measurement.</p>
               </div>
               <div>
                 <p className="font-medium">Interpretation:</p>
                 <ul className="list-disc pl-4">
-                  <li>Men: 8-20% (healthy range)</li>
-                  <li>Women: 21-33% (healthy range)</li>
+                  <li>Men: 8-20% is considered healthy</li>
+                  <li>Women: 21-33% is considered healthy</li>
+                  <li>Below ranges: Potential insufficient body fat</li>
+                  <li>Above ranges: Elevated body fat levels</li>
                 </ul>
               </div>
             </div>
