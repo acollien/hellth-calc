@@ -47,8 +47,10 @@ const Group4Results = ({ bmi, bodyFat, bmr, unit }: Group4ResultsProps) => {
           <TooltipTrigger>
             <Info className="h-4 w-4 text-mint-500" />
           </TooltipTrigger>
-          <TooltipContent side="top" align="start" className="max-w-xs p-4">
-            <p>This chart shows projected trends based on current metrics and typical healthy lifestyle changes.</p>
+          <TooltipContent align="start" className="max-w-xs p-4">
+            <div className="text-left">
+              <p>This chart shows projected trends based on current metrics and typical healthy lifestyle changes.</p>
+            </div>
           </TooltipContent>
         </Tooltip>
       </div>

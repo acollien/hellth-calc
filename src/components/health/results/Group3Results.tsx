@@ -55,8 +55,8 @@ const Group3Results = ({
                   <Info className="h-4 w-4 text-mint-500" />
                 </div>
               </TooltipTrigger>
-              <TooltipContent side="top" align="start" className="max-w-xs p-4">
-                <div className="space-y-2">
+              <TooltipContent align="start" className="max-w-xs p-4">
+                <div className="space-y-2 text-left">
                   <h4 className="font-semibold">Lean Mass Index (LMI)</h4>
                   <p>A measure of lean body mass relative to height.</p>
                   <div className="text-sm">
@@ -87,8 +87,8 @@ const Group3Results = ({
                     <Info className="h-4 w-4 text-mint-500" />
                   </div>
                 </TooltipTrigger>
-                <TooltipContent className="max-w-xs p-4">
-                  <div className="space-y-2">
+                <TooltipContent align="start" className="max-w-xs p-4">
+                  <div className="space-y-2 text-left">
                     <h4 className="font-semibold">Body Adiposity Index (BAI)</h4>
                     <p>Estimates body fat percentage using hip circumference and height.</p>
                     <div className="text-sm">
@@ -118,8 +118,8 @@ const Group3Results = ({
                     <Info className="h-4 w-4 text-mint-500" />
                   </div>
                 </TooltipTrigger>
-                <TooltipContent className="max-w-xs p-4">
-                  <div className="space-y-2">
+                <TooltipContent align="start" className="max-w-xs p-4">
+                  <div className="space-y-2 text-left">
                     <h4 className="font-semibold">Conicity Index (C-Index)</h4>
                     <p>Measures abdominal fat distribution and cardiovascular risk.</p>
                     <div className="text-sm">
