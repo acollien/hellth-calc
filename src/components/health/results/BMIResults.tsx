@@ -110,7 +110,6 @@ const BMIResults = ({ bmi }: BMIResultsProps) => {
                 value={value}
                 ranges={bmiRanges}
                 max={40}
-                unit="BMI"
               />
             </div>
           );
