@@ -24,6 +24,7 @@ export const useBodyComposition = () => {
     });
 
     const compositionResults = calculateComposition(numericMetrics);
+    console.log('Composition results:', compositionResults);
     
     const results: any = {
       ...compositionResults,
@@ -33,7 +34,7 @@ export const useBodyComposition = () => {
       skeletalMuscleMass: calculateSkeletalMuscleMass(numericMetrics),
     };
 
-    console.log('Body composition results:', results);
+    console.log('Final body composition results:', results);
     setResults(results);
     return results;
   };

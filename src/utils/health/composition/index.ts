@@ -1,26 +1,33 @@
 import { calculateBodyFat } from './bodyFat';
 import { calculateLeanBodyMass } from './leanMass';
-import { calculateSkeletalMuscleMass } from './muscleMass';
 import { calculateFatFreeMassIndex } from './fatFreeMass';
-import { calculateBodyFatDistribution } from '../calculations/bodyFatDistribution';
+import { calculateSkeletalMuscleMass } from './muscleMass';
+import { HealthMetrics } from "@/components/health/types";
 
-// Re-export individual calculation functions
+export const calculateBodyFatDistribution = (metrics: HealthMetrics) => {
+  if (!metrics.waist || !metrics.hip || !metrics.height) return null;
+  
+  const waist = parseFloat(metrics.waist);
+  const hip = parseFloat(metrics.hip);
+  const height = parseFloat(metrics.height);
+  
+  return (Math.pow(waist, 2) * height) / (Math.pow(hip, 2) * Math.sqrt(height));
+};
+
+export const calculateComposition = (metrics: HealthMetrics) => {
+  console.log("Calculating composition with metrics:", metrics);
+  
+  const bodyFatDistribution = calculateBodyFatDistribution(metrics);
+  console.log("Calculated bodyFatDistribution:", bodyFatDistribution);
+  
+  return {
+    bodyFatDistribution
+  };
+};
+
 export {
   calculateBodyFat,
   calculateLeanBodyMass,
-  calculateSkeletalMuscleMass,
-  calculateFatFreeMassIndex
-};
-
-// Export the composition calculator
-export const calculateComposition = (metrics: any) => {
-  console.log('Calculating composition with metrics:', metrics);
-  
-  const height = parseFloat(metrics.height);
-  const waist = parseFloat(metrics.waist);
-  const hip = parseFloat(metrics.hip);
-
-  return {
-    bodyFatDistribution: calculateBodyFatDistribution(waist, hip, height)
-  };
+  calculateFatFreeMassIndex,
+  calculateSkeletalMuscleMass
 };
