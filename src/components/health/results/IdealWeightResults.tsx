@@ -19,6 +19,14 @@ const IdealWeightResults = ({ idealWeight }: IdealWeightResultsProps) => {
     return "text-red-600"; // High
   };
 
+  const getWeightRangeDescription = (value: number) => {
+    if (value < 45) return "Very Low Weight Range";
+    if (value < 55) return "Low Normal Weight Range";
+    if (value < 75) return "Normal Weight Range";
+    if (value < 85) return "High Normal Weight Range";
+    return "High Weight Range";
+  };
+
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-medium text-mint-800">Ideal Weight Range (kg)</h3>
@@ -46,6 +54,25 @@ const IdealWeightResults = ({ idealWeight }: IdealWeightResultsProps) => {
                   <div className="text-sm space-y-1">
                     <p className="font-medium">Formula:</p>
                     <p className="text-mint-700">{getFormula(formula)}</p>
+                  </div>
+                  <div className="mt-2 pt-2 border-t">
+                    <p className="font-medium text-sm">Current Range:</p>
+                    <p className={`text-sm ${getValueColor(value)}`}>
+                      {getWeightRangeDescription(value)}
+                    </p>
+                    <p className="text-xs text-gray-600 mt-1">
+                      Ranges (kg):
+                      <br />
+                      &lt;45: Very Low
+                      <br />
+                      45-54: Low Normal
+                      <br />
+                      55-74: Normal
+                      <br />
+                      75-84: High Normal
+                      <br />
+                      ≥85: High
+                    </p>
                   </div>
                 </div>
               </TooltipContent>
