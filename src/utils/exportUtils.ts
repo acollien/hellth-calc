@@ -2,10 +2,23 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { formatDate } from '@/lib/utils';
 
+interface ExtendedJsPDF extends jsPDF {
+  lastAutoTable?: {
+    finalY: number;
+  };
+  internal: {
+    pageSize: {
+      width: number;
+      height: number;
+    };
+    getNumberOfPages: () => number;
+  };
+}
+
 export const exportHealthResults = (results: any) => {
   console.log('Exporting health results to PDF:', results);
   
-  const doc = new jsPDF();
+  const doc = new jsPDF() as ExtendedJsPDF;
   const pageWidth = doc.internal.pageSize.width;
   
   // Add title
@@ -36,7 +49,8 @@ export const exportHealthResults = (results: any) => {
   });
   
   // Body Composition Section
-  doc.text('Body Composition', 20, doc.lastAutoTable.finalY + 20);
+  const lastY1 = doc.lastAutoTable?.finalY || 50;
+  doc.text('Body Composition', 20, lastY1 + 20);
   
   const bodyCompData = [
     ['Metric', 'Value'],
@@ -46,7 +60,7 @@ export const exportHealthResults = (results: any) => {
   ];
   
   autoTable(doc, {
-    startY: doc.lastAutoTable.finalY + 25,
+    startY: lastY1 + 25,
     head: [bodyCompData[0]],
     body: bodyCompData.slice(1),
     theme: 'striped',
@@ -54,7 +68,8 @@ export const exportHealthResults = (results: any) => {
   });
   
   // Body Indices Section
-  doc.text('Body Indices', 20, doc.lastAutoTable.finalY + 20);
+  const lastY2 = doc.lastAutoTable?.finalY || lastY1 + 25;
+  doc.text('Body Indices', 20, lastY2 + 20);
   
   const indicesData = [
     ['Index', 'Value'],
@@ -65,7 +80,7 @@ export const exportHealthResults = (results: any) => {
   ];
   
   autoTable(doc, {
-    startY: doc.lastAutoTable.finalY + 25,
+    startY: lastY2 + 25,
     head: [indicesData[0]],
     body: indicesData.slice(1),
     theme: 'striped',
