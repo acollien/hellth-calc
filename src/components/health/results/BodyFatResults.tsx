@@ -1,5 +1,4 @@
-import { Info } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import BodyFatCard from "./cards/BodyFatCard";
 
 interface BodyFatResultsProps {
   bodyFat: {
@@ -10,17 +9,6 @@ interface BodyFatResultsProps {
   };
   gender: 'male' | 'female';
 }
-
-const getBodyFatColor = (bodyFat: number, gender: 'male' | 'female') => {
-  const ranges = gender === 'male' 
-    ? { low: 6, healthy: 24, high: 32 }
-    : { low: 14, healthy: 31, high: 39 };
-
-  if (bodyFat < ranges.low) return "text-blue-600";
-  if (bodyFat < ranges.healthy) return "text-green-600";
-  if (bodyFat < ranges.high) return "text-yellow-600";
-  return "text-red-600";
-};
 
 const BodyFatResults = ({ bodyFat, gender }: BodyFatResultsProps) => {
   console.log('BodyFat Results Props:', { bodyFat, gender });
@@ -125,47 +113,20 @@ const BodyFatResults = ({ bodyFat, gender }: BodyFatResultsProps) => {
         {Object.entries(bodyFat).map(([key, value]) => {
           console.log(`Processing ${key} with value:`, value);
           
-          // Skip if value is null, undefined, or NaN
-          if (value === null || value === undefined || isNaN(value)) {
-            console.log(`Skipping ${key} - invalid value:`, value);
-            return null;
+          // Only render if value is a valid number
+          if (typeof value === 'number' && !isNaN(value)) {
+            return (
+              <BodyFatCard
+                key={key}
+                methodKey={key}
+                value={value}
+                gender={gender}
+                tooltipContent={tooltipContent[key as keyof typeof tooltipContent]}
+              />
+            );
           }
-          
-          return (
-            <div key={key} className="flex-1 p-4 rounded-lg bg-mint-50 border border-mint-100 w-full">
-              <div className="flex items-center justify-between gap-2">
-                <span className="text-sm text-mint-800 font-medium capitalize">
-                  {key.replace(/([A-Z])/g, ' $1').trim()}
-                </span>
-                <Tooltip>
-                  <TooltipTrigger>
-                    <Info className="h-4 w-4 text-mint-500" />
-                  </TooltipTrigger>
-                  <TooltipContent className="max-w-xs p-4">
-                    <div className="space-y-2">
-                      <h4 className="font-semibold">{tooltipContent[key as keyof typeof tooltipContent].title}</h4>
-                      <p>{tooltipContent[key as keyof typeof tooltipContent].description}</p>
-                      <div className="text-sm space-y-1">
-                        <p className="font-medium">Formula:</p>
-                        <p className="text-mint-700 whitespace-pre-line">
-                          {tooltipContent[key as keyof typeof tooltipContent].formula}
-                        </p>
-                        <p className="font-medium mt-2">Ranges ({gender === 'male' ? 'Men' : 'Women'}):</p>
-                        <ul className="list-disc pl-4">
-                          {tooltipContent[key as keyof typeof tooltipContent].ranges[gender].map((range, index) => (
-                            <li key={index}>{range}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </TooltipContent>
-                </Tooltip>
-              </div>
-              <div className={`text-2xl font-semibold mt-2 ${getBodyFatColor(value, gender)}`}>
-                {value.toFixed(1)}%
-              </div>
-            </div>
-          );
+          console.log(`Skipping ${key} - invalid value:`, value);
+          return null;
         })}
       </div>
     </div>
