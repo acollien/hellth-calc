@@ -68,7 +68,7 @@ const Group1Results = ({ ponderalIndex, absi, bodyRoundnessIndex, waistToHeightR
         {absi && (
           <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
             <div className="flex items-center gap-2">
-              <span className="text-sm text-mint-800 font-medium">A Body Shape Index (ABSI)</span>
+              <span className="text-sm text-mint-800 font-medium">A Body Shape Index</span>
               <Tooltip>
                 <TooltipTrigger>
                   <Info className="h-4 w-4 text-mint-500" />
@@ -89,7 +89,7 @@ const Group1Results = ({ ponderalIndex, absi, bodyRoundnessIndex, waistToHeightR
               </Tooltip>
             </div>
             <div className={`text-2xl font-semibold ${getValueColor(absi[unit], 'absi')}`}>
-              {absi[unit].toFixed(5)} {unit === 'metric' ? 'm¹¹/⁶/kg²/³' : 'in¹¹/⁶/lb²/³'}
+              {absi[unit].toFixed(5)}
             </div>
           </div>
         )}
