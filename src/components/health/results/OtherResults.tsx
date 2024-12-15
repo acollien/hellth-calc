@@ -31,9 +31,9 @@ const OtherResults = ({ frameSize, waistToHip, biologicalAge }: OtherResultsProp
                 <div className="text-sm space-y-1">
                   <p className="font-medium">Categories:</p>
                   <ul className="list-disc pl-4 space-y-1">
-                    <li>Small: Height/Wrist > 10.4</li>
-                    <li>Medium: Height/Wrist 9.6 - 10.4</li>
-                    <li>Large: Height/Wrist < 9.6</li>
+                    <li>Small: Height/Wrist &gt; {10.4}</li>
+                    <li>Medium: Height/Wrist {9.6} - {10.4}</li>
+                    <li>Large: Height/Wrist &lt; {9.6}</li>
                   </ul>
                 </div>
               </div>
