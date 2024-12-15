@@ -5,12 +5,13 @@ import {
   calculateLeanBodyMass,
   calculateFatFreeMassIndex,
   calculateSkeletalMuscleMass,
+  calculateComposition
 } from "@/utils/health/composition";
 
 export const useBodyComposition = () => {
   const [results, setResults] = useState<any>(null);
 
-  const calculateComposition = (metrics: HealthMetrics) => {
+  const calculateCompositionMetrics = (metrics: HealthMetrics) => {
     console.log('Calculating body composition:', metrics);
     
     const numericMetrics: any = {};
@@ -22,20 +23,20 @@ export const useBodyComposition = () => {
       }
     });
 
-    const results: any = {};
-
-    if (numericMetrics.gender) {
-      results.bodyFat = calculateBodyFat(numericMetrics);
-    }
-
-    results.leanBodyMass = calculateLeanBodyMass(numericMetrics);
-    results.fatFreeMassIndex = calculateFatFreeMassIndex(numericMetrics);
-    results.skeletalMuscleMass = calculateSkeletalMuscleMass(numericMetrics);
+    const compositionResults = calculateComposition(numericMetrics);
+    
+    const results: any = {
+      ...compositionResults,
+      bodyFat: calculateBodyFat(numericMetrics),
+      leanBodyMass: calculateLeanBodyMass(numericMetrics),
+      fatFreeMassIndex: calculateFatFreeMassIndex(numericMetrics),
+      skeletalMuscleMass: calculateSkeletalMuscleMass(numericMetrics),
+    };
 
     console.log('Body composition results:', results);
     setResults(results);
     return results;
   };
 
-  return { results, calculateComposition };
+  return { results, calculateComposition: calculateCompositionMetrics };
 };

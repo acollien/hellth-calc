@@ -11,6 +11,8 @@ interface ResultsProps {
 }
 
 const HealthResults = ({ results }: ResultsProps) => {
+  console.log("HealthResults received results:", results);
+  
   return (
     <div className="space-y-6 animate-fade-in">
       <ResultsHeader results={results} />

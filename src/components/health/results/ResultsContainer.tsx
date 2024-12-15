@@ -12,6 +12,8 @@ interface ResultsContainerProps {
 }
 
 const ResultsContainer = ({ results, metrics }: ResultsContainerProps) => {
+  console.log("ResultsContainer received results:", results);
+  
   return (
     <div className="space-y-8">
       <HealthResults results={results} />
