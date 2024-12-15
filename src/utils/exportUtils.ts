@@ -6,19 +6,12 @@ interface ExtendedJsPDF extends jsPDF {
   lastAutoTable?: {
     finalY: number;
   };
-  internal: {
-    pageSize: {
-      width: number;
-      height: number;
-    };
-    getNumberOfPages: () => number;
-  };
 }
 
 export const exportHealthResults = (results: any) => {
   console.log('Exporting health results to PDF:', results);
   
-  const doc = new jsPDF() as ExtendedJsPDF;
+  const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.width;
   
   // Add title
@@ -49,7 +42,7 @@ export const exportHealthResults = (results: any) => {
   });
   
   // Body Composition Section
-  const lastY1 = doc.lastAutoTable?.finalY || 50;
+  const lastY1 = (doc as ExtendedJsPDF).lastAutoTable?.finalY || 50;
   doc.text('Body Composition', 20, lastY1 + 20);
   
   const bodyCompData = [
@@ -68,7 +61,7 @@ export const exportHealthResults = (results: any) => {
   });
   
   // Body Indices Section
-  const lastY2 = doc.lastAutoTable?.finalY || lastY1 + 25;
+  const lastY2 = (doc as ExtendedJsPDF).lastAutoTable?.finalY || lastY1 + 25;
   doc.text('Body Indices', 20, lastY2 + 20);
   
   const indicesData = [
