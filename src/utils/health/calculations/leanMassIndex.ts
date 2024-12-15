@@ -13,14 +13,29 @@ export const calculateLeanMassIndex = (metrics: HealthMetrics): number | null =>
   const heightInM = Number(height) / 100;
   const weightInKg = Number(weight);
   
-  // Convert metrics to the format expected by calculateBodyFat
+  // Convert all numeric string values to numbers
   const convertedMetrics = {
     ...metrics,
     height: Number(height),
     weight: Number(weight),
+    age: metrics.age ? Number(metrics.age) : undefined,
     neck: metrics.neck ? Number(metrics.neck) : undefined,
     waist: metrics.waist ? Number(metrics.waist) : undefined,
-    hip: metrics.hip ? Number(metrics.hip) : undefined
+    hip: metrics.hip ? Number(metrics.hip) : undefined,
+    wrist: metrics.wrist ? Number(metrics.wrist) : undefined,
+    forearm: metrics.forearm ? Number(metrics.forearm) : undefined,
+    chestSkinfold: metrics.chestSkinfold ? Number(metrics.chestSkinfold) : undefined,
+    midaxillarySkinfold: metrics.midaxillarySkinfold ? Number(metrics.midaxillarySkinfold) : undefined,
+    suprailiacSkinfold: metrics.suprailiacSkinfold ? Number(metrics.suprailiacSkinfold) : undefined,
+    thighSkinfold: metrics.thighSkinfold ? Number(metrics.thighSkinfold) : undefined,
+    umbilicalSkinfold: metrics.umbilicalSkinfold ? Number(metrics.umbilicalSkinfold) : undefined,
+    tricepsSkinfold: metrics.tricepsSkinfold ? Number(metrics.tricepsSkinfold) : undefined,
+    subscapularSkinfold: metrics.subscapularSkinfold ? Number(metrics.subscapularSkinfold) : undefined,
+    calfSkinfold: metrics.calfSkinfold ? Number(metrics.calfSkinfold) : undefined,
+    midaxillarySkinfold2: metrics.midaxillarySkinfold2 ? Number(metrics.midaxillarySkinfold2) : undefined,
+    gender: metrics.gender,
+    activityLevel: metrics.activityLevel,
+    unit: metrics.unit
   };
   
   // Calculate body fat using the Navy method as it's generally most reliable
