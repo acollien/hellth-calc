@@ -18,16 +18,16 @@ const IdealWeightResults = ({ idealWeight }: IdealWeightResultsProps) => {
           <div key={formula} className="p-4 rounded-lg bg-mint-50 border border-mint-100">
             <Tooltip>
               <TooltipTrigger asChild>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <div className="text-sm text-mint-800 font-medium capitalize">
+                <div className="flex items-center gap-2">
+                  <div className="flex-1">
+                    <div className="text-sm text-mint-800 font-medium flex items-center gap-2">
                       {formula} Formula
+                      <Info className="h-4 w-4 text-mint-500" />
                     </div>
                     <div className="text-2xl font-semibold text-mint-900">
                       {value.toFixed(1)}
                     </div>
                   </div>
-                  <Info className="h-4 w-4 text-mint-500" />
                 </div>
               </TooltipTrigger>
               <TooltipContent className="max-w-xs p-4">

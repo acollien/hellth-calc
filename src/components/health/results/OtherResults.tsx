@@ -14,14 +14,16 @@ const OtherResults = ({ frameSize, waistToHip, biologicalAge }: OtherResultsProp
         <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
           <Tooltip>
             <TooltipTrigger asChild>
-              <div className="flex items-start justify-between">
-                <div>
-                  <div className="text-sm text-mint-800 font-medium">Body Frame Size</div>
+              <div className="flex items-center gap-2">
+                <div className="flex-1">
+                  <div className="text-sm text-mint-800 font-medium flex items-center gap-2">
+                    Body Frame Size
+                    <Info className="h-4 w-4 text-mint-500" />
+                  </div>
                   <div className="text-2xl font-semibold text-mint-900 capitalize">
                     {frameSize}
                   </div>
                 </div>
-                <Info className="h-4 w-4 text-mint-500" />
               </div>
             </TooltipTrigger>
             <TooltipContent className="max-w-xs p-4">
@@ -46,14 +48,16 @@ const OtherResults = ({ frameSize, waistToHip, biologicalAge }: OtherResultsProp
         <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
           <Tooltip>
             <TooltipTrigger asChild>
-              <div className="flex items-start justify-between">
-                <div>
-                  <div className="text-sm text-mint-800 font-medium">Waist-to-Hip Ratio</div>
+              <div className="flex items-center gap-2">
+                <div className="flex-1">
+                  <div className="text-sm text-mint-800 font-medium flex items-center gap-2">
+                    Waist-to-Hip Ratio
+                    <Info className="h-4 w-4 text-mint-500" />
+                  </div>
                   <div className="text-2xl font-semibold text-mint-900">
                     {waistToHip.toFixed(2)}
                   </div>
                 </div>
-                <Info className="h-4 w-4 text-mint-500" />
               </div>
             </TooltipTrigger>
             <TooltipContent className="max-w-xs p-4">
@@ -78,14 +82,16 @@ const OtherResults = ({ frameSize, waistToHip, biologicalAge }: OtherResultsProp
         <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
           <Tooltip>
             <TooltipTrigger asChild>
-              <div className="flex items-start justify-between">
-                <div>
-                  <div className="text-sm text-mint-800 font-medium">Estimated Biological Age</div>
+              <div className="flex items-center gap-2">
+                <div className="flex-1">
+                  <div className="text-sm text-mint-800 font-medium flex items-center gap-2">
+                    Estimated Biological Age
+                    <Info className="h-4 w-4 text-mint-500" />
+                  </div>
                   <div className="text-2xl font-semibold text-mint-900">
                     {biologicalAge} years
                   </div>
                 </div>
-                <Info className="h-4 w-4 text-mint-500" />
               </div>
             </TooltipTrigger>
             <TooltipContent className="max-w-xs p-4">
