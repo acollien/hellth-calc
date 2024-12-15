@@ -24,13 +24,22 @@ export const calculateBodyFat = (metrics: HealthMetrics) => {
   }
 
   // Jackson-Pollock Method
-  if (metrics.chestSkinfold && metrics.midaxillarySkinfold && metrics.tricepsSkinfold && metrics.age && metrics.gender) {
-    const sum = parseFloat(metrics.chestSkinfold) + parseFloat(metrics.midaxillarySkinfold) + parseFloat(metrics.tricepsSkinfold);
+  if (metrics.chestSkinfold && metrics.umbilicalSkinfold && metrics.thighSkinfold && metrics.age && metrics.gender) {
+    console.log('Calculating Jackson-Pollock with:', {
+      chest: metrics.chestSkinfold,
+      umbilical: metrics.umbilicalSkinfold,
+      thigh: metrics.thighSkinfold,
+      age: metrics.age,
+      gender: metrics.gender
+    });
+
+    const sum = parseFloat(metrics.chestSkinfold) + parseFloat(metrics.umbilicalSkinfold) + parseFloat(metrics.thighSkinfold);
     if (metrics.gender === 'male') {
       results.jackson = 495 / (1.10938 - 0.0008267 * sum + 0.0000016 * sum * sum - 0.0002574 * parseFloat(metrics.age)) - 450;
     } else {
       results.jackson = 495 / (1.089733 - 0.0009245 * sum + 0.0000025 * sum * sum - 0.0000979 * parseFloat(metrics.age)) - 450;
     }
+    console.log('Jackson-Pollock result:', results.jackson);
   }
 
   // BMI-based estimation
@@ -61,6 +70,7 @@ export const calculateBodyFat = (metrics: HealthMetrics) => {
     }
   }
 
+  console.log('Final body fat results:', results);
   return results;
 };
 
