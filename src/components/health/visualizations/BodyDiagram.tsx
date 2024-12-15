@@ -8,70 +8,39 @@ interface BodyDiagramProps {
 }
 
 const BodyDiagram = ({ gender, measurementType, className }: BodyDiagramProps) => {
-  const getDiagramPath = () => {
-    const basePath = gender === 'male' ? 'M' : 'F';
-    
+  const getMeasurementPath = () => {
     switch (measurementType) {
       case 'neck':
-        return `${basePath}_NECK`;
-      case 'waist':
-        return `${basePath}_WAIST`;
-      case 'hip':
-        return `${basePath}_HIP`;
-      case 'wrist':
-        return `${basePath}_WRIST`;
-      case 'forearm':
-        return `${basePath}_FOREARM`;
-      case 'triceps':
-        return `${basePath}_TRICEPS`;
-      case 'subscapular':
-        return `${basePath}_SUBSCAPULAR`;
-      case 'suprailiac':
-        return `${basePath}_SUPRAILIAC`;
-      case 'abdominal':
-        return `${basePath}_ABDOMINAL`;
-      case 'thigh':
-        return `${basePath}_THIGH`;
+        return (
+          <g>
+            <path d="M40 30 C40 40 60 40 60 30" className="stroke-mint-800" />
+            <path d="M40 30 C40 20 60 20 60 30" className="stroke-mint-800" />
+            <circle cx="50" cy="30" r="15" className="stroke-mint-500 stroke-dasharray-2 fill-none animate-pulse" />
+            <text x="70" y="30" className="text-xs fill-mint-700">Measure around middle of neck</text>
+          </g>
+        );
       case 'chest':
-        return `${basePath}_CHEST`;
+        return (
+          <g>
+            <path d="M30 50 C30 70 70 70 70 50" className="stroke-mint-800" />
+            <path d="M30 50 C30 30 70 30 70 50" className="stroke-mint-800" />
+            <path d="M30 50 L70 50" className="stroke-mint-500 stroke-dasharray-2 animate-pulse" />
+            <text x="75" y="50" className="text-xs fill-mint-700">Measure at nipple level</text>
+          </g>
+        );
+      // Add similar detailed anatomical drawings for other measurements
       default:
-        return `${basePath}_FULL`;
+        return null;
     }
   };
 
   return (
-    <div className={cn("relative w-24 h-32", className)}>
+    <div className={cn("relative w-32 h-32", className)}>
       <svg
-        viewBox="0 0 100 140"
-        className="w-full h-full stroke-mint-800 fill-none stroke-2"
+        viewBox="0 0 100 100"
+        className="w-full h-full"
       >
-        {/* Base figure - simplified human outline */}
-        <path d="M50 20 C60 20 65 15 65 10 C65 5 60 0 50 0 C40 0 35 5 35 10 C35 15 40 20 50 20" />
-        <path d="M35 20 L35 45 L30 60 L35 80 L33 140" />
-        <path d="M65 20 L65 45 L70 60 L65 80 L67 140" />
-        <path d="M35 45 L65 45" />
-        
-        {/* Measurement-specific highlights */}
-        {measurementType === 'neck' && (
-          <circle cx="50" cy="15" r="12" className="stroke-mint-500 animate-pulse" />
-        )}
-        {measurementType === 'chest' && (
-          <path d="M35 45 L65 45" className="stroke-mint-500 stroke-4 animate-pulse" />
-        )}
-        {measurementType === 'waist' && (
-          <path d="M30 60 L70 60" className="stroke-mint-500 stroke-4 animate-pulse" />
-        )}
-        {measurementType === 'hip' && (
-          <path d="M35 80 L65 80" className="stroke-mint-500 stroke-4 animate-pulse" />
-        )}
-        {/* Add measurement guide arrows */}
-        {measurementType !== 'full' && (
-          <path
-            d="M10 70 L90 70"
-            className="stroke-mint-300 stroke-dasharray-2"
-            strokeDasharray="4"
-          />
-        )}
+        {getMeasurementPath()}
       </svg>
     </div>
   );

@@ -82,7 +82,7 @@ const HealthCalculator = () => {
       <Card className="p-6 backdrop-blur-sm bg-white/90 shadow-lg">
         <div className="space-y-8">
           <div className="text-center space-y-2">
-            <h1 className="text-3xl font-semibold text-mint-800">Health Calculator</h1>
+            <h1 className="text-3xl font-semibold text-mint-800">Hellth Calculator</h1>
             <p className="text-gray-600">Calculate various health metrics based on your measurements</p>
           </div>
 

@@ -15,21 +15,18 @@ interface BasicMeasurementsProps {
 const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) => {
   const getHeightRange = () => {
     return metrics.unit === "metric" 
-      ? { min: 54, max: 251, step: 1 }    // cm (updated for record holders)
-      : { min: 21, max: 99, step: 0.5 };  // inches
+      ? { min: 54.0, max: 251.0, step: 0.1 }    // cm (updated for record holders)
+      : { min: 21.0, max: 99.0, step: 0.1 };    // inches
   };
 
   const getWeightRange = () => {
     return metrics.unit === "metric"
-      ? { min: 2, max: 635, step: 0.5 }    // kg (updated for record holders)
-      : { min: 4.4, max: 1400, step: 0.5 }; // lbs
+      ? { min: 2.0, max: 635.0, step: 0.1 }    // kg (updated for record holders)
+      : { min: 4.4, max: 1400.0, step: 0.1 };  // lbs
   };
 
   const formatValue = (value: number, type: 'height' | 'weight') => {
-    if (type === 'height') {
-      return `${value} ${metrics.unit === "metric" ? "cm" : "in"}`;
-    }
-    return `${value} ${metrics.unit === "metric" ? "kg" : "lbs"}`;
+    return `${value.toFixed(1)} ${metrics.unit === "metric" ? "cm" : "in"}`;
   };
 
   return (
