@@ -5,6 +5,8 @@ interface HealthMetrics {
   waist?: number;
   hip?: number;
   unit?: 'metric' | 'imperial';
+  age?: number;
+  gender?: 'male' | 'female';
 }
 
 export const calculateFrameSize = (metrics: HealthMetrics) => {
