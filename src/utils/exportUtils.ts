@@ -48,18 +48,18 @@ export const exportHealthResults = (results: any) => {
     ['Body Fat (Army)', 
      `${results.bodyFat?.army?.toFixed(1) || 'N/A'}%`, 
      'Men:\n17-20 years: <20%\n21-27 years: <22%\n28-39 years: <24%\n40+ years: <26%\n\nWomen:\n17-20 years: <30%\n21-27 years: <32%\n28-39 years: <34%\n40+ years: <36%'],
-    ['Ponderal Index', 
-     `${results.ponderalIndex?.metric.toFixed(2) || 'N/A'}`, 
-     'Underweight: <13\nNormal: 13-15\nOverweight: 15-16\nObese: >16'],
-    ['A Body Shape Index', 
-     `${results.absi?.metric.toFixed(3) || 'N/A'}`, 
-     'Low Risk: <0.07\nAverage Risk: 0.07-0.08\nHigh Risk: >0.08'],
-    ['Body Roundness Index', 
-     `${results.bodyRoundnessIndex?.metric.toFixed(2) || 'N/A'}`, 
-     'Normal: 1-5\nOverweight: 5-15\nObese: >15'],
-    ['Waist-to-Height Ratio', 
-     `${results.waistToHeightRatio?.toFixed(2) || 'N/A'}`, 
-     'Extremely Slim: <0.34\nHealthy Slim: 0.35-0.42\nHealthy: 0.43-0.52\nOverweight: 0.53-0.57\nVery Overweight: 0.58-0.62\nObese: >0.63']
+    ['Lean Body Mass',
+     `${results.leanBodyMass?.toFixed(1) || 'N/A'} kg`,
+     'Low: <35kg\nNormal: 35-65kg\nAthletic: 65-80kg\nHigh: >80kg'],
+    ['Fat-Free Mass Index',
+     `${results.fatFreeMassIndex?.toFixed(1) || 'N/A'}`,
+     'Low: <16\nNormal: 16-20\nAthletic: 20-25\nVery High: >25'],
+    ['Skeletal Muscle Mass',
+     `${results.skeletalMuscleMass?.toFixed(1) || 'N/A'} kg`,
+     'Low: <25kg\nNormal: 25-45kg\nAthletic: 45-55kg\nElite: >55kg'],
+    ['Body Fat Distribution',
+     `${results.bodyFatDistribution?.toFixed(2) || 'N/A'}`,
+     'Optimal: <0.5\nModerate: 0.5-0.8\nHigh Risk: >0.8']
   ];
 
   autoTable(doc, {
@@ -76,10 +76,57 @@ export const exportHealthResults = (results: any) => {
 
   currentY = (doc as ExtendedJsPDF).lastAutoTable?.finalY || currentY + 40;
 
-  // Metabolic Metrics Section
+  // Body Indices Section
   doc.setFontSize(16);
   doc.setTextColor(42, 149, 135);
-  doc.text('Metabolic Metrics', 20, currentY + 15);
+  doc.text('Body Indices', 20, currentY + 15);
+
+  const bodyIndicesData = [
+    ['Metric', 'Value', 'Interpretation'],
+    ['Ponderal Index', 
+     `${results.ponderalIndex?.metric.toFixed(2) || 'N/A'}`, 
+     'Underweight: <11\nNormal: 11-14\nOverweight: 14-17\nObese: >17'],
+    ['A Body Shape Index', 
+     `${results.absi?.metric.toFixed(3) || 'N/A'}`, 
+     'Low Risk: <0.07\nAverage Risk: 0.07-0.08\nHigh Risk: >0.08'],
+    ['Body Roundness Index', 
+     `${results.bodyRoundnessIndex?.metric.toFixed(2) || 'N/A'}`, 
+     'Very Lean: <1\nNormal: 1-2\nOverweight: 2-3\nObese: >3'],
+    ['Waist-to-Height Ratio', 
+     `${results.waistToHeightRatio?.toFixed(2) || 'N/A'}`, 
+     'Very Low: <0.4\nHealthy: 0.4-0.5\nOverweight: 0.5-0.6\nObese: >0.6'],
+    ['Waist-to-Hip Ratio',
+     `${results.waistToHip?.toFixed(2) || 'N/A'}`,
+     'Men:\nLow Risk: <0.85\nModerate Risk: 0.85-0.90\nHigh Risk: >0.90\n\nWomen:\nLow Risk: <0.80\nModerate Risk: 0.80-0.85\nHigh Risk: >0.85'],
+    ['Body Adiposity Index',
+     `${results.bodyAdiposityIndex?.toFixed(1) || 'N/A'}`,
+     'Men: 8-20%\nWomen: 21-33%'],
+    ['Conicity Index',
+     `${results.conicityIndex?.toFixed(2) || 'N/A'}`,
+     'Low Risk: <1.25\nModerate Risk: 1.25-1.35\nHigh Risk: >1.35'],
+    ['Lean Mass Index',
+     `${results.leanMassIndex?.toFixed(1) || 'N/A'}`,
+     'Low: <16\nNormal: 16-19\nAthletic: 19-22\nExceptional: >22']
+  ];
+
+  autoTable(doc, {
+    startY: currentY + 20,
+    head: [bodyIndicesData[0]],
+    body: bodyIndicesData.slice(1),
+    theme: 'striped',
+    headStyles: { fillColor: [42, 149, 135] },
+    columnStyles: {
+      2: { cellWidth: 80 }
+    },
+    styles: { cellPadding: 5 }
+  });
+
+  currentY = (doc as ExtendedJsPDF).lastAutoTable?.finalY || currentY + 40;
+
+  // Metabolic & Other Metrics Section
+  doc.setFontSize(16);
+  doc.setTextColor(42, 149, 135);
+  doc.text('Metabolic & Other Metrics', 20, currentY + 15);
 
   const metabolicData = [
     ['Metric', 'Value', 'Interpretation'],
@@ -91,7 +138,10 @@ export const exportHealthResults = (results: any) => {
      'Low Activity: 1.2 × BMR\nLight Activity: 1.375 × BMR\nModerate Activity: 1.55 × BMR\nVery Active: 1.725 × BMR\nExtra Active: 1.9 × BMR'],
     ['Biological Age', 
      `${results.biologicalAge || 'N/A'} years`, 
-     'Lower than chronological age: Excellent health\nEqual to chronological age: Average health\nHigher than chronological age: Poor health']
+     'Lower than chronological age: Excellent health\nEqual to chronological age: Average health\nHigher than chronological age: Poor health'],
+    ['Frame Size',
+     `${results.frameSize || 'N/A'}`,
+     'Small: Height/Wrist > 10.4\nMedium: Height/Wrist 9.6-10.4\nLarge: Height/Wrist < 9.6']
   ];
 
   autoTable(doc, {
