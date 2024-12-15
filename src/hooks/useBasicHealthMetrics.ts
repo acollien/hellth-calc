@@ -34,7 +34,6 @@ export const useBasicHealthMetrics = () => {
     results.biologicalAge = calculateBiologicalAge(numericMetrics);
 
     console.log('Basic metrics results:', results);
-    setResults(results);
     return results;
   };
 

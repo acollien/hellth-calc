@@ -22,12 +22,12 @@ export const useHealthCalculations = () => {
     // Convert imperial to metric if needed
     const metrics = { ...currentMetrics };
     if (metrics.unit === 'imperial') {
-      if (metrics.height) metrics.height = parseFloat(metrics.height) * 2.54;
-      if (metrics.weight) metrics.weight = parseFloat(metrics.weight) * 0.453592;
-      if (metrics.neck) metrics.neck = parseFloat(metrics.neck) * 2.54;
-      if (metrics.waist) metrics.waist = parseFloat(metrics.waist) * 2.54;
-      if (metrics.hip) metrics.hip = parseFloat(metrics.hip) * 2.54;
-      if (metrics.wrist) metrics.wrist = parseFloat(metrics.wrist) * 2.54;
+      if (metrics.height) metrics.height = `${parseFloat(metrics.height) * 2.54}`;
+      if (metrics.weight) metrics.weight = `${parseFloat(metrics.weight) * 0.453592}`;
+      if (metrics.neck) metrics.neck = `${parseFloat(metrics.neck) * 2.54}`;
+      if (metrics.waist) metrics.waist = `${parseFloat(metrics.waist) * 2.54}`;
+      if (metrics.hip) metrics.hip = `${parseFloat(metrics.hip) * 2.54}`;
+      if (metrics.wrist) metrics.wrist = `${parseFloat(metrics.wrist) * 2.54}`;
     }
 
     // Calculate all metrics using specialized hooks
