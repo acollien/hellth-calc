@@ -27,7 +27,7 @@ const RangeBar = ({ value, ranges, unit = '', max }: RangeBarProps) => {
   const currentRange = getCurrentRange();
 
   return (
-    <div className="space-y-2 w-full">
+    <div className="space-y-4 w-full">
       <div className="relative h-8">
         {ranges.map((range, index) => (
           <Tooltip key={index}>
@@ -58,6 +58,7 @@ const RangeBar = ({ value, ranges, unit = '', max }: RangeBarProps) => {
           style={{ left: `${percentage}%` }}
         />
       </div>
+      <div className="h-4"></div>
     </div>
   );
 };
