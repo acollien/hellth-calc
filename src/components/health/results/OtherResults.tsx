@@ -15,16 +15,17 @@ const OtherResults = ({ frameSize, waistToHip }: OtherResultsProps) => {
     return null;
   }
 
-  const shouldShowFrameSize = frameSize && 
+  const isValidFrameSize = frameSize && 
+    typeof frameSize === 'string' &&
     frameSize !== 'undefined' && 
     frameSize !== 'null' && 
     ['small', 'medium', 'large'].includes(frameSize.toLowerCase());
 
-  console.log("Should show frame size:", shouldShowFrameSize, "with value:", frameSize);
+  console.log("Is valid frame size:", isValidFrameSize, "with value:", frameSize);
 
   return (
     <div className="grid gap-4 sm:grid-cols-2">
-      {shouldShowFrameSize && <FrameSizeCard frameSize={frameSize} />}
+      {isValidFrameSize && <FrameSizeCard frameSize={frameSize} />}
       {waistToHip && <WaistToHipCard value={waistToHip} />}
     </div>
   );

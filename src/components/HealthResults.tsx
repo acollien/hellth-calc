@@ -11,27 +11,36 @@ interface ResultsProps {
 }
 
 const HealthResults = ({ results }: ResultsProps) => {
-  console.log("HealthResults received results:", results);
+  console.log("HealthResults received full results:", results);
   
   // Extract frameSize value, ensuring we handle all possible cases
   const frameSize = (() => {
-    console.log("Processing frameSize from:", results.frameSize);
+    if (!results) return null;
     
-    // If frameSize is directly a string, use it
-    if (typeof results.frameSize === 'string') {
-      return results.frameSize;
+    // Direct access to frameSize property
+    const rawFrameSize = results.frameSize;
+    console.log("Raw frameSize value:", rawFrameSize);
+    
+    // If it's a string and valid, return it
+    if (typeof rawFrameSize === 'string' && 
+        ['small', 'medium', 'large'].includes(rawFrameSize.toLowerCase())) {
+      return rawFrameSize;
     }
     
-    // If frameSize is an object with _type property
-    if (results.frameSize && typeof results.frameSize === 'object') {
-      // First check for direct value
-      if (results.frameSize.value && results.frameSize.value !== 'undefined') {
-        return results.frameSize.value;
+    // If it's an object, try to get the value
+    if (rawFrameSize && typeof rawFrameSize === 'object') {
+      // Check value property
+      if (rawFrameSize.value && 
+          typeof rawFrameSize.value === 'string' && 
+          rawFrameSize.value !== 'undefined') {
+        return rawFrameSize.value;
       }
       
-      // Then check for _type
-      if (results.frameSize._type && results.frameSize._type !== 'undefined') {
-        return results.frameSize._type;
+      // Check _type property
+      if (rawFrameSize._type && 
+          typeof rawFrameSize._type === 'string' && 
+          rawFrameSize._type !== 'undefined') {
+        return rawFrameSize._type;
       }
     }
     

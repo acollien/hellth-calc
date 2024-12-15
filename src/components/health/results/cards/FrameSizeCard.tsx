@@ -6,9 +6,9 @@ interface FrameSizeCardProps {
 }
 
 const FrameSizeCard = ({ frameSize }: FrameSizeCardProps) => {
-  console.log("FrameSizeCard received frameSize:", frameSize);
+  console.log("FrameSizeCard rendering with frameSize:", frameSize);
 
-  const getFrameSizeColor = (size: string) => {
+  const getFrameSizeColor = (size: string): string => {
     const normalizedSize = size.toLowerCase();
     switch (normalizedSize) {
       case 'small': return "text-blue-600";
@@ -19,6 +19,9 @@ const FrameSizeCard = ({ frameSize }: FrameSizeCardProps) => {
   };
 
   const normalizedFrameSize = frameSize.toLowerCase();
+  const color = getFrameSizeColor(normalizedFrameSize);
+  
+  console.log("Normalized frame size:", normalizedFrameSize, "with color:", color);
 
   return (
     <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
@@ -30,7 +33,7 @@ const FrameSizeCard = ({ frameSize }: FrameSizeCardProps) => {
                 Body Frame Size
                 <Info className="h-4 w-4 text-mint-500" />
               </div>
-              <div className={`text-2xl font-semibold ${getFrameSizeColor(normalizedFrameSize)} capitalize`}>
+              <div className={`text-2xl font-semibold ${color} capitalize`}>
                 {normalizedFrameSize}
               </div>
             </div>
