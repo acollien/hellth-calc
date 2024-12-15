@@ -1,74 +1,8 @@
-import { HealthMetrics, BodyFatResult } from './types';
-import { convertToMetric } from './conversions';
+import { HealthMetrics } from './types';
+import { calculateBodyFat } from './bodyFat';
 
-export const calculateBodyFat = (metrics: HealthMetrics): BodyFatResult => {
-  console.log('Calculating body fat with metrics:', metrics);
-  const metricMetrics = convertToMetric(metrics);
-  
-  const results: BodyFatResult = {
-    navy: null,
-    jackson: null,
-    bmiBased: null,
-    army: null
-  };
+export { calculateBodyFat };
 
-  // Navy Method
-  if (metricMetrics.neck && metricMetrics.waist && metricMetrics.hip && metricMetrics.height && metricMetrics.gender) {
-    if (metricMetrics.gender === 'male') {
-      results.navy = 495 / (1.0324 - 0.19077 * Math.log10(metricMetrics.waist - metricMetrics.neck) + 0.15456 * Math.log10(metricMetrics.height)) - 450;
-    } else {
-      results.navy = 495 / (1.29579 - 0.35004 * Math.log10(metricMetrics.waist + metricMetrics.hip - metricMetrics.neck) + 0.22100 * Math.log10(metricMetrics.height)) - 450;
-    }
-  }
-
-  // Jackson-Pollock Method
-  if (metricMetrics.chest && metricMetrics.abdominal && metricMetrics.thigh && metricMetrics.age && metricMetrics.gender) {
-    const sum = metricMetrics.chest + metricMetrics.abdominal + metricMetrics.thigh;
-    if (metricMetrics.gender === 'male') {
-      results.jackson = 1.10938 - (0.0008267 * sum) + (0.0000016 * sum * sum) - (0.0002574 * metricMetrics.age);
-      results.jackson = (495 / results.jackson) - 450;
-    } else {
-      results.jackson = 1.089733 - (0.0009245 * sum) + (0.0000025 * sum * sum) - (0.0000979 * metricMetrics.age);
-      results.jackson = (495 / results.jackson) - 450;
-    }
-  }
-
-  // BMI-based estimation
-  if (metricMetrics.height && metricMetrics.weight && metricMetrics.age && metricMetrics.gender) {
-    const bmi = metricMetrics.weight / Math.pow(metricMetrics.height / 100, 2);
-    results.bmiBased = metricMetrics.gender === 'male'
-      ? (1.20 * bmi) + (0.23 * metricMetrics.age) - 16.2
-      : (1.20 * bmi) + (0.23 * metricMetrics.age) - 5.4;
-  }
-
-  results.army = calculateArmyBodyFat(metricMetrics);
-  console.log('Body fat calculation results:', results);
-  return results;
-};
-
-export const calculateArmyBodyFat = (metrics: HealthMetrics) => {
-  if (!metrics.gender || !metrics.neck || !metrics.waist || !metrics.height || (metrics.gender === 'female' && !metrics.hip)) {
-    return null;
-  }
-
-  // Convert measurements to inches if they're in metric
-  const heightInInches = metrics.unit === 'metric' ? metrics.height / 2.54 : metrics.height;
-  const neckInInches = metrics.unit === 'metric' ? metrics.neck / 2.54 : metrics.neck;
-  const waistInInches = metrics.unit === 'metric' ? metrics.waist / 2.54 : metrics.waist;
-  const hipInInches = metrics.gender === 'female' ? (metrics.unit === 'metric' ? metrics.hip / 2.54 : metrics.hip) : 0;
-
-  let bodyFat: number;
-  
-  if (metrics.gender === 'male') {
-    bodyFat = 86.010 * Math.log10(waistInInches - neckInInches) - 70.041 * Math.log10(heightInInches) + 36.76;
-  } else {
-    bodyFat = 163.205 * Math.log10(waistInInches + hipInInches - neckInInches) - 97.684 * Math.log10(heightInInches) - 78.387;
-  }
-
-  return Math.max(0, Math.min(bodyFat, 100)); // Ensure result is between 0 and 100
-};
-
-// Add the missing functions
 export const calculateLeanBodyMass = (metrics: HealthMetrics): number | null => {
   console.log('Calculating lean body mass with metrics:', metrics);
   if (!metrics.weight || !metrics.height || !metrics.gender) return null;
@@ -77,15 +11,9 @@ export const calculateLeanBodyMass = (metrics: HealthMetrics): number | null => 
   const height = metrics.unit === 'metric' ? metrics.height : metrics.height * 2.54;
 
   // Boer Formula
-  let lbm: number;
-  if (metrics.gender === 'male') {
-    lbm = (0.407 * weight) + (0.267 * height) - 19.2;
-  } else {
-    lbm = (0.252 * weight) + (0.473 * height) - 48.3;
-  }
-
-  console.log('Calculated lean body mass:', lbm);
-  return lbm;
+  return metrics.gender === 'male'
+    ? (0.407 * weight) + (0.267 * height) - 19.2
+    : (0.252 * weight) + (0.473 * height) - 48.3;
 };
 
 export const calculateFatFreeMassIndex = (metrics: HealthMetrics): number | null => {
@@ -94,10 +22,7 @@ export const calculateFatFreeMassIndex = (metrics: HealthMetrics): number | null
   if (!lbm || !metrics.height) return null;
 
   const heightInMeters = metrics.unit === 'metric' ? metrics.height / 100 : metrics.height * 0.0254;
-  const ffmi = lbm / (heightInMeters * heightInMeters);
-
-  console.log('Calculated fat-free mass index:', ffmi);
-  return ffmi;
+  return lbm / (heightInMeters * heightInMeters);
 };
 
 export const calculateSkeletalMuscleMass = (metrics: HealthMetrics): number | null => {
@@ -107,12 +32,8 @@ export const calculateSkeletalMuscleMass = (metrics: HealthMetrics): number | nu
   const weight = metrics.unit === 'metric' ? metrics.weight : metrics.weight * 0.453592;
   const height = metrics.unit === 'metric' ? metrics.height : metrics.height * 2.54;
   
-  // Lee Formula
   const genderFactor = metrics.gender === 'male' ? 2.29 : 0;
-  const smm = (0.244 * weight) + (0.117 * height) - (0.127 * metrics.age) + genderFactor - 2.98;
-
-  console.log('Calculated skeletal muscle mass:', smm);
-  return smm;
+  return (0.244 * weight) + (0.117 * height) - (0.127 * metrics.age) + genderFactor - 2.98;
 };
 
 export const calculateBodyFatDistributionIndex = (metrics: HealthMetrics): number | null => {
@@ -123,8 +44,5 @@ export const calculateBodyFatDistributionIndex = (metrics: HealthMetrics): numbe
   const hip = metrics.unit === 'metric' ? metrics.hip : metrics.hip * 2.54;
   const height = metrics.unit === 'metric' ? metrics.height : metrics.height * 2.54;
 
-  const bfdi = (waist * waist) / (hip * height);
-
-  console.log('Calculated body fat distribution index:', bfdi);
-  return bfdi;
+  return (waist * waist) / (hip * height);
 };
