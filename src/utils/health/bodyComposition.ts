@@ -152,7 +152,9 @@ export const calculateWaistToHipRatio = (metrics: HealthMetrics): number | null 
 export const calculateLeanMassIndex = (metrics: HealthMetrics): number | null => {
   console.log('Calculating Lean Mass Index with metrics:', metrics);
   
-  if (!metrics.height || !metrics.weight || !metrics.bodyFat) {
+  // Get body fat percentage from the navy method calculation
+  const bodyFatResults = calculateBodyFat(metrics);
+  if (!metrics.height || !metrics.weight || !bodyFatResults?.navy) {
     return null;
   }
 
@@ -160,7 +162,7 @@ export const calculateLeanMassIndex = (metrics: HealthMetrics): number | null =>
   const weight = metrics.unit === 'metric' ? parseFloat(metrics.weight) : parseFloat(metrics.weight) * 0.453592;
   
   // Calculate lean mass (total weight - fat mass)
-  const bodyFatPercentage = parseFloat(metrics.bodyFat) / 100;
+  const bodyFatPercentage = bodyFatResults.navy / 100;
   const leanMass = weight * (1 - bodyFatPercentage);
   
   // Calculate LMI (lean mass / height²)
@@ -168,14 +170,4 @@ export const calculateLeanMassIndex = (metrics: HealthMetrics): number | null =>
   
   console.log('Calculated Lean Mass Index:', lmi);
   return lmi;
-};
-
-export {
-  calculateBodyFat,
-  calculateLeanBodyMass,
-  calculateFatFreeMassIndex,
-  calculateSkeletalMuscleMass,
-  calculateBodyFatDistribution,
-  calculateWaistToHipRatio,
-  calculateLeanMassIndex
 };
