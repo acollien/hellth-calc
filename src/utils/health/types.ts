@@ -21,6 +21,9 @@ export interface SkinfoldMeasurements {
   abdominal?: number;
   thigh?: number;
   chest?: number;
+  chestSkinfold?: number;      // Added
+  thighSkinfold?: number;      // Added
+  suprailiacSkinfold?: number; // Added
 }
 
 export interface ActivityLevel {
@@ -28,21 +31,3 @@ export interface ActivityLevel {
 }
 
 export type HealthMetrics = BaseHealthMetrics & BodyMeasurements & SkinfoldMeasurements & ActivityLevel;
-
-export interface BMIResult {
-  standard: number;
-  devine: number;
-  athletic: number;
-}
-
-export interface BodyFatResult {
-  navy: number | null;
-  jackson: number | null;
-  bmiBased: number | null;
-  army: number | null;
-}
-
-export interface MetricImperialResult {
-  metric: number;
-  imperial: number;
-}
