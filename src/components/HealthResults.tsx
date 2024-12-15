@@ -1,6 +1,4 @@
-import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
-import { exportResults } from "@/utils/exportResults";
+import ResultsHeader from "./health/results/ResultsHeader";
 import BMIResults from "./health/results/BMIResults";
 import BodyFatResults from "./health/results/BodyFatResults";
 import MetabolicResults from "./health/results/MetabolicResults";
@@ -12,23 +10,9 @@ interface ResultsProps {
 }
 
 const HealthResults = ({ results }: ResultsProps) => {
-  const handleExport = () => {
-    exportResults(results);
-  };
-
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold text-mint-900">Your Results</h2>
-        <Button
-          onClick={handleExport}
-          variant="outline"
-          className="gap-2"
-        >
-          <Download className="h-4 w-4" />
-          Export Results
-        </Button>
-      </div>
+      <ResultsHeader results={results} />
       
       <div className="h-px bg-gray-200" />
       

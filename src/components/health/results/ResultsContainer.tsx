@@ -1,7 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
-import { exportResults } from "@/utils/exportResults";
+import { HealthResult } from "@/types/health";
 import HealthResults from "@/components/HealthResults";
 import Group1Results from "./Group1Results";
 import Group2Results from "./Group2Results";
@@ -9,15 +7,11 @@ import Group3Results from "./Group3Results";
 import Group4Results from "./Group4Results";
 
 interface ResultsContainerProps {
-  results: any;
+  results: HealthResult;
   metrics: { unit: 'metric' | 'imperial' };
 }
 
 const ResultsContainer = ({ results, metrics }: ResultsContainerProps) => {
-  const handleExport = () => {
-    exportResults(results);
-  };
-
   return (
     <div className="space-y-8">
       <HealthResults results={results} />
