@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
-import { exportHealthResults } from "@/utils/exportUtils";
+import { exportResults } from "@/utils/exportUtils";
 
 interface ResultsHeaderProps {
   results: any;
@@ -11,7 +11,7 @@ const ResultsHeader = ({ results }: ResultsHeaderProps) => {
     <div className="flex justify-between items-center">
       <h2 className="text-xl font-semibold text-mint-900">Your Results</h2>
       <Button
-        onClick={() => exportHealthResults(results)}
+        onClick={() => exportResults(results, 'pdf')}
         variant="outline"
         className="gap-2"
       >
