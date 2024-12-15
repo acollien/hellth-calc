@@ -64,7 +64,12 @@ export const useHealthCalculations = () => {
 
     // Calculate body composition metrics
     if (numericMetrics.gender) {
-      results.bodyFat = bodyComposition.calculateBodyFat(numericMetrics);
+      const bodyFatResults = bodyComposition.calculateBodyFat(numericMetrics);
+      // Include army method in the bodyFat results
+      results.bodyFat = {
+        ...bodyFatResults,
+        army: bodyComposition.calculateArmyBodyFat(numericMetrics)
+      };
       results.leanBodyMass = bodyComposition.calculateLeanBodyMass(numericMetrics);
       results.fatFreeMassIndex = bodyComposition.calculateFatFreeMassIndex(numericMetrics);
       results.skeletalMuscleMass = bodyComposition.calculateSkeletalMuscleMass(numericMetrics);
@@ -82,6 +87,7 @@ export const useHealthCalculations = () => {
     results.bodyAdiposityIndex = advancedMetrics.calculateBodyAdiposityIndex(numericMetrics);
     results.conicityIndex = advancedMetrics.calculateConicityIndex(numericMetrics);
 
+    console.log('Body Fat Results:', results.bodyFat); // Debug log
     setResults(results);
   };
 
