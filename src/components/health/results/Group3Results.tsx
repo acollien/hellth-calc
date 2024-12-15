@@ -13,10 +13,10 @@ const Group3Results = ({ leanMassIndex, bodyAdiposityIndex, conicityIndex, unit 
   if (!leanMassIndex && !bodyAdiposityIndex && !conicityIndex) return null;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full">
       <h3 className="text-lg font-semibold text-mint-900">Advanced Body Measurements</h3>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
         {leanMassIndex && (
           <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
             <div className="flex items-center gap-2 mb-2">
