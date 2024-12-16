@@ -25,24 +25,29 @@ export const useBasicMetrics = () => {
       // Calculate BMI using numeric values
       const height = parseFloat(metrics.height);
       const weight = parseFloat(metrics.weight);
+      console.log('Starting BMI calculations with height:', height, 'and weight:', weight);
+      
       const bmiResults = calculateBMI(height, weight);
+      console.log('BMI results calculated:', bmiResults);
 
       // Calculate ideal weight
       const baseIdealWeight = calculateIdealWeight(height, metrics.gender);
+      console.log('Base ideal weight calculated:', baseIdealWeight);
 
       // Calculate biological age
       const biologicalAge = calculateBiologicalAge({
-        height: parseFloat(metrics.height),
-        weight: parseFloat(metrics.weight),
+        height,
+        weight,
         age: parseFloat(metrics.age),
         gender: metrics.gender,
-        neck: metrics.neck ? parseFloat(metrics.neck) : 0,
-        waist: metrics.waist ? parseFloat(metrics.waist) : 0,
-        hip: metrics.hip ? parseFloat(metrics.hip) : 0,
-        wrist: metrics.wrist ? parseFloat(metrics.wrist) : 0,
-        forearm: metrics.forearm ? parseFloat(metrics.forearm) : 0,
+        neck: metrics.neck ? parseFloat(metrics.neck) : undefined,
+        waist: metrics.waist ? parseFloat(metrics.waist) : undefined,
+        hip: metrics.hip ? parseFloat(metrics.hip) : undefined,
+        wrist: metrics.wrist ? parseFloat(metrics.wrist) : undefined,
+        forearm: metrics.forearm ? parseFloat(metrics.forearm) : undefined,
         unit: metrics.unit
       });
+      console.log('Biological age calculated:', biologicalAge);
 
       // Create complete results object
       const newResults = {
@@ -55,7 +60,7 @@ export const useBasicMetrics = () => {
         biologicalAge
       };
 
-      console.log('Basic metrics calculated:', newResults);
+      console.log('Final basic metrics results:', newResults);
       
       // Merge new results with existing results
       dispatch({ 
