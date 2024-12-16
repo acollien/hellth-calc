@@ -8,8 +8,8 @@ import { HealthMetrics } from "./health/types";
 import Header from "./health/Header";
 import HealthResults from "./HealthResults";
 import useBasicMetrics from "@/hooks/useBasicMetrics";
-import useBodyCompositionMetrics from "@/hooks/useBodyCompositionMetrics";
-import useBodyIndicesMetrics from "@/hooks/useBodyIndicesMetrics";
+import { useBodyCompositionMetrics } from "@/hooks/useBodyCompositionMetrics";
+import { useBodyIndicesMetrics } from "@/hooks/useBodyIndicesMetrics";
 
 const HealthCalculator = () => {
   const { state, dispatch } = useHealth();
