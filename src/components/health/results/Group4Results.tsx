@@ -5,7 +5,6 @@ interface Group4ResultsProps {
     standard: number;
     devine: number;
     athletic: number;
-    bmiBased: number;
   };
   bodyFat: {
     navy: number | null;
