@@ -5,7 +5,9 @@ import {
   calculateBodyRoundnessIndex, 
   calculatePonderalIndex,
   calculateBodyAdiposityIndex,
-  calculateConicityIndex 
+  calculateConicityIndex,
+  calculateWaistToHeightRatio,
+  calculateWaistToHipRatio
 } from '@/utils/health/indices';
 
 export const useBodyIndicesMetrics = () => {
@@ -13,22 +15,43 @@ export const useBodyIndicesMetrics = () => {
   const { metrics } = state;
 
   useEffect(() => {
-    if (!metrics.height || !metrics.weight || !metrics.waist) return;
+    if (!metrics.height || !metrics.weight || !metrics.waist) {
+      console.log('Missing required metrics for body indices calculations');
+      return;
+    }
 
-    const height = parseFloat(metrics.height);
-    const weight = parseFloat(metrics.weight);
-    const waist = parseFloat(metrics.waist);
+    try {
+      const height = parseFloat(metrics.height);
+      const weight = parseFloat(metrics.weight);
+      const waist = parseFloat(metrics.waist);
 
-    const results = {
-      absi: calculateABSI(waist, height, weight, metrics.unit),
-      bodyRoundnessIndex: calculateBodyRoundnessIndex(waist, height, metrics.unit),
-      ponderalIndex: calculatePonderalIndex(height, weight, metrics.unit),
-      bodyAdiposityIndex: calculateBodyAdiposityIndex(metrics),
-      conicityIndex: calculateConicityIndex(metrics)
-    };
+      const results = {
+        absi: calculateABSI(waist, height, weight, metrics.unit),
+        bodyRoundnessIndex: calculateBodyRoundnessIndex(waist, height, metrics.unit),
+        ponderalIndex: calculatePonderalIndex(height, weight, metrics.unit),
+        bodyAdiposityIndex: calculateBodyAdiposityIndex(metrics),
+        conicityIndex: calculateConicityIndex(metrics)
+      };
 
-    dispatch({ type: 'SET_RESULTS', results: { ...state.results, ...results } });
-  }, [metrics.height, metrics.weight, metrics.waist, metrics.hip, metrics.unit]);
+      if (metrics.waist && metrics.height) {
+        results.waistToHeightRatio = calculateWaistToHeightRatio(waist, height);
+      }
+
+      if (metrics.waist && metrics.hip) {
+        results.waistToHip = calculateWaistToHipRatio(metrics);
+      }
+
+      dispatch({ type: 'SET_RESULTS', results: { ...state.results, ...results } });
+    } catch (error) {
+      console.error('Error calculating body indices:', error);
+    }
+  }, [
+    metrics.height,
+    metrics.weight,
+    metrics.waist,
+    metrics.hip,
+    metrics.unit
+  ]);
 
   return state.results;
 };
