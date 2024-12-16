@@ -1,4 +1,4 @@
-import { HealthMetrics } from '@/components/health/types';
+import { HealthMetrics } from '../types';
 
 export const calculateJacksonPollockBodyFat = (metrics: HealthMetrics): number | null => {
   console.log('Calculating Jackson-Pollock body fat with metrics:', metrics);
@@ -23,18 +23,18 @@ export const calculateJacksonPollockBodyFat = (metrics: HealthMetrics): number |
 
   let bodyDensity: number;
   if (metrics.gender === 'male') {
-    // Male formula (correct)
+    // Male formula (Jackson & Pollock, 1978)
     bodyDensity = 1.10938 - (0.0008267 * sum) + (0.0000016 * sum * sum) - (0.0002574 * age);
   } else {
-    // Female formula (corrected)
-    bodyDensity = 1.089733 - (0.0009245 * sum) + (0.0000025 * sum * sum) - (0.0000979 * age);
+    // Female formula (Jackson, Pollock & Ward, 1980)
+    bodyDensity = 1.0994921 - (0.0009929 * sum) + (0.0000023 * sum * sum) - (0.0001392 * age);
   }
 
   console.log('Calculated body density:', bodyDensity);
 
-  // Siri's equation to convert body density to body fat percentage
+  // Siri's equation (1956) for converting body density to body fat percentage
   const bodyFat = (495 / bodyDensity) - 450;
   console.log('Calculated body fat percentage:', bodyFat);
 
-  return isNaN(bodyFat) ? null : bodyFat;
+  return isNaN(bodyFat) ? null : Math.max(0, Math.min(bodyFat, 100));
 };

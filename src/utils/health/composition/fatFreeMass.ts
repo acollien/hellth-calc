@@ -6,6 +6,14 @@ export const calculateFatFreeMassIndex = (metrics: HealthMetrics): number | null
   const lbm = calculateLeanBodyMass(metrics);
   if (!lbm || !metrics.height) return null;
 
-  const heightInMeters = metrics.unit === 'metric' ? parseFloat(metrics.height) / 100 : parseFloat(metrics.height) * 0.0254;
-  return lbm / (heightInMeters * heightInMeters);
+  // Convert height to meters for the calculation
+  const heightInMeters = metrics.unit === 'metric' 
+    ? parseFloat(metrics.height) / 100 
+    : parseFloat(metrics.height) * 0.0254;
+
+  // FFMI Formula: LBM/height² (VanItallie et al., 1990)
+  const ffmi = lbm / (heightInMeters * heightInMeters);
+  
+  console.log('Calculated fat-free mass index:', ffmi);
+  return Math.max(0, ffmi);
 };
