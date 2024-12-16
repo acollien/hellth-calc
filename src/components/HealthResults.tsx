@@ -35,7 +35,17 @@ const HealthResults = ({ results, metrics }: ResultsProps) => {
 
       {results.bmr && <MetabolicResults bmr={results.bmr} />}
 
-      {results.idealWeight && <IdealWeightResults idealWeight={results.idealWeight} />}
+      {results.idealWeight && (
+        <IdealWeightResults 
+          idealWeight={{
+            robinson: results.idealWeight.robinson,
+            miller: results.idealWeight.miller,
+            devine: results.idealWeight.devine,
+            athletic: results.idealWeight.athletic || 0,
+            bmiBased: results.idealWeight.bmiBased || 0
+          }} 
+        />
+      )}
 
       {results.biologicalAge && (
         <BiologicalAgeResults biologicalAge={results.biologicalAge} />
