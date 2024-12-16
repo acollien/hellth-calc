@@ -5,15 +5,16 @@ import MetabolicResults from "./health/results/MetabolicResults";
 import IdealWeightResults from "./health/results/IdealWeightResults";
 import OtherResults from "./health/results/OtherResults";
 import BiologicalAgeResults from "./health/results/BiologicalAgeResults";
+import { HealthResult } from "@/types/health";
 
 interface ResultsProps {
-  results: any;
+  results: HealthResult;
 }
 
 const HealthResults = ({ results }: ResultsProps) => {
   console.log("HealthResults received full results:", results);
   
-  // Extract frameSize value directly from results
+  // Extract frameSize value directly from results with proper typing
   const frameSize = results?.frameSize || null;
   console.log("Frame size value:", frameSize);
   
