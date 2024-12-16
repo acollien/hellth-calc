@@ -63,8 +63,6 @@ export interface HealthResult {
     robinson: number;
     miller: number;
     devine: number;
-    athletic: number;
-    bmiBased: number;
   };
   frameSize?: string;
   waistToHip?: number;

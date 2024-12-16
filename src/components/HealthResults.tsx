@@ -41,7 +41,6 @@ const HealthResults = ({ results, metrics }: ResultsProps) => {
       <OtherResults 
         frameSize={results.frameSize}
         waistToHip={results.waistToHip}
-        unit={metrics.unit}
       />
     </div>
   );
