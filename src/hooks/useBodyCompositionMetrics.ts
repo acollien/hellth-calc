@@ -4,7 +4,8 @@ import {
   calculateBodyFat, 
   calculateLeanBodyMass, 
   calculateFatFreeMassIndex, 
-  calculateSkeletalMuscleMass 
+  calculateSkeletalMuscleMass,
+  calculateBodyFatDistribution
 } from '@/utils/health/composition';
 
 export const useBodyCompositionMetrics = () => {
@@ -18,14 +19,26 @@ export const useBodyCompositionMetrics = () => {
     }
 
     try {
+      const bodyFat = calculateBodyFat(metrics);
+      const leanBodyMass = calculateLeanBodyMass(metrics);
+      const fatFreeMassIndex = calculateFatFreeMassIndex(metrics);
+      const skeletalMuscleMass = calculateSkeletalMuscleMass(metrics);
+      const bodyFatDistribution = calculateBodyFatDistribution(metrics);
+
       const results = {
-        bodyFat: calculateBodyFat(metrics),
-        leanBodyMass: calculateLeanBodyMass(metrics),
-        fatFreeMassIndex: calculateFatFreeMassIndex(metrics),
-        skeletalMuscleMass: calculateSkeletalMuscleMass(metrics)
+        bodyFat,
+        leanBodyMass,
+        fatFreeMassIndex,
+        skeletalMuscleMass,
+        bodyFatDistribution
       };
 
-      dispatch({ type: 'SET_RESULTS', results: { ...state.results, ...results } });
+      console.log('Body composition calculation results:', results);
+
+      dispatch({ 
+        type: 'SET_RESULTS', 
+        results: { ...state.results, ...results } 
+      });
     } catch (error) {
       console.error('Error calculating body composition metrics:', error);
     }

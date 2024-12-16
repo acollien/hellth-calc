@@ -10,16 +10,42 @@ import HealthResults from "./HealthResults";
 import useBasicMetrics from "@/hooks/useBasicMetrics";
 import { useBodyCompositionMetrics } from "@/hooks/useBodyCompositionMetrics";
 import { useBodyIndicesMetrics } from "@/hooks/useBodyIndicesMetrics";
+import { calculateBMR } from "@/utils/health/calculations/bmr";
 
 const HealthCalculator = () => {
   const { state, dispatch } = useHealth();
   
   console.log('Current state in HealthCalculator:', state);
 
-  // Use the metric calculation hooks
-  useBasicMetrics();
-  useBodyCompositionMetrics();
-  useBodyIndicesMetrics();
+  // Use all metric calculation hooks
+  const basicResults = useBasicMetrics();
+  const compositionResults = useBodyCompositionMetrics();
+  const indicesResults = useBodyIndicesMetrics();
+
+  // Calculate BMR whenever metrics change
+  const calculateMetabolicRates = () => {
+    if (state.metrics.height && state.metrics.weight && state.metrics.age && state.metrics.gender) {
+      const bmrResults = calculateBMR(state.metrics);
+      dispatch({ 
+        type: 'SET_RESULTS', 
+        results: { 
+          ...state.results, 
+          bmr: bmrResults 
+        } 
+      });
+    }
+  };
+
+  // Update BMR when relevant metrics change
+  React.useEffect(() => {
+    calculateMetabolicRates();
+  }, [
+    state.metrics.height,
+    state.metrics.weight,
+    state.metrics.age,
+    state.metrics.gender,
+    state.metrics.activityLevel
+  ]);
 
   const handleMetricChange = (key: keyof HealthMetrics, value: string) => {
     console.log('Metric changed:', key, value);
