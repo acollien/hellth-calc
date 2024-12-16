@@ -30,14 +30,17 @@ const HealthCalculator = () => {
       dispatch({ 
         type: 'SET_RESULTS', 
         results: { 
-          ...state.results, 
+          ...state.results,
+          ...basicResults,
+          ...compositionResults,
+          ...indicesResults,
           bmr: bmrResults 
         } 
       });
     }
   };
 
-  // Update BMR when relevant metrics change
+  // Update all results when relevant metrics change
   useEffect(() => {
     calculateMetabolicRates();
   }, [
@@ -45,7 +48,15 @@ const HealthCalculator = () => {
     state.metrics.weight,
     state.metrics.age,
     state.metrics.gender,
-    state.metrics.activityLevel
+    state.metrics.activityLevel,
+    state.metrics.neck,
+    state.metrics.waist,
+    state.metrics.hip,
+    state.metrics.wrist,
+    state.metrics.forearm,
+    basicResults,
+    compositionResults,
+    indicesResults
   ]);
 
   const handleMetricChange = (key: keyof HealthMetrics, value: string) => {
