@@ -9,15 +9,11 @@ import { HealthResult } from "@/types/health";
 
 interface ResultsProps {
   results: HealthResult;
-  metrics: { gender: 'male' | 'female' | '' };
+  metrics: { gender: 'male' | 'female' | '', unit: 'metric' | 'imperial' };
 }
 
 const HealthResults = ({ results, metrics }: ResultsProps) => {
   console.log("HealthResults received full results:", results);
-  
-  // Extract frameSize value directly from results with proper typing
-  const frameSize = results?.frameSize || null;
-  console.log("Frame size value:", frameSize);
   
   return (
     <div className="space-y-6 animate-fade-in">
@@ -43,8 +39,9 @@ const HealthResults = ({ results, metrics }: ResultsProps) => {
       )}
 
       <OtherResults 
-        frameSize={frameSize}
+        frameSize={results.frameSize}
         waistToHip={results.waistToHip}
+        unit={metrics.unit}
       />
     </div>
   );
