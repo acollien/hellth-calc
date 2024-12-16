@@ -39,7 +39,12 @@ const ResultsContainer = ({ results, metrics }: ResultsContainerProps) => {
       />
       {results.bmi && results.bodyFat && results.bmr && (
         <Group4Results
-          bmi={results.bmi}
+          bmi={{
+            standard: results.bmi.standard,
+            devine: results.bmi.devine,
+            athletic: results.bmi.athletic,
+            bmiBased: results.bmi.bmiBased || results.bmi.standard // Fallback to standard if bmiBased is not available
+          }}
           bodyFat={results.bodyFat}
           bmr={results.bmr.bmr}
           unit={metrics.unit}
