@@ -27,7 +27,7 @@ export const useBodyIndicesMetrics = () => {
       const weight = parseFloat(metrics.weight);
       const waist = parseFloat(metrics.waist);
 
-      const results: any = {
+      const results = {
         absi: calculateABSI(waist, height, weight, metrics.unit),
         bodyRoundnessIndex: calculateBodyRoundnessIndex(waist, height, metrics.unit),
         ponderalIndex: calculatePonderalIndex(height, weight, metrics.unit),

@@ -24,6 +24,7 @@ export interface HealthResult {
   };
   frameSize?: string;
   waistToHip?: number;
+  waistToHeightRatio?: number;
   biologicalAge?: number;
   ponderalIndex?: {
     metric: number;
@@ -37,7 +38,6 @@ export interface HealthResult {
     metric: number;
     imperial: number;
   };
-  waistToHeightRatio?: number;
   leanBodyMass?: number;
   fatFreeMassIndex?: number;
   skeletalMuscleMass?: number;
