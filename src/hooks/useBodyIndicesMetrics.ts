@@ -5,10 +5,12 @@ import {
   calculateBodyRoundnessIndex, 
   calculatePonderalIndex,
   calculateBodyAdiposityIndex,
-  calculateConicityIndex,
+  calculateConicityIndex
+} from '@/utils/health/indices';
+import {
   calculateWaistToHeightRatio,
   calculateWaistToHipRatio
-} from '@/utils/health/indices';
+} from '@/utils/health/metrics';
 
 export const useBodyIndicesMetrics = () => {
   const { state, dispatch } = useHealth();
@@ -25,7 +27,7 @@ export const useBodyIndicesMetrics = () => {
       const weight = parseFloat(metrics.weight);
       const waist = parseFloat(metrics.waist);
 
-      const results = {
+      const results: any = {
         absi: calculateABSI(waist, height, weight, metrics.unit),
         bodyRoundnessIndex: calculateBodyRoundnessIndex(waist, height, metrics.unit),
         ponderalIndex: calculatePonderalIndex(height, weight, metrics.unit),
