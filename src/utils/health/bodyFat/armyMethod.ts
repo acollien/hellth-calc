@@ -6,21 +6,28 @@ export const calculateArmyBodyFat = (metrics: HealthMetrics): number | null => {
     return null;
   }
 
-  const heightInInches = metrics.unit === 'metric' ? parseFloat(metrics.height) / 2.54 : parseFloat(metrics.height);
-  const neckInInches = metrics.unit === 'metric' ? parseFloat(metrics.neck) / 2.54 : parseFloat(metrics.neck);
-  const waistInInches = metrics.unit === 'metric' ? parseFloat(metrics.waist) / 2.54 : parseFloat(metrics.waist);
-  const hipInInches = metrics.gender === 'female' ? 
-    (metrics.unit === 'metric' ? parseFloat(metrics.hip) / 2.54 : parseFloat(metrics.hip)) : 0;
+  // Convert all measurements to inches if in metric
+  const heightInInches = metrics.unit === 'metric' ? Number(metrics.height) / 2.54 : Number(metrics.height);
+  const neckInInches = metrics.unit === 'metric' ? Number(metrics.neck) / 2.54 : Number(metrics.neck);
+  const waistInInches = metrics.unit === 'metric' ? Number(metrics.waist) / 2.54 : Number(metrics.waist);
+  const hipInInches = metrics.gender === 'female' && metrics.hip ? 
+    (metrics.unit === 'metric' ? Number(metrics.hip) / 2.54 : Number(metrics.hip)) : 0;
 
   let bodyFat: number;
   
   if (metrics.gender === 'male') {
-    bodyFat = 86.010 * Math.log10(waistInInches - neckInInches) - 
-              70.041 * Math.log10(heightInInches) + 36.76;
+    bodyFat = Math.max(0, Math.min(
+      86.010 * Math.log10(waistInInches - neckInInches) - 
+      70.041 * Math.log10(heightInInches) + 36.76,
+      100
+    ));
   } else {
-    bodyFat = 163.205 * Math.log10(waistInInches + hipInInches - neckInInches) - 
-              97.684 * Math.log10(heightInInches) - 78.387;
+    bodyFat = Math.max(0, Math.min(
+      163.205 * Math.log10(waistInInches + hipInInches - neckInInches) - 
+      97.684 * Math.log10(heightInInches) - 78.387,
+      100
+    ));
   }
 
-  return Math.max(0, Math.min(bodyFat, 100));
+  return bodyFat;
 };

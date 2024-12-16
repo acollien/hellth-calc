@@ -5,20 +5,17 @@ export const calculateNavyBodyFat = (metrics: HealthMetrics): number | null => {
     return null;
   }
 
-  const height = parseFloat(metrics.height);
-  const neck = parseFloat(metrics.neck);
-  const waist = parseFloat(metrics.waist);
-  const hip = parseFloat(metrics.hip);
+  // Convert all measurements to centimeters if in imperial
+  const height = metrics.unit === 'imperial' ? Number(metrics.height) * 2.54 : Number(metrics.height);
+  const neck = metrics.unit === 'imperial' ? Number(metrics.neck) * 2.54 : Number(metrics.neck);
+  const waist = metrics.unit === 'imperial' ? Number(metrics.waist) * 2.54 : Number(metrics.waist);
+  const hip = metrics.unit === 'imperial' ? Number(metrics.hip) * 2.54 : Number(metrics.hip);
   
   if (metrics.gender === 'male') {
-    return Math.max(0, Math.min(
-      495 / (1.0324 - 0.19077 * Math.log10(waist - neck) + 0.15456 * Math.log10(height)) - 450,
-      100
-    ));
+    const logValue = Math.log10(waist - neck);
+    return Math.max(0, Math.min(495 / (1.0324 - 0.19077 * logValue + 0.15456 * Math.log10(height)) - 450, 100));
   }
   
-  return Math.max(0, Math.min(
-    495 / (1.29579 - 0.35004 * Math.log10(waist + hip - neck) + 0.22100 * Math.log10(height)) - 450,
-    100
-  ));
+  const logValue = Math.log10(waist + hip - neck);
+  return Math.max(0, Math.min(495 / (1.29579 - 0.35004 * logValue + 0.22100 * Math.log10(height)) - 450, 100));
 };

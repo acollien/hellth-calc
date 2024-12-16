@@ -9,7 +9,10 @@ export const calculateLeanMassIndex = (metrics: HealthMetrics): number | null =>
     return null;
   }
 
-  const heightInM = parseFloat(metrics.height) / 100;
+  const heightInM = metrics.unit === 'imperial' ? 
+    (parseFloat(metrics.height) * 0.0254) : 
+    (parseFloat(metrics.height) / 100);
+    
   const weightInKg = metrics.unit === 'imperial' ? 
     parseFloat(metrics.weight) * 0.453592 : 
     parseFloat(metrics.weight);
