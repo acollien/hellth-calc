@@ -33,7 +33,6 @@ export const useHealthMetricsCalculator = ({
     }
 
     try {
-      // Convert string values to numbers for calculations
       const numericMetrics = {
         height: parseFloat(metrics.height),
         weight: parseFloat(metrics.weight),
@@ -65,11 +64,7 @@ export const useHealthMetricsCalculator = ({
 
       // Calculate BMR and TDEE
       if (metrics.activityLevel) {
-        const bmrMetrics = {
-          ...numericMetrics,
-          activityLevel: metrics.activityLevel
-        };
-        results.bmr = calculateBMR(bmrMetrics);
+        results.bmr = calculateBMR(metrics);
         console.log('Calculated BMR:', results.bmr);
       }
 
@@ -78,21 +73,12 @@ export const useHealthMetricsCalculator = ({
       console.log('Calculated Ideal Weight:', results.idealWeight);
 
       // Calculate Biological Age
-      results.biologicalAge = calculateBiologicalAge(numericMetrics);
+      results.biologicalAge = calculateBiologicalAge(metrics);
       console.log('Calculated Biological Age:', results.biologicalAge);
 
       // Calculate Body Fat if required measurements are present
       if (numericMetrics.neck && numericMetrics.waist && numericMetrics.hip) {
-        const bodyFatMetrics = {
-          ...numericMetrics,
-          height: numericMetrics.height,
-          weight: numericMetrics.weight,
-          age: numericMetrics.age,
-          neck: numericMetrics.neck,
-          waist: numericMetrics.waist,
-          hip: numericMetrics.hip
-        };
-        results.bodyFat = calculateBodyFat(bodyFatMetrics);
+        results.bodyFat = calculateBodyFat(metrics);
         console.log('Calculated Body Fat:', results.bodyFat);
       }
 
@@ -136,11 +122,7 @@ export const useHealthMetricsCalculator = ({
 
       // Calculate Waist to Hip Ratio if both measurements are present
       if (numericMetrics.waist && numericMetrics.hip) {
-        results.waistToHip = calculateWaistToHipRatio({
-          ...numericMetrics,
-          waist: numericMetrics.waist,
-          hip: numericMetrics.hip
-        });
+        results.waistToHip = calculateWaistToHipRatio(metrics);
       }
 
       console.log('Final calculated results:', results);

@@ -1,33 +1,33 @@
 export interface BaseHealthMetrics {
-  height: number;
-  weight: number;
-  age?: number;
+  height: string;
+  weight: string;
+  age?: string;
   gender: 'male' | 'female';
   unit: 'metric' | 'imperial';
 }
 
 export interface BodyMeasurements {
-  neck?: number;
-  waist?: number;
-  hip?: number;
-  wrist?: number;
-  forearm?: number;
+  neck?: string;
+  waist?: string;
+  hip?: string;
+  wrist?: string;
+  forearm?: string;
 }
 
 export interface SkinfoldMeasurements {
-  triceps?: number;
-  subscapular?: number;
-  suprailiac?: number;
-  abdominal?: number;
-  thigh?: number;
-  chest?: number;
-  chestSkinfold?: number;
-  thighSkinfold?: number;
-  suprailiacSkinfold?: number;
+  triceps?: string;
+  subscapular?: string;
+  suprailiac?: string;
+  abdominal?: string;
+  thigh?: string;
+  chest?: string;
+  chestSkinfold?: string;
+  thighSkinfold?: string;
+  suprailiacSkinfold?: string;
 }
 
 export interface ActivityLevel {
-  activityLevel: 'sedentary' | 'light' | 'moderate' | 'active' | 'veryActive';
+  activityLevel: 'sedentary' | 'light' | 'moderate' | 'active' | 'veryActive' | '';
 }
 
 export type HealthMetrics = BaseHealthMetrics & BodyMeasurements & SkinfoldMeasurements & Partial<ActivityLevel>;
