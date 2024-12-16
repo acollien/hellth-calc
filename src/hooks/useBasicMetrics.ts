@@ -15,31 +15,28 @@ export const useBasicMetrics = () => {
     }
 
     try {
-      const height = parseFloat(metrics.height);
-      const weight = parseFloat(metrics.weight);
-      const age = parseFloat(metrics.age);
+      const numericMetrics = {
+        ...metrics,
+        height: metrics.height,
+        weight: metrics.weight,
+        age: metrics.age,
+        neck: metrics.neck || '',
+        waist: metrics.waist || '',
+        hip: metrics.hip || '',
+        wrist: metrics.wrist || '',
+        forearm: metrics.forearm || ''
+      };
 
-      const bmi = calculateBMI(height, weight);
-      const idealWeight = calculateIdealWeight(height, metrics.gender);
-      const biologicalAge = calculateBiologicalAge({
-        height,
-        weight,
-        age,
-        gender: metrics.gender,
-        neck: metrics.neck ? parseFloat(metrics.neck) : undefined,
-        waist: metrics.waist ? parseFloat(metrics.waist) : undefined,
-        hip: metrics.hip ? parseFloat(metrics.hip) : undefined,
-        wrist: metrics.wrist ? parseFloat(metrics.wrist) : undefined,
-        forearm: metrics.forearm ? parseFloat(metrics.forearm) : undefined,
-        unit: metrics.unit
-      });
+      const bmi = calculateBMI(parseFloat(metrics.height), parseFloat(metrics.weight));
+      const idealWeight = calculateIdealWeight(parseFloat(metrics.height), metrics.gender);
+      const biologicalAge = calculateBiologicalAge(numericMetrics);
 
       const newResults = {
         ...state.results,
         bmi,
         idealWeight: {
           ...idealWeight,
-          athletic: 0, // Adding required properties with default values
+          athletic: 0,
           bmiBased: 0
         },
         biologicalAge

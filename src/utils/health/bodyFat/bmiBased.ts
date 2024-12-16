@@ -1,16 +1,19 @@
-import { HealthMetrics } from '../types';
+import { HealthMetrics } from '@/components/health/types';
 
 export const calculateBMIBasedBodyFat = (metrics: HealthMetrics): number | null => {
-  console.log('Calculating BMI-based body fat with metrics:', metrics);
-  
   if (!metrics.height || !metrics.weight || !metrics.age || !metrics.gender) {
     return null;
   }
 
-  const bmi = metrics.weight / Math.pow(metrics.height / 100, 2);
+  const height = parseFloat(metrics.height);
+  const weight = parseFloat(metrics.weight);
+  const age = parseFloat(metrics.age);
   
-  // Updated coefficients based on Deurenberg formula
-  return metrics.gender === 'male'
-    ? (1.20 * bmi) + (0.23 * metrics.age) - 10.8 - 5.4
-    : (1.20 * bmi) + (0.23 * metrics.age) - 5.4;
+  const bmi = weight / Math.pow(height / 100, 2);
+  
+  const bodyFat = metrics.gender === 'male'
+    ? (1.10 * bmi) + (0.15 * age) - 9.5
+    : (1.08 * bmi) + (0.15 * age) - 4.5;
+
+  return Math.max(0, Math.min(bodyFat, 100));
 };

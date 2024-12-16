@@ -1,18 +1,17 @@
-import { HealthMetrics } from './types';
+import { HealthMetrics } from '@/components/health/types';
 
 export const convertToMetric = (metrics: HealthMetrics): HealthMetrics => {
   if (metrics.unit === 'metric') return metrics;
 
   return {
     ...metrics,
-    height: Number(metrics.height) * 2.54,
-    weight: Number(metrics.weight) * 0.453592,
-    neck: metrics.neck ? Number(metrics.neck) * 2.54 : undefined,
-    waist: metrics.waist ? Number(metrics.waist) * 2.54 : undefined,
-    hip: metrics.hip ? Number(metrics.hip) * 2.54 : undefined,
-    wrist: metrics.wrist ? Number(metrics.wrist) * 2.54 : undefined,
-    forearm: metrics.forearm ? Number(metrics.forearm) * 2.54 : undefined,
-    unit: 'metric'
+    height: (parseFloat(metrics.height) * 2.54).toString(),
+    weight: (parseFloat(metrics.weight) * 0.453592).toString(),
+    neck: metrics.neck ? (parseFloat(metrics.neck) * 2.54).toString() : '',
+    waist: metrics.waist ? (parseFloat(metrics.waist) * 2.54).toString() : '',
+    hip: metrics.hip ? (parseFloat(metrics.hip) * 2.54).toString() : '',
+    wrist: metrics.wrist ? (parseFloat(metrics.wrist) * 2.54).toString() : '',
+    forearm: metrics.forearm ? (parseFloat(metrics.forearm) * 2.54).toString() : ''
   };
 };
 
@@ -21,13 +20,12 @@ export const convertToImperial = (metrics: HealthMetrics): HealthMetrics => {
 
   return {
     ...metrics,
-    height: Number(metrics.height) / 2.54,
-    weight: Number(metrics.weight) / 0.453592,
-    neck: metrics.neck ? Number(metrics.neck) / 2.54 : undefined,
-    waist: metrics.waist ? Number(metrics.waist) / 2.54 : undefined,
-    hip: metrics.hip ? Number(metrics.hip) / 2.54 : undefined,
-    wrist: metrics.wrist ? Number(metrics.wrist) / 2.54 : undefined,
-    forearm: metrics.forearm ? Number(metrics.forearm) / 2.54 : undefined,
-    unit: 'imperial'
+    height: (parseFloat(metrics.height) / 2.54).toString(),
+    weight: (parseFloat(metrics.weight) / 0.453592).toString(),
+    neck: metrics.neck ? (parseFloat(metrics.neck) / 2.54).toString() : '',
+    waist: metrics.waist ? (parseFloat(metrics.waist) / 2.54).toString() : '',
+    hip: metrics.hip ? (parseFloat(metrics.hip) / 2.54).toString() : '',
+    wrist: metrics.wrist ? (parseFloat(metrics.wrist) / 2.54).toString() : '',
+    forearm: metrics.forearm ? (parseFloat(metrics.forearm) / 2.54).toString() : ''
   };
 };
