@@ -37,7 +37,11 @@ export const useBasicMetrics = () => {
       const newResults = {
         ...state.results,
         bmi,
-        idealWeight,
+        idealWeight: {
+          robinson: idealWeight.robinson,
+          miller: idealWeight.miller,
+          devine: idealWeight.devine
+        },
         biologicalAge
       };
 

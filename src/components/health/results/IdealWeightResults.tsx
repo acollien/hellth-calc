@@ -11,12 +11,11 @@ interface IdealWeightResultsProps {
 
 const IdealWeightResults = ({ idealWeight }: IdealWeightResultsProps) => {
   const getValueColor = (value: number) => {
-    // Color coding based on general weight ranges (in kg)
-    if (value < 45) return "text-blue-600"; // Very low
-    if (value < 55) return "text-green-600"; // Low normal
-    if (value < 75) return "text-mint-600"; // Normal
-    if (value < 85) return "text-yellow-600"; // High normal
-    return "text-red-600"; // High
+    if (value < 45) return "text-blue-600";
+    if (value < 55) return "text-green-600";
+    if (value < 75) return "text-mint-600";
+    if (value < 85) return "text-yellow-600";
+    return "text-red-600";
   };
 
   const getWeightRangeDescription = (value: number) => {
