@@ -9,17 +9,18 @@ import SkinFoldMeasurements from "./health/SkinFoldMeasurements";
 import ActivityLevel from "./health/ActivityLevel";
 import { HealthMetrics } from "./health/types";
 import Header from "./health/Header";
-import HealthResults from "./HealthResults";
+import ResultsContainer from "./health/results/ResultsContainer";
 
 const HealthCalculator = () => {
   const { state, dispatch } = useHealth();
   
-  // Call the calculation hooks
-  useBasicMetrics();
-  useBodyCompositionMetrics();
-  useBodyIndicesMetrics();
+  // Use all the calculation hooks
+  const basicResults = useBasicMetrics();
+  const bodyComposition = useBodyCompositionMetrics();
+  const bodyIndices = useBodyIndicesMetrics();
 
   console.log('Current state in HealthCalculator:', state);
+  console.log('Results from hooks:', { basicResults, bodyComposition, bodyIndices });
 
   const handleMetricChange = (key: keyof HealthMetrics, value: string) => {
     console.log('Metric changed:', key, value);
@@ -44,7 +45,7 @@ const HealthCalculator = () => {
             <ActivityLevel metrics={state.metrics} onMetricChange={handleMetricChange} />
           </div>
 
-          {state.results && <HealthResults results={state.results} />}
+          {state.results && <ResultsContainer results={state.results} metrics={state.metrics} />}
         </div>
       </Card>
     </div>
