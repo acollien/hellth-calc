@@ -1,4 +1,4 @@
-import { HealthMetrics } from '../types';
+import { HealthMetrics } from '@/types/health';
 import { calculateNavyBodyFat } from './navyMethod';
 import { calculateJacksonPollockBodyFat } from './jacksonPollock';
 import { calculateBMIBasedBodyFat } from './bmiBased';

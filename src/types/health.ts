@@ -1,22 +1,3 @@
-export interface IndicesResults {
-  ponderalIndex?: {
-    metric: number;
-    imperial: number;
-  };
-  absi?: {
-    metric: number;
-    imperial: number;
-  };
-  bodyRoundnessIndex?: {
-    metric: number;
-    imperial: number;
-  };
-  bodyAdiposityIndex?: number;
-  conicityIndex?: number;
-  waistToHip?: number;
-  waistToHeightRatio?: number;
-}
-
 export interface HealthMetrics {
   height: string;
   weight: string;
@@ -27,16 +8,39 @@ export interface HealthMetrics {
   hip: string;
   wrist: string;
   forearm: string;
-  chestSkinfold: string;      // Point a
-  midaxillarySkinfold: string; // Point b
-  suprailiacSkinfold: string;  // Point c
-  thighSkinfold: string;       // Point d
-  umbilicalSkinfold: string;   // Point e
-  tricepsSkinfold: string;     // Point f
-  midaxillarySkinfold2: string; // Point g
-  subscapularSkinfold: string; // Point h
-  calfSkinfold: string;        // Point i
+  chestSkinfold: string;
+  midaxillarySkinfold: string;
+  suprailiacSkinfold: string;
+  thighSkinfold: string;
+  umbilicalSkinfold: string;
+  tricepsSkinfold: string;
+  midaxillarySkinfold2: string;
+  subscapularSkinfold: string;
+  calfSkinfold: string;
   activityLevel: 'sedentary' | 'light' | 'moderate' | 'active' | 'veryActive' | '';
+  unit: 'metric' | 'imperial';
+}
+
+export interface NumericHealthMetrics {
+  height: number;
+  weight: number;
+  age: number;
+  gender: 'male' | 'female';
+  neck?: number;
+  waist?: number;
+  hip?: number;
+  wrist?: number;
+  forearm?: number;
+  chestSkinfold?: number;
+  midaxillarySkinfold?: number;
+  suprailiacSkinfold?: number;
+  thighSkinfold?: number;
+  umbilicalSkinfold?: number;
+  tricepsSkinfold?: number;
+  midaxillarySkinfold2?: number;
+  subscapularSkinfold?: number;
+  calfSkinfold?: number;
+  activityLevel?: 'sedentary' | 'light' | 'moderate' | 'active' | 'veryActive';
   unit: 'metric' | 'imperial';
 }
 

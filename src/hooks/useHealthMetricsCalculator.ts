@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { HealthMetrics, HealthResult } from "@/components/health/types";
+import { HealthMetrics, NumericHealthMetrics, HealthResult } from "@/types/health";
 import { calculateBMI } from "@/utils/health/calculations/bmi";
 import { calculateBMR } from "@/utils/health/calculations/bmr";
 import { calculateIdealWeight } from "@/utils/health/calculations/idealWeight";
@@ -21,6 +21,36 @@ interface UseHealthMetricsCalculatorProps {
   onResultsCalculated: (results: Partial<HealthResult>) => void;
 }
 
+const convertToNumericMetrics = (metrics: HealthMetrics): NumericHealthMetrics | null => {
+  if (!metrics.height || !metrics.weight || !metrics.age || !metrics.gender) {
+    return null;
+  }
+
+  const numericMetrics: NumericHealthMetrics = {
+    height: parseFloat(metrics.height),
+    weight: parseFloat(metrics.weight),
+    age: parseFloat(metrics.age),
+    gender: metrics.gender as 'male' | 'female',
+    unit: metrics.unit,
+    ...(metrics.neck ? { neck: parseFloat(metrics.neck) } : {}),
+    ...(metrics.waist ? { waist: parseFloat(metrics.waist) } : {}),
+    ...(metrics.hip ? { hip: parseFloat(metrics.hip) } : {}),
+    ...(metrics.wrist ? { wrist: parseFloat(metrics.wrist) } : {}),
+    ...(metrics.forearm ? { forearm: parseFloat(metrics.forearm) } : {}),
+    ...(metrics.chestSkinfold ? { chestSkinfold: parseFloat(metrics.chestSkinfold) } : {}),
+    ...(metrics.midaxillarySkinfold ? { midaxillarySkinfold: parseFloat(metrics.midaxillarySkinfold) } : {}),
+    ...(metrics.suprailiacSkinfold ? { suprailiacSkinfold: parseFloat(metrics.suprailiacSkinfold) } : {}),
+    ...(metrics.thighSkinfold ? { thighSkinfold: parseFloat(metrics.thighSkinfold) } : {}),
+    ...(metrics.umbilicalSkinfold ? { umbilicalSkinfold: parseFloat(metrics.umbilicalSkinfold) } : {}),
+    ...(metrics.tricepsSkinfold ? { tricepsSkinfold: parseFloat(metrics.tricepsSkinfold) } : {}),
+    ...(metrics.subscapularSkinfold ? { subscapularSkinfold: parseFloat(metrics.subscapularSkinfold) } : {}),
+    ...(metrics.calfSkinfold ? { calfSkinfold: parseFloat(metrics.calfSkinfold) } : {}),
+    ...(metrics.activityLevel ? { activityLevel: metrics.activityLevel } : {})
+  };
+
+  return numericMetrics;
+};
+
 export const useHealthMetricsCalculator = ({ 
   metrics, 
   onResultsCalculated 
@@ -33,28 +63,11 @@ export const useHealthMetricsCalculator = ({
     }
 
     try {
-      const numericMetrics = {
-        height: parseFloat(metrics.height),
-        weight: parseFloat(metrics.weight),
-        age: parseFloat(metrics.age),
-        gender: metrics.gender,
-        unit: metrics.unit,
-        neck: metrics.neck ? parseFloat(metrics.neck) : undefined,
-        waist: metrics.waist ? parseFloat(metrics.waist) : undefined,
-        hip: metrics.hip ? parseFloat(metrics.hip) : undefined,
-        wrist: metrics.wrist ? parseFloat(metrics.wrist) : undefined,
-        forearm: metrics.forearm ? parseFloat(metrics.forearm) : undefined,
-        activityLevel: metrics.activityLevel,
-        chestSkinfold: metrics.chestSkinfold ? parseFloat(metrics.chestSkinfold) : undefined,
-        midaxillarySkinfold: metrics.midaxillarySkinfold ? parseFloat(metrics.midaxillarySkinfold) : undefined,
-        suprailiacSkinfold: metrics.suprailiacSkinfold ? parseFloat(metrics.suprailiacSkinfold) : undefined,
-        thighSkinfold: metrics.thighSkinfold ? parseFloat(metrics.thighSkinfold) : undefined,
-        umbilicalSkinfold: metrics.umbilicalSkinfold ? parseFloat(metrics.umbilicalSkinfold) : undefined,
-        tricepsSkinfold: metrics.tricepsSkinfold ? parseFloat(metrics.tricepsSkinfold) : undefined,
-        subscapularSkinfold: metrics.subscapularSkinfold ? parseFloat(metrics.subscapularSkinfold) : undefined,
-        calfSkinfold: metrics.calfSkinfold ? parseFloat(metrics.calfSkinfold) : undefined,
-        midaxillarySkinfold2: metrics.midaxillarySkinfold2 ? parseFloat(metrics.midaxillarySkinfold2) : undefined
-      };
+      const numericMetrics = convertToNumericMetrics(metrics);
+      if (!numericMetrics) {
+        console.log('Failed to convert metrics to numeric values');
+        return;
+      }
 
       const results: Partial<HealthResult> = {};
 
