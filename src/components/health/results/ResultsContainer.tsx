@@ -8,7 +8,7 @@ import ProjectedResults from "./ProjectedResults";
 
 interface ResultsContainerProps {
   results: HealthResult;
-  metrics: { unit: 'metric' | 'imperial' };
+  metrics: { unit: 'metric' | 'imperial', gender: 'male' | 'female' | '' };
 }
 
 const ResultsContainer = ({ results, metrics }: ResultsContainerProps) => {
@@ -16,7 +16,7 @@ const ResultsContainer = ({ results, metrics }: ResultsContainerProps) => {
   
   return (
     <div className="space-y-8">
-      <HealthResults results={results} />
+      <HealthResults results={results} metrics={metrics} />
 
       {/* Body Indices */}
       <Group1Results
