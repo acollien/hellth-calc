@@ -1,4 +1,4 @@
-import { HealthMetrics } from '../types';
+import { HealthMetrics } from '@/components/health/types';
 
 export const calculateJacksonPollockBodyFat = (metrics: HealthMetrics): number | null => {
   console.log('Calculating Jackson-Pollock body fat with metrics:', metrics);
