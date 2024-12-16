@@ -1,22 +1,33 @@
 import { HealthMetrics } from './types';
 
 export const convertToMetric = (metrics: HealthMetrics): HealthMetrics => {
-  if (metrics.unit !== 'imperial') return metrics;
+  if (metrics.unit === 'metric') return metrics;
 
-  const converted: HealthMetrics = { ...metrics };
-  
-  if (metrics.height) converted.height = metrics.height * 2.54;
-  if (metrics.weight) converted.weight = metrics.weight * 0.453592;
-  if (metrics.neck) converted.neck = metrics.neck * 2.54;
-  if (metrics.waist) converted.waist = metrics.waist * 2.54;
-  if (metrics.hip) converted.hip = metrics.hip * 2.54;
-  if (metrics.wrist) converted.wrist = metrics.wrist * 2.54;
-  if (metrics.forearm) converted.forearm = metrics.forearm * 2.54;
-
-  console.log('Converted metrics to metric:', converted);
-  return converted;
+  return {
+    ...metrics,
+    height: Number(metrics.height) * 2.54,
+    weight: Number(metrics.weight) * 0.453592,
+    neck: metrics.neck ? Number(metrics.neck) * 2.54 : undefined,
+    waist: metrics.waist ? Number(metrics.waist) * 2.54 : undefined,
+    hip: metrics.hip ? Number(metrics.hip) * 2.54 : undefined,
+    wrist: metrics.wrist ? Number(metrics.wrist) * 2.54 : undefined,
+    forearm: metrics.forearm ? Number(metrics.forearm) * 2.54 : undefined,
+    unit: 'metric'
+  };
 };
 
-export const convertToImperial = (value: number): number => {
-  return value * 0.393701; // cm to inches
+export const convertToImperial = (metrics: HealthMetrics): HealthMetrics => {
+  if (metrics.unit === 'imperial') return metrics;
+
+  return {
+    ...metrics,
+    height: Number(metrics.height) / 2.54,
+    weight: Number(metrics.weight) / 0.453592,
+    neck: metrics.neck ? Number(metrics.neck) / 2.54 : undefined,
+    waist: metrics.waist ? Number(metrics.waist) / 2.54 : undefined,
+    hip: metrics.hip ? Number(metrics.hip) / 2.54 : undefined,
+    wrist: metrics.wrist ? Number(metrics.wrist) / 2.54 : undefined,
+    forearm: metrics.forearm ? Number(metrics.forearm) / 2.54 : undefined,
+    unit: 'imperial'
+  };
 };

@@ -1,15 +1,13 @@
 import { ThemeProvider } from "@/components/theme-provider";
-import { Toaster } from "@/components/ui/toaster";
-import { HealthProvider } from "@/contexts/HealthContext";
-import Index from "@/pages/Index";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import Index from "./pages/Index";
 
 function App() {
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-      <HealthProvider>
+      <TooltipProvider>
         <Index />
-        <Toaster />
-      </HealthProvider>
+      </TooltipProvider>
     </ThemeProvider>
   );
 }

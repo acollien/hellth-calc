@@ -1,29 +1,29 @@
 export interface BaseHealthMetrics {
-  height: string;
-  weight: string;
-  age?: string;
+  height: number;
+  weight: number;
+  age?: number;
   gender: 'male' | 'female';
   unit: 'metric' | 'imperial';
 }
 
 export interface BodyMeasurements {
-  neck?: string;
-  waist?: string;
-  hip?: string;
-  wrist?: string;
-  forearm?: string;
+  neck?: number;
+  waist?: number;
+  hip?: number;
+  wrist?: number;
+  forearm?: number;
 }
 
 export interface SkinfoldMeasurements {
-  triceps?: string;
-  subscapular?: string;
-  suprailiac?: string;
-  abdominal?: string;
-  thigh?: string;
-  chest?: string;
-  chestSkinfold?: string;
-  thighSkinfold?: string;
-  suprailiacSkinfold?: string;
+  triceps?: number;
+  subscapular?: number;
+  suprailiac?: number;
+  abdominal?: number;
+  thigh?: number;
+  chest?: number;
+  chestSkinfold?: number;
+  thighSkinfold?: number;
+  suprailiacSkinfold?: number;
 }
 
 export interface ActivityLevel {
@@ -34,8 +34,8 @@ export type HealthMetrics = BaseHealthMetrics & BodyMeasurements & SkinfoldMeasu
 
 export interface BMIResult {
   standard: number;
-  devine: number;
   athletic: number;
+  devine: number;
   bmiBased: number;
 }
 
@@ -46,11 +46,6 @@ export interface BodyFatResult {
   army: number | null;
 }
 
-export interface BMRResult {
-  bmr: number;
-  tdee?: number;
-}
-
 export interface IdealWeightResult {
   robinson: number;
   miller: number;
@@ -59,22 +54,29 @@ export interface IdealWeightResult {
   bmiBased: number;
 }
 
-export interface MetricImperialResult {
-  metric: number;
-  imperial: number;
-}
-
 export interface HealthResult {
   bmi?: BMIResult;
   bodyFat?: BodyFatResult;
-  bmr?: BMRResult;
+  bmr?: {
+    bmr: number;
+    tdee?: number;
+  };
   idealWeight?: IdealWeightResult;
-  frameSize?: 'small' | 'medium' | 'large' | null;
+  frameSize?: string;
   waistToHip?: number;
   biologicalAge?: number;
-  ponderalIndex?: MetricImperialResult;
-  absi?: MetricImperialResult;
-  bodyRoundnessIndex?: MetricImperialResult;
+  ponderalIndex?: {
+    metric: number;
+    imperial: number;
+  };
+  absi?: {
+    metric: number;
+    imperial: number;
+  };
+  bodyRoundnessIndex?: {
+    metric: number;
+    imperial: number;
+  };
   waistToHeightRatio?: number;
   leanBodyMass?: number;
   fatFreeMassIndex?: number;
