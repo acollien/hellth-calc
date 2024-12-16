@@ -28,34 +28,30 @@ export const useBasicMetrics = () => {
       const bmiResults = calculateBMI(height, weight);
 
       // Calculate ideal weight
-      const baseIdealWeight = calculateIdealWeight(
-        parseFloat(metrics.height),
-        metrics.gender
-      );
+      const baseIdealWeight = calculateIdealWeight(height, metrics.gender);
 
-      const idealWeightResults = {
-        ...baseIdealWeight,
-        athletic: 0,
-        bmiBased: 0
-      };
-
-      // Calculate biological age with numeric conversions
+      // Calculate biological age
       const biologicalAge = calculateBiologicalAge({
-        ...metrics,
         height: parseFloat(metrics.height),
         weight: parseFloat(metrics.weight),
         age: parseFloat(metrics.age),
-        neck: parseFloat(metrics.neck || '0'),
-        waist: parseFloat(metrics.waist || '0'),
-        hip: parseFloat(metrics.hip || '0'),
-        wrist: parseFloat(metrics.wrist || '0'),
-        forearm: parseFloat(metrics.forearm || '0')
-      } as unknown as BaseHealthMetrics);
+        gender: metrics.gender,
+        neck: metrics.neck ? parseFloat(metrics.neck) : 0,
+        waist: metrics.waist ? parseFloat(metrics.waist) : 0,
+        hip: metrics.hip ? parseFloat(metrics.hip) : 0,
+        wrist: metrics.wrist ? parseFloat(metrics.wrist) : 0,
+        forearm: metrics.forearm ? parseFloat(metrics.forearm) : 0,
+        unit: metrics.unit
+      });
 
       // Create complete results object
       const newResults = {
         bmi: bmiResults,
-        idealWeight: idealWeightResults,
+        idealWeight: {
+          ...baseIdealWeight,
+          athletic: baseIdealWeight.robinson * 0.9,
+          bmiBased: baseIdealWeight.robinson
+        },
         biologicalAge
       };
 
