@@ -5,7 +5,6 @@ interface Group4ResultsProps {
     standard: number;
     devine: number;
     athletic: number;
-    bmiBased: number;
   };
   bodyFat: {
     navy: number | null;
@@ -26,7 +25,7 @@ const Group4Results = ({ bmi, bodyFat, bmr, unit }: Group4ResultsProps) => {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-medium text-mint-800">Group 4 Results</h3>
+      <h3 className="text-lg font-medium text-mint-800">Health Metrics</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
           <h4 className="font-semibold">BMI</h4>
