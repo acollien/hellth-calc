@@ -4,6 +4,7 @@ import HealthResults from "@/components/HealthResults";
 import Group1Results from "./Group1Results";
 import Group2Results from "./Group2Results";
 import Group3Results from "./Group3Results";
+import ProjectedResults from "./ProjectedResults";
 
 interface ResultsContainerProps {
   results: HealthResult;
@@ -36,6 +37,19 @@ const ResultsContainer = ({ results, metrics }: ResultsContainerProps) => {
         conicityIndex={results.conicityIndex}
         unit={metrics.unit}
       />
+      {results.bmi && results.bodyFat && results.bmr && (
+        <ProjectedResults
+          bmi={{
+            standard: results.bmi.standard,
+            devine: results.bmi.devine,
+            athletic: results.bmi.athletic,
+            bmiBased: results.bmi.bmiBased
+          }}
+          bodyFat={results.bodyFat}
+          bmr={results.bmr}
+          unit={metrics.unit}
+        />
+      )}
     </div>
   );
 };
