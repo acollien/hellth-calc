@@ -21,7 +21,8 @@ const BodyFatResults = ({ bodyFat, gender }: BodyFatResultsProps) => {
         {Object.entries(bodyFat).map(([key, value]) => {
           console.log(`Processing ${key} with value:`, value);
           
-          if (typeof value === 'number' && !isNaN(value)) {
+          // Only render card if value is a valid number and not null
+          if (value !== null && !isNaN(value)) {
             const tooltipContent = {
               ...bodyFatTooltips[key],
               formula: bodyFatTooltips[key].formula[gender]
