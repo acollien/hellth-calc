@@ -4,10 +4,9 @@ import WaistToHipCard from "./cards/WaistToHipCard";
 interface OtherResultsProps {
   frameSize: string | null;
   waistToHip?: number;
-  unit: 'metric' | 'imperial';  // Added unit to props interface
 }
 
-const OtherResults = ({ frameSize, waistToHip, unit }: OtherResultsProps) => {
+const OtherResults = ({ frameSize, waistToHip }: OtherResultsProps) => {
   console.log("OtherResults received frameSize:", frameSize);
   
   // Only render if we have valid data to show

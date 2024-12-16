@@ -20,15 +20,7 @@ export const useBasicMetrics = () => {
       const age = parseFloat(metrics.age);
 
       const bmi = calculateBMI(height, weight);
-      const rawIdealWeight = calculateIdealWeight(height, metrics.gender);
-      
-      // Add missing athletic and bmiBased properties
-      const idealWeight = {
-        ...rawIdealWeight,
-        athletic: rawIdealWeight.robinson * 0.95, // Athletic ideal weight is typically 5% less
-        bmiBased: weight // Using current weight as bmiBased for now
-      };
-
+      const idealWeight = calculateIdealWeight(height, metrics.gender);
       const biologicalAge = calculateBiologicalAge({
         height,
         weight,
