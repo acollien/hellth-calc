@@ -1,7 +1,8 @@
 import { Info } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { ReactNode } from "react";
-import { formatValue } from "@/utils/health/display";
+import { formatValue } from "@/utils/health/display/formatters";
+import { getValueColor } from "@/utils/health/display/colors";
 
 interface TooltipContentProps {
   title: string;
