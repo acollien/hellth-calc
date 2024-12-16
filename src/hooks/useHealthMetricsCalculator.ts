@@ -8,13 +8,36 @@ import { calculateBodyFat } from "@/utils/health/bodyFat";
 import { 
   calculateABSI, 
   calculateBodyRoundnessIndex, 
-  calculatePonderalIndex 
+  calculatePonderalIndex,
+  calculateBodyAdiposityIndex,
+  calculateConicityIndex
 } from "@/utils/health/indices";
 import { 
   calculateWaistToHipRatio, 
   calculateWaistToHeightRatio 
 } from "@/utils/health/metrics";
 import { calculateFrameSize } from "@/utils/health/metrics/frameSize";
+import { calculateLeanMassIndex } from "@/utils/health/calculations/leanMassIndex";
+
+// Add new calculation functions
+const calculateFatFreeMassIndex = (weight: number, height: number, bodyFat: number): number => {
+  const fatFreeMass = weight * (1 - bodyFat / 100);
+  return fatFreeMass / ((height / 100) * (height / 100));
+};
+
+const calculateSkeletalMuscleMass = (weight: number, bodyFat: number): number => {
+  // Approximate skeletal muscle mass using lean body mass
+  const leanMass = weight * (1 - bodyFat / 100);
+  return leanMass * 0.6; // Skeletal muscle typically accounts for ~60% of lean mass
+};
+
+const calculateBodyFatDistribution = (waist: number, hip: number): number => {
+  return (waist / hip) * 100;
+};
+
+const calculateLeanBodyMass = (weight: number, bodyFat: number): number => {
+  return weight * (1 - bodyFat / 100);
+};
 
 interface UseHealthMetricsCalculatorProps {
   metrics: HealthMetrics;
@@ -71,31 +94,34 @@ export const useHealthMetricsCalculator = ({
 
       const results: Partial<HealthResult> = {};
 
-      // Calculate BMI
+      // Calculate existing metrics
       results.bmi = calculateBMI(numericMetrics.height, numericMetrics.weight);
-      console.log('Calculated BMI:', results.bmi);
-
-      // Calculate BMR and TDEE
+      
       if (metrics.activityLevel) {
         results.bmr = calculateBMR(metrics);
-        console.log('Calculated BMR:', results.bmr);
       }
 
-      // Calculate Ideal Weight
       results.idealWeight = calculateIdealWeight(numericMetrics.height, metrics.gender);
-      console.log('Calculated Ideal Weight:', results.idealWeight);
-
-      // Calculate Biological Age
       results.biologicalAge = calculateBiologicalAge(metrics);
-      console.log('Calculated Biological Age:', results.biologicalAge);
 
-      // Calculate Body Fat if required measurements are present
+      // Calculate body fat if required measurements are present
       if (numericMetrics.neck && numericMetrics.waist && numericMetrics.hip) {
         results.bodyFat = calculateBodyFat(metrics);
-        console.log('Calculated Body Fat:', results.bodyFat);
+        
+        // Calculate additional metrics that depend on body fat
+        if (results.bodyFat.navy) {
+          const bodyFatPercentage = results.bodyFat.navy;
+          const weight = numericMetrics.weight;
+          const height = numericMetrics.height;
+
+          // Add new calculations
+          results.leanBodyMass = calculateLeanBodyMass(weight, bodyFatPercentage);
+          results.fatFreeMassIndex = calculateFatFreeMassIndex(weight, height, bodyFatPercentage);
+          results.skeletalMuscleMass = calculateSkeletalMuscleMass(weight, bodyFatPercentage);
+        }
       }
 
-      // Calculate Body Indices if waist measurement is present
+      // Calculate body indices if waist measurement is present
       if (numericMetrics.waist) {
         results.absi = calculateABSI(
           numericMetrics.waist,
@@ -114,6 +140,17 @@ export const useHealthMetricsCalculator = ({
           numericMetrics.waist,
           numericMetrics.height
         );
+
+        // Add new calculations
+        if (numericMetrics.hip) {
+          results.bodyFatDistribution = calculateBodyFatDistribution(
+            numericMetrics.waist,
+            numericMetrics.hip
+          );
+
+          results.bodyAdiposityIndex = calculateBodyAdiposityIndex(metrics);
+          results.conicityIndex = calculateConicityIndex(metrics);
+        }
       }
 
       // Calculate Ponderal Index
@@ -122,6 +159,11 @@ export const useHealthMetricsCalculator = ({
         numericMetrics.weight,
         metrics.unit
       );
+
+      // Calculate Lean Mass Index if body fat is available
+      if (results.bodyFat) {
+        results.leanMassIndex = calculateLeanMassIndex(metrics);
+      }
 
       // Calculate Frame Size if wrist measurement is present
       if (numericMetrics.wrist) {

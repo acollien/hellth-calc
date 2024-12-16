@@ -19,19 +19,42 @@ const Group2Results = ({
   bodyFatDistribution,
   unit 
 }: Group2ResultsProps) => {
-  const hasAnyResults = leanBodyMass || fatFreeMassIndex || skeletalMuscleMass || bodyFatDistribution;
-  
-  if (!hasAnyResults) return null;
+  console.log("Group2Results received values:", {
+    leanBodyMass,
+    fatFreeMassIndex,
+    skeletalMuscleMass,
+    bodyFatDistribution
+  });
+
+  // Check if we have at least one valid value
+  const hasAnyValidValues = 
+    (typeof leanBodyMass === 'number' && !isNaN(leanBodyMass)) ||
+    (typeof fatFreeMassIndex === 'number' && !isNaN(fatFreeMassIndex)) ||
+    (typeof skeletalMuscleMass === 'number' && !isNaN(skeletalMuscleMass)) ||
+    (typeof bodyFatDistribution === 'number' && !isNaN(bodyFatDistribution));
+
+  if (!hasAnyValidValues) {
+    console.log("No valid values present in Group2Results, not rendering");
+    return null;
+  }
 
   return (
     <GroupResults 
       title="Mass and Composition"
       description="Detailed breakdown of your body's mass components and their distribution."
     >
-      {leanBodyMass && <LeanBodyMassCard value={leanBodyMass} unit={unit} />}
-      {fatFreeMassIndex && <FatFreeMassCard value={fatFreeMassIndex} />}
-      {skeletalMuscleMass && <SkeletalMuscleMassCard value={skeletalMuscleMass} unit={unit} />}
-      {bodyFatDistribution && <BodyFatDistributionCard value={bodyFatDistribution} />}
+      {typeof leanBodyMass === 'number' && !isNaN(leanBodyMass) && (
+        <LeanBodyMassCard value={leanBodyMass} unit={unit} />
+      )}
+      {typeof fatFreeMassIndex === 'number' && !isNaN(fatFreeMassIndex) && (
+        <FatFreeMassCard value={fatFreeMassIndex} />
+      )}
+      {typeof skeletalMuscleMass === 'number' && !isNaN(skeletalMuscleMass) && (
+        <SkeletalMuscleMassCard value={skeletalMuscleMass} unit={unit} />
+      )}
+      {typeof bodyFatDistribution === 'number' && !isNaN(bodyFatDistribution) && (
+        <BodyFatDistributionCard value={bodyFatDistribution} />
+      )}
     </GroupResults>
   );
 };

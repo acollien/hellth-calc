@@ -22,13 +22,11 @@ const Group3Results = ({
     conicityIndex
   });
 
-  // Individual validity checks for each metric
-  const hasValidLeanMassIndex = typeof leanMassIndex === 'number' && !isNaN(leanMassIndex);
-  const hasValidBodyAdiposityIndex = typeof bodyAdiposityIndex === 'number' && !isNaN(bodyAdiposityIndex);
-  const hasValidConicityIndex = typeof conicityIndex === 'number' && !isNaN(conicityIndex);
-
   // Check if we have at least one valid value
-  const hasAnyValidValues = hasValidLeanMassIndex || hasValidBodyAdiposityIndex || hasValidConicityIndex;
+  const hasAnyValidValues = 
+    (typeof leanMassIndex === 'number' && !isNaN(leanMassIndex)) ||
+    (typeof bodyAdiposityIndex === 'number' && !isNaN(bodyAdiposityIndex)) ||
+    (typeof conicityIndex === 'number' && !isNaN(conicityIndex));
 
   if (!hasAnyValidValues) {
     console.log("No valid values present in Group3Results, not rendering");
@@ -40,17 +38,15 @@ const Group3Results = ({
       title="Advanced Body Measurements"
       description="Advanced measurements that provide detailed insights about your body composition and health risks."
     >
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {hasValidLeanMassIndex && (
-          <LeanMassIndexCard value={leanMassIndex} />
-        )}
-        {hasValidBodyAdiposityIndex && (
-          <BodyAdiposityCard value={bodyAdiposityIndex} />
-        )}
-        {hasValidConicityIndex && (
-          <ConicityCard value={conicityIndex} />
-        )}
-      </div>
+      {typeof leanMassIndex === 'number' && !isNaN(leanMassIndex) && (
+        <LeanMassIndexCard value={leanMassIndex} />
+      )}
+      {typeof bodyAdiposityIndex === 'number' && !isNaN(bodyAdiposityIndex) && (
+        <BodyAdiposityCard value={bodyAdiposityIndex} />
+      )}
+      {typeof conicityIndex === 'number' && !isNaN(conicityIndex) && (
+        <ConicityCard value={conicityIndex} />
+      )}
     </GroupResults>
   );
 };
