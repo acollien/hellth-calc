@@ -5,17 +5,15 @@ export const calculateBMIBasedBodyFat = (metrics: HealthMetrics): number | null 
     return null;
   }
 
-  const height = Number(metrics.height);
-  const weight = Number(metrics.weight);
-  const age = Number(metrics.age);
+  const height = parseFloat(metrics.height);
+  const weight = parseFloat(metrics.weight);
+  const age = parseFloat(metrics.age);
   
   // Calculate BMI
   const bmi = weight / Math.pow(height / 100, 2);
   
-  // Updated coefficients based on more recent research for better alignment with other methods
-  let bodyFat = metrics.gender === 'male'
-    ? (1.10 * bmi) + (0.15 * age) - 9.5
-    : (1.08 * bmi) + (0.15 * age) - 4.5;
+  // Updated coefficients based on Deurenberg formula (1991)
+  const bodyFat = (1.20 * bmi) + (0.23 * age) - (10.8 * (metrics.gender === 'male' ? 1 : 0)) - 5.4;
 
   // Ensure result is within realistic bounds
   return Math.max(0, Math.min(bodyFat, 100));
