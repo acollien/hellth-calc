@@ -30,15 +30,18 @@ const HealthCalculator = () => {
     }
 
     try {
-      // Convert string measurements to numbers for calculations
+      // Convert string measurements to numbers and create a properly typed object
       const numericMetrics: Record<string, any> = {
         height: parseFloat(metrics.height),
         weight: parseFloat(metrics.weight),
         age: parseFloat(metrics.age),
         gender: metrics.gender,
-        unit: metrics.unit,
-        activityLevel: metrics.activityLevel || undefined
+        unit: metrics.unit
       };
+
+      if (metrics.activityLevel) {
+        numericMetrics.activityLevel = metrics.activityLevel;
+      }
 
       // Only add measurements that exist and can be converted to numbers
       const optionalMeasurements = [
@@ -50,7 +53,10 @@ const HealthCalculator = () => {
 
       optionalMeasurements.forEach(measurement => {
         if (metrics[measurement as keyof HealthMetrics]) {
-          numericMetrics[measurement] = parseFloat(metrics[measurement as keyof HealthMetrics]);
+          const value = parseFloat(metrics[measurement as keyof HealthMetrics]);
+          if (!isNaN(value)) {
+            numericMetrics[measurement] = value;
+          }
         }
       });
 
@@ -63,7 +69,11 @@ const HealthCalculator = () => {
       // Calculate BMR and TDEE
       if (metrics.activityLevel) {
         results.bmr = calculateBMR({
-          ...numericMetrics,
+          height: numericMetrics.height,
+          weight: numericMetrics.weight,
+          age: numericMetrics.age,
+          gender: metrics.gender,
+          unit: metrics.unit,
           activityLevel: metrics.activityLevel
         });
         console.log('Calculated BMR:', results.bmr);
@@ -81,7 +91,12 @@ const HealthCalculator = () => {
 
       // Calculate Body Fat if required measurements are present
       if (numericMetrics.neck && numericMetrics.waist && numericMetrics.hip) {
-        results.bodyFat = calculateBodyFat(metrics);
+        results.bodyFat = calculateBodyFat({
+          ...metrics,
+          neck: numericMetrics.neck.toString(),
+          waist: numericMetrics.waist.toString(),
+          hip: numericMetrics.hip.toString()
+        });
         console.log('Calculated Body Fat:', results.bodyFat);
       }
 
