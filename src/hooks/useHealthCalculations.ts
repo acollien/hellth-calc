@@ -20,6 +20,12 @@ export const useHealthCalculations = () => {
   const calculateResults = (currentMetrics: HealthMetrics) => {
     console.log('Starting health calculations with metrics:', currentMetrics);
 
+    // Skip calculations if gender is not selected
+    if (!currentMetrics.gender) {
+      console.log('Skipping calculations - gender not selected');
+      return;
+    }
+
     // Convert imperial to metric if needed
     const metrics = { ...currentMetrics };
     if (metrics.unit === 'imperial') {
@@ -41,6 +47,10 @@ export const useHealthCalculations = () => {
       }
     });
 
+    // Ensure gender is typed correctly for calculations
+    const gender = metrics.gender as 'male' | 'female';
+    numericMetrics.gender = gender;
+
     // Calculate all metrics using specialized hooks
     const basicResults = calculateBasicMetrics(metrics);
     const compositionResults = calculateComposition(metrics);
@@ -51,7 +61,7 @@ export const useHealthCalculations = () => {
     const frameSize = calculateFrameSize({
       height: numericMetrics.height,
       wrist: numericMetrics.wrist,
-      gender: metrics.gender,
+      gender,
       unit: metrics.unit
     });
 
