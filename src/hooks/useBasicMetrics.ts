@@ -15,32 +15,60 @@ export const useBasicMetrics = () => {
       return;
     }
 
-    const numericMetrics: HealthMetrics = {
-      ...metrics,
-      height: parseFloat(metrics.height),
-      weight: parseFloat(metrics.weight),
-      age: parseFloat(metrics.age)
-    };
+    try {
+      // Convert string metrics to numbers while maintaining the string type in the metrics object
+      const height = parseFloat(metrics.height);
+      const weight = parseFloat(metrics.weight);
+      const age = parseFloat(metrics.age);
 
-    const bmiResults = calculateBMI(numericMetrics);
-    const idealWeightResults = calculateIdealWeight(numericMetrics);
-    const biologicalAge = calculateBiologicalAge(numericMetrics);
+      // Calculate BMI with numeric values
+      const bmiResults = calculateBMI({
+        ...metrics,
+        height,
+        weight,
+        age
+      });
 
-    // Ensure all required properties are included in idealWeightResults
-    const completeIdealWeightResults = {
-      ...idealWeightResults,
-      athletic: idealWeightResults.athletic || 0,
-      bmiBased: idealWeightResults.bmiBased || 0
-    };
+      // Calculate ideal weight with numeric values
+      const idealWeightResults = calculateIdealWeight({
+        ...metrics,
+        height,
+        weight,
+        age
+      });
 
-    const results = {
-      bmi: bmiResults,
-      idealWeight: completeIdealWeightResults,
-      biologicalAge
-    };
+      // Calculate biological age with numeric values
+      const biologicalAge = calculateBiologicalAge({
+        ...metrics,
+        height,
+        weight,
+        age
+      });
 
-    console.log('Basic metrics calculated:', results);
-    dispatch({ type: 'SET_RESULTS', results: { ...state.results, ...results } });
+      // Create complete results object
+      const newResults = {
+        bmi: bmiResults,
+        idealWeight: {
+          ...idealWeightResults,
+          athletic: idealWeightResults.athletic || 0,
+          bmiBased: idealWeightResults.bmiBased || 0
+        },
+        biologicalAge
+      };
+
+      console.log('Basic metrics calculated:', newResults);
+      
+      // Merge new results with existing results instead of replacing them
+      dispatch({ 
+        type: 'SET_RESULTS', 
+        results: { 
+          ...state.results, // Keep existing results
+          ...newResults     // Add/update new results
+        } 
+      });
+    } catch (error) {
+      console.error('Error calculating basic metrics:', error);
+    }
   }, [metrics.height, metrics.weight, metrics.age, metrics.gender, metrics.unit]);
 
   return state.results;
