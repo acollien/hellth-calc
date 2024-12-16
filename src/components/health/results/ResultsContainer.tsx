@@ -24,6 +24,7 @@ const ResultsContainer = ({ results, metrics }: ResultsContainerProps) => {
         absi={results.absi}
         bodyRoundnessIndex={results.bodyRoundnessIndex}
         waistToHeightRatio={results.waistToHeightRatio}
+        waistToHip={results.waistToHip}
         unit={metrics.unit}
       />
 
@@ -33,6 +34,7 @@ const ResultsContainer = ({ results, metrics }: ResultsContainerProps) => {
         fatFreeMassIndex={results.fatFreeMassIndex}
         skeletalMuscleMass={results.skeletalMuscleMass}
         bodyFatDistribution={results.bodyFatDistribution}
+        frameSize={results.frameSize}
         unit={metrics.unit}
       />
 
