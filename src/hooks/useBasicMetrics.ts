@@ -22,40 +22,49 @@ export const useBasicMetrics = () => {
     }
 
     try {
-      // Convert string metrics to numbers
-      const height = parseFloat(metrics.height);
-      const weight = parseFloat(metrics.weight);
-      const age = parseFloat(metrics.age);
-
-      // Create numeric metrics object with valid gender type
-      const numericMetrics = {
+      // Convert all string measurements to numbers
+      const numericMetrics: HealthMetrics = {
         ...metrics,
-        height,
-        weight,
-        age,
-        gender: metrics.gender as 'male' | 'female' // Type assertion since we checked above
+        height: parseFloat(metrics.height),
+        weight: parseFloat(metrics.weight),
+        age: parseFloat(metrics.age),
+        neck: parseFloat(metrics.neck || '0'),
+        waist: parseFloat(metrics.waist || '0'),
+        hip: parseFloat(metrics.hip || '0'),
+        wrist: parseFloat(metrics.wrist || '0'),
+        forearm: parseFloat(metrics.forearm || '0'),
+        chestSkinfold: parseFloat(metrics.chestSkinfold || '0'),
+        midaxillarySkinfold: parseFloat(metrics.midaxillarySkinfold || '0'),
+        suprailiacSkinfold: parseFloat(metrics.suprailiacSkinfold || '0'),
+        thighSkinfold: parseFloat(metrics.thighSkinfold || '0'),
+        umbilicalSkinfold: parseFloat(metrics.umbilicalSkinfold || '0'),
+        tricepsSkinfold: parseFloat(metrics.tricepsSkinfold || '0'),
+        midaxillarySkinfold2: parseFloat(metrics.midaxillarySkinfold2 || '0'),
+        subscapularSkinfold: parseFloat(metrics.subscapularSkinfold || '0'),
+        calfSkinfold: parseFloat(metrics.calfSkinfold || '0'),
+        gender: metrics.gender,
+        unit: metrics.unit,
+        activityLevel: metrics.activityLevel
       };
 
-      // Calculate BMI with numeric values and unit
+      // Calculate BMI
       const bmiResults = calculateBMI(numericMetrics, metrics.unit);
 
-      // Calculate ideal weight with numeric values and unit
-      const idealWeightResults = calculateIdealWeight(numericMetrics, metrics.unit);
+      // Calculate ideal weight
+      const baseIdealWeight = calculateIdealWeight(numericMetrics.height, numericMetrics.gender);
+      const idealWeightResults = {
+        ...baseIdealWeight,
+        athletic: 0, // Add missing properties
+        bmiBased: 0
+      };
 
       // Calculate biological age
       const biologicalAge = calculateBiologicalAge(numericMetrics);
 
-      // Create complete results object with all required properties
+      // Create complete results object
       const newResults = {
         bmi: bmiResults,
-        idealWeight: {
-          ...idealWeightResults,
-          athletic: typeof idealWeightResults.athletic === 'number' ? idealWeightResults.athletic : 0,
-          bmiBased: typeof idealWeightResults.bmiBased === 'number' ? idealWeightResults.bmiBased : 0,
-          robinson: idealWeightResults.robinson,
-          miller: idealWeightResults.miller,
-          devine: idealWeightResults.devine
-        },
+        idealWeight: idealWeightResults,
         biologicalAge
       };
 
