@@ -4,6 +4,7 @@ import HealthResults from "@/components/HealthResults";
 import Group1Results from "./Group1Results";
 import Group2Results from "./Group2Results";
 import Group3Results from "./Group3Results";
+import Group4Results from "./Group4Results";
 import ProjectedResults from "./ProjectedResults";
 
 interface ResultsContainerProps {
@@ -17,6 +18,18 @@ const ResultsContainer = ({ results, metrics }: ResultsContainerProps) => {
   return (
     <div className="space-y-8">
       <HealthResults results={results} />
+      
+      {/* Basic Health Metrics */}
+      {results.bmi && results.bodyFat && results.bmr && (
+        <Group4Results
+          bmi={results.bmi}
+          bodyFat={results.bodyFat}
+          bmr={results.bmr.bmr}
+          unit={metrics.unit}
+        />
+      )}
+
+      {/* Body Indices */}
       <Group1Results
         ponderalIndex={results.ponderalIndex}
         absi={results.absi}
@@ -24,6 +37,8 @@ const ResultsContainer = ({ results, metrics }: ResultsContainerProps) => {
         waistToHeightRatio={results.waistToHeightRatio}
         unit={metrics.unit}
       />
+
+      {/* Body Composition */}
       <Group2Results
         leanBodyMass={results.leanBodyMass}
         fatFreeMassIndex={results.fatFreeMassIndex}
@@ -31,12 +46,16 @@ const ResultsContainer = ({ results, metrics }: ResultsContainerProps) => {
         bodyFatDistribution={results.bodyFatDistribution}
         unit={metrics.unit}
       />
+
+      {/* Additional Metrics */}
       <Group3Results
         leanMassIndex={results.leanMassIndex}
         bodyAdiposityIndex={results.bodyAdiposityIndex}
         conicityIndex={results.conicityIndex}
         unit={metrics.unit}
       />
+
+      {/* Projected Results */}
       {results.bmi && results.bodyFat && results.bmr && (
         <ProjectedResults
           bmi={{

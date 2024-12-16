@@ -35,6 +35,12 @@ export const exportResults = (results: any, format: 'pdf' | 'json') => {
       "Body Adiposity Index": value < 20 ? "Underweight (<20)" :
                             value < 25 ? "Normal (20-25)" :
                             value < 30 ? "Overweight (25-30)" : "Obese (>30)",
+      "Fat Free Mass Index": value < 16 ? "Below Average (<16)" :
+                           value < 19 ? "Average (16-19)" :
+                           value < 22 ? "Above Average (19-22)" : "High (>22)",
+      "Skeletal Muscle Mass": value < 30 ? "Low (<30)" :
+                            value < 40 ? "Average (30-40)" :
+                            value < 50 ? "Athletic (40-50)" : "High (>50)",
     };
     return ranges[metric] || "No range data";
   };
@@ -61,8 +67,8 @@ export const exportResults = (results: any, format: 'pdf' | 'json') => {
     },
     "Body Composition": {
       "Lean Body Mass": `${formatValue(results.leanBodyMass)} kg`,
-      "Fat Free Mass Index": formatValue(results.fatFreeMassIndex),
-      "Skeletal Muscle Mass": `${formatValue(results.skeletalMuscleMass)} kg`,
+      "Fat Free Mass Index": `${formatValue(results.fatFreeMassIndex)} - ${getRangeForMetric("Fat Free Mass Index", results.fatFreeMassIndex)}`,
+      "Skeletal Muscle Mass": `${formatValue(results.skeletalMuscleMass)} kg - ${getRangeForMetric("Skeletal Muscle Mass", results.skeletalMuscleMass)}`,
       "Body Fat Distribution": formatValue(results.bodyFatDistribution),
       "Frame Size": results.frameSize || 'N/A',
       "Lean Mass Index": `${formatValue(results.leanMassIndex)} - ${getRangeForMetric("Lean Mass Index", results.leanMassIndex)}`
