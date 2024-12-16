@@ -3,6 +3,7 @@ export interface HealthResult {
     standard: number;
     devine: number;
     athletic: number;
+    bmiBased: number;
   };
   bodyFat?: {
     navy: number | null;
