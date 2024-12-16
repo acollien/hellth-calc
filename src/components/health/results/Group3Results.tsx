@@ -2,6 +2,7 @@ import LeanMassIndexCard from "./cards/LeanMassIndexCard";
 import BodyAdiposityCard from "./cards/BodyAdiposityCard";
 import ConicityCard from "./cards/ConicityCard";
 import GroupResults from "./GroupResults";
+import ProjectedResults from "./ProjectedResults";
 
 interface Group3ResultsProps {
   leanMassIndex?: number | null;

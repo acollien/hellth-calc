@@ -9,6 +9,7 @@ import { HealthResult } from "@/types/health";
 import Group1Results from "./health/results/Group1Results";
 import Group2Results from "./health/results/Group2Results";
 import Group3Results from "./health/results/Group3Results";
+import ProjectedResults from "./health/results/ProjectedResults";
 
 interface ResultsProps {
   results: HealthResult;
@@ -73,6 +74,15 @@ const HealthResults = ({ results, metrics }: ResultsProps) => {
         conicityIndex={results.conicityIndex}
         unit={metrics.unit}
       />
+
+      {results.bmi && results.bodyFat && results.bmr && (
+        <ProjectedResults
+          bmi={results.bmi}
+          bodyFat={results.bodyFat}
+          bmr={results.bmr}
+          unit={metrics.unit}
+        />
+      )}
 
       <OtherResults 
         frameSize={results.frameSize}
