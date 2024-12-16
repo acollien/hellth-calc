@@ -1,40 +1,34 @@
-import { HealthMetrics } from '@/components/health/types';
+interface FrameSizeParams {
+  height: number;
+  wrist: number;
+  gender: 'male' | 'female';
+  unit: 'metric' | 'imperial';
+}
 
-export const calculateFrameSize = (metrics: {
-  height?: number;
-  wrist?: number;
-  gender?: string;
-  unit?: 'metric' | 'imperial';
-}): string | null => {
-  console.log('Calculating frame size with metrics:', metrics);
+export const calculateFrameSize = ({ height, wrist, gender, unit }: FrameSizeParams): string | null => {
+  console.log("Calculating frame size with params:", { height, wrist, gender, unit });
   
-  if (!metrics.height || !metrics.wrist) {
-    console.log('Missing required measurements for frame size calculation');
+  if (!height || !wrist) {
+    console.log("Missing required measurements for frame size calculation");
     return null;
   }
 
-  // Ensure measurements are in metric
-  let height = metrics.height;
-  let wrist = metrics.wrist;
-  
-  if (metrics.unit === 'imperial') {
-    height = height * 2.54; // Convert inches to cm
-    wrist = wrist * 2.54; // Convert inches to cm
+  // Convert to metric if needed
+  if (unit === 'imperial') {
+    height = height * 2.54;  // inches to cm
+    wrist = wrist * 2.54;    // inches to cm
   }
 
-  // Calculate height to wrist ratio
   const ratio = height / wrist;
-  console.log('Height to wrist ratio:', ratio);
+  console.log("Frame size ratio calculated:", ratio);
 
-  // Different ranges for males and females
-  if (metrics.gender === 'female') {
-    if (ratio > 11.0) return 'small';
-    if (ratio < 10.1) return 'large';
-    return 'medium';
-  } else {
-    // Default to male ranges
+  if (gender === 'male') {
     if (ratio > 10.4) return 'small';
     if (ratio < 9.6) return 'large';
+    return 'medium';
+  } else {
+    if (ratio > 11.0) return 'small';
+    if (ratio < 10.1) return 'large';
     return 'medium';
   }
 };

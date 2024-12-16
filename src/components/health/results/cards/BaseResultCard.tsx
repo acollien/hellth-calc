@@ -1,6 +1,7 @@
 import { Info } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { ReactNode } from "react";
+import { formatValue } from "@/utils/health/display";
 
 interface TooltipContentProps {
   title: string;
@@ -12,11 +13,13 @@ interface TooltipContentProps {
 
 interface BaseResultCardProps {
   label: string;
-  value: string | number;
+  value: number | null;
   valueColor: string;
   tooltipContent: TooltipContentProps;
+  precision?: number;
   unit?: string;
   children?: ReactNode;
+  className?: string;
 }
 
 const BaseResultCard = ({
@@ -24,11 +27,15 @@ const BaseResultCard = ({
   value,
   valueColor,
   tooltipContent,
+  precision = 1,
   unit = "",
-  children
+  children,
+  className = ""
 }: BaseResultCardProps) => {
+  console.log(`Rendering BaseResultCard for ${label} with value:`, value);
+  
   return (
-    <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
+    <div className={`p-4 rounded-lg bg-mint-50 border border-mint-100 ${className}`}>
       <Tooltip>
         <TooltipTrigger asChild>
           <div className="flex items-start gap-2">
@@ -38,7 +45,7 @@ const BaseResultCard = ({
                 <Info className="h-4 w-4 text-mint-500" />
               </div>
               <div className={`text-2xl font-semibold ${valueColor}`}>
-                {typeof value === 'number' ? value.toFixed(2) : value}
+                {formatValue(value, precision)}
                 {unit && ` ${unit}`}
               </div>
               {children}
