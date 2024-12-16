@@ -4,6 +4,7 @@ import { calculateBMI } from '@/utils/health/calculations/bmi';
 import { calculateIdealWeight } from '@/utils/health/calculations/idealWeight';
 import { calculateBiologicalAge } from '@/utils/health/calculations/biologicalAge';
 import { HealthMetrics } from '@/components/health/types';
+import { BaseHealthMetrics } from '@/utils/health/types';
 
 export const useBasicMetrics = () => {
   const { state, dispatch } = useHealth();
@@ -15,15 +16,34 @@ export const useBasicMetrics = () => {
       return;
     }
 
-    // Only proceed if gender is male or female (not empty string)
     if (metrics.gender !== 'male' && metrics.gender !== 'female') {
       console.log('Gender must be either male or female');
       return;
     }
 
     try {
-      // Convert all string measurements to numbers
-      const numericMetrics: HealthMetrics = {
+      // Calculate BMI using numeric values
+      const bmiResults = calculateBMI({
+        height: parseFloat(metrics.height),
+        weight: parseFloat(metrics.weight),
+        gender: metrics.gender,
+        unit: metrics.unit
+      } as BaseHealthMetrics, metrics.unit);
+
+      // Calculate ideal weight
+      const baseIdealWeight = calculateIdealWeight(
+        parseFloat(metrics.height),
+        metrics.gender
+      );
+
+      const idealWeightResults = {
+        ...baseIdealWeight,
+        athletic: 0,
+        bmiBased: 0
+      };
+
+      // Calculate biological age with numeric conversions
+      const biologicalAge = calculateBiologicalAge({
         ...metrics,
         height: parseFloat(metrics.height),
         weight: parseFloat(metrics.weight),
@@ -32,34 +52,8 @@ export const useBasicMetrics = () => {
         waist: parseFloat(metrics.waist || '0'),
         hip: parseFloat(metrics.hip || '0'),
         wrist: parseFloat(metrics.wrist || '0'),
-        forearm: parseFloat(metrics.forearm || '0'),
-        chestSkinfold: parseFloat(metrics.chestSkinfold || '0'),
-        midaxillarySkinfold: parseFloat(metrics.midaxillarySkinfold || '0'),
-        suprailiacSkinfold: parseFloat(metrics.suprailiacSkinfold || '0'),
-        thighSkinfold: parseFloat(metrics.thighSkinfold || '0'),
-        umbilicalSkinfold: parseFloat(metrics.umbilicalSkinfold || '0'),
-        tricepsSkinfold: parseFloat(metrics.tricepsSkinfold || '0'),
-        midaxillarySkinfold2: parseFloat(metrics.midaxillarySkinfold2 || '0'),
-        subscapularSkinfold: parseFloat(metrics.subscapularSkinfold || '0'),
-        calfSkinfold: parseFloat(metrics.calfSkinfold || '0'),
-        gender: metrics.gender,
-        unit: metrics.unit,
-        activityLevel: metrics.activityLevel
-      };
-
-      // Calculate BMI
-      const bmiResults = calculateBMI(numericMetrics, metrics.unit);
-
-      // Calculate ideal weight
-      const baseIdealWeight = calculateIdealWeight(numericMetrics.height, numericMetrics.gender);
-      const idealWeightResults = {
-        ...baseIdealWeight,
-        athletic: 0, // Add missing properties
-        bmiBased: 0
-      };
-
-      // Calculate biological age
-      const biologicalAge = calculateBiologicalAge(numericMetrics);
+        forearm: parseFloat(metrics.forearm || '0')
+      } as unknown as BaseHealthMetrics);
 
       // Create complete results object
       const newResults = {
