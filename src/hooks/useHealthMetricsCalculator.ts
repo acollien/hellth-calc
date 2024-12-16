@@ -33,18 +33,19 @@ export const useHealthMetricsCalculator = ({
     }
 
     try {
+      // Convert string values to numbers for calculations
       const numericMetrics = {
         height: parseFloat(metrics.height),
         weight: parseFloat(metrics.weight),
         age: parseFloat(metrics.age),
         gender: metrics.gender,
         unit: metrics.unit,
-        ...(metrics.neck && { neck: parseFloat(metrics.neck) }),
-        ...(metrics.waist && { waist: parseFloat(metrics.waist) }),
-        ...(metrics.hip && { hip: parseFloat(metrics.hip) }),
-        ...(metrics.wrist && { wrist: parseFloat(metrics.wrist) }),
-        ...(metrics.forearm && { forearm: parseFloat(metrics.forearm) }),
-        ...(metrics.activityLevel && { activityLevel: metrics.activityLevel })
+        neck: metrics.neck ? parseFloat(metrics.neck) : undefined,
+        waist: metrics.waist ? parseFloat(metrics.waist) : undefined,
+        hip: metrics.hip ? parseFloat(metrics.hip) : undefined,
+        wrist: metrics.wrist ? parseFloat(metrics.wrist) : undefined,
+        forearm: metrics.forearm ? parseFloat(metrics.forearm) : undefined,
+        activityLevel: metrics.activityLevel
       };
 
       const results: Partial<HealthResult> = {};
@@ -56,11 +57,7 @@ export const useHealthMetricsCalculator = ({
       // Calculate BMR and TDEE
       if (metrics.activityLevel) {
         results.bmr = calculateBMR({
-          height: numericMetrics.height,
-          weight: numericMetrics.weight,
-          age: numericMetrics.age,
-          gender: metrics.gender,
-          unit: metrics.unit,
+          ...numericMetrics,
           activityLevel: metrics.activityLevel
         });
         console.log('Calculated BMR:', results.bmr);
@@ -76,7 +73,15 @@ export const useHealthMetricsCalculator = ({
 
       // Calculate Body Fat if required measurements are present
       if (numericMetrics.neck && numericMetrics.waist && numericMetrics.hip) {
-        results.bodyFat = calculateBodyFat(metrics);
+        results.bodyFat = calculateBodyFat({
+          ...metrics,
+          height: numericMetrics.height.toString(),
+          weight: numericMetrics.weight.toString(),
+          age: numericMetrics.age.toString(),
+          neck: numericMetrics.neck.toString(),
+          waist: numericMetrics.waist.toString(),
+          hip: numericMetrics.hip.toString()
+        });
         console.log('Calculated Body Fat:', results.bodyFat);
       }
 
@@ -120,7 +125,11 @@ export const useHealthMetricsCalculator = ({
 
       // Calculate Waist to Hip Ratio if both measurements are present
       if (numericMetrics.waist && numericMetrics.hip) {
-        results.waistToHip = calculateWaistToHipRatio(metrics);
+        results.waistToHip = calculateWaistToHipRatio({
+          ...metrics,
+          waist: numericMetrics.waist.toString(),
+          hip: numericMetrics.hip.toString()
+        });
       }
 
       console.log('Final calculated results:', results);
