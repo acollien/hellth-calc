@@ -11,16 +11,7 @@ import {
   calculateWaistToHeightRatio,
   calculateWaistToHipRatio
 } from '@/utils/health/metrics';
-
-interface IndicesResults {
-  absi: { metric: number; imperial: number };
-  bodyRoundnessIndex: { metric: number; imperial: number };
-  ponderalIndex: { metric: number; imperial: number };
-  bodyAdiposityIndex: number;
-  conicityIndex: number;
-  waistToHeightRatio?: number;
-  waistToHip?: number;
-}
+import { IndicesResults } from '@/utils/health/types';
 
 export const useBodyIndicesMetrics = () => {
   const { state, dispatch } = useHealth();

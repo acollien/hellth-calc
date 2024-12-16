@@ -54,6 +54,16 @@ export interface IdealWeightResult {
   bmiBased: number;
 }
 
+export interface IndicesResults {
+  absi: { metric: number; imperial: number };
+  bodyRoundnessIndex: { metric: number; imperial: number };
+  ponderalIndex: { metric: number; imperial: number };
+  bodyAdiposityIndex: number;
+  conicityIndex: number;
+  waistToHeightRatio?: number;
+  waistToHip?: number;
+}
+
 export interface HealthResult {
   bmi?: BMIResult;
   bodyFat?: BodyFatResult;
