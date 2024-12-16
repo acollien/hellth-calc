@@ -4,14 +4,15 @@ import { calculateBodyFat } from '../bodyFat';
 export const calculateLeanMassIndex = (metrics: HealthMetrics): number | null => {
   console.log('Calculating Lean Mass Index with metrics:', metrics);
 
-  const { height, weight } = metrics;
-  if (!height || !weight) {
+  if (!metrics.height || !metrics.weight || !metrics.gender) {
     console.log('Missing required metrics for Lean Mass Index calculation');
     return null;
   }
 
-  const heightInM = parseFloat(height) / 100;
-  const weightInKg = parseFloat(weight);
+  const heightInM = parseFloat(metrics.height) / 100;
+  const weightInKg = metrics.unit === 'imperial' ? 
+    parseFloat(metrics.weight) * 0.453592 : 
+    parseFloat(metrics.weight);
   
   const bodyFatResults = calculateBodyFat(metrics);
   const bodyFatPercentage = bodyFatResults?.navy || bodyFatResults?.jackson || bodyFatResults?.bmiBased || null;

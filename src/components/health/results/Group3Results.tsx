@@ -2,7 +2,6 @@ import LeanMassIndexCard from "./cards/LeanMassIndexCard";
 import BodyAdiposityCard from "./cards/BodyAdiposityCard";
 import ConicityCard from "./cards/ConicityCard";
 import GroupResults from "./GroupResults";
-import ProjectedResults from "./ProjectedResults";
 
 interface Group3ResultsProps {
   leanMassIndex?: number | null;
@@ -23,11 +22,9 @@ const Group3Results = ({
     conicityIndex
   });
   
-  // Check if we have valid numbers for any of the indices
-  const hasValidValues = (
-    (typeof leanMassIndex === 'number' && !isNaN(leanMassIndex)) ||
-    (typeof bodyAdiposityIndex === 'number' && !isNaN(bodyAdiposityIndex)) ||
-    (typeof conicityIndex === 'number' && !isNaN(conicityIndex))
+  // Check if we have at least one valid value
+  const hasValidValues = [leanMassIndex, bodyAdiposityIndex, conicityIndex].some(
+    value => typeof value === 'number' && !isNaN(value)
   );
 
   if (!hasValidValues) {
