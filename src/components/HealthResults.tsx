@@ -9,9 +9,10 @@ import { HealthResult } from "@/types/health";
 
 interface ResultsProps {
   results: HealthResult;
+  metrics: { gender: 'male' | 'female' | '' };
 }
 
-const HealthResults = ({ results }: ResultsProps) => {
+const HealthResults = ({ results, metrics }: ResultsProps) => {
   console.log("HealthResults received full results:", results);
   
   // Extract frameSize value directly from results with proper typing
@@ -26,10 +27,10 @@ const HealthResults = ({ results }: ResultsProps) => {
       
       {results.bmi && <BMIResults bmi={results.bmi} />}
       
-      {results.bodyFat && (
+      {results.bodyFat && metrics.gender && (
         <BodyFatResults 
           bodyFat={results.bodyFat} 
-          gender={'male'} // Default to male if not specified
+          gender={metrics.gender}
         />
       )}
 
