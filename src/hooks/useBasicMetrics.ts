@@ -22,23 +22,22 @@ export const useBasicMetrics = () => {
     }
 
     try {
-      // Calculate BMI using numeric values
       const height = parseFloat(metrics.height);
       const weight = parseFloat(metrics.weight);
-      console.log('Starting BMI calculations with height:', height, 'and weight:', weight);
-      
-      const bmiResults = calculateBMI(height, weight);
-      console.log('BMI results calculated:', bmiResults);
+      const age = parseFloat(metrics.age);
 
-      // Calculate ideal weight
-      const baseIdealWeight = calculateIdealWeight(height, metrics.gender);
-      console.log('Base ideal weight calculated:', baseIdealWeight);
+      console.log('Calculating metrics with:', { height, weight, age, gender: metrics.gender });
 
-      // Calculate biological age
+      const bmi = calculateBMI(height, weight);
+      console.log('BMI calculated:', bmi);
+
+      const idealWeight = calculateIdealWeight(height, metrics.gender);
+      console.log('Ideal weight calculated:', idealWeight);
+
       const biologicalAge = calculateBiologicalAge({
         height,
         weight,
-        age: parseFloat(metrics.age),
+        age,
         gender: metrics.gender,
         neck: metrics.neck ? parseFloat(metrics.neck) : undefined,
         waist: metrics.waist ? parseFloat(metrics.waist) : undefined,
@@ -49,20 +48,18 @@ export const useBasicMetrics = () => {
       });
       console.log('Biological age calculated:', biologicalAge);
 
-      // Create complete results object
       const newResults = {
-        bmi: bmiResults,
+        bmi,
         idealWeight: {
-          ...baseIdealWeight,
-          athletic: baseIdealWeight.robinson * 0.9,
-          bmiBased: baseIdealWeight.robinson
+          ...idealWeight,
+          athletic: idealWeight.robinson * 0.9,
+          bmiBased: idealWeight.robinson
         },
         biologicalAge
       };
 
-      console.log('Final basic metrics results:', newResults);
+      console.log('Dispatching new results:', newResults);
       
-      // Merge new results with existing results
       dispatch({ 
         type: 'SET_RESULTS', 
         results: { 

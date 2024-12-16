@@ -15,15 +15,20 @@ const HealthCalculator = () => {
   const { state, dispatch } = useHealth();
   
   // Use all the calculation hooks
-  useBasicMetrics();
-  useBodyCompositionMetrics();
-  useBodyIndicesMetrics();
+  const basicResults = useBasicMetrics();
+  const bodyComposition = useBodyCompositionMetrics();
+  const bodyIndices = useBodyIndicesMetrics();
+
+  console.log('Current state in HealthCalculator:', state);
+  console.log('Results from hooks:', { basicResults, bodyComposition, bodyIndices });
 
   const handleMetricChange = (key: keyof HealthMetrics, value: string) => {
+    console.log('Metric changed:', key, value);
     dispatch({ type: 'UPDATE_METRIC', key, value });
   };
 
   const handleTestDataClick = (testData: HealthMetrics) => {
+    console.log('Setting test data:', testData);
     dispatch({ type: 'SET_METRICS', metrics: testData });
   };
 
