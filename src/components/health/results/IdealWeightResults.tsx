@@ -38,7 +38,7 @@ const IdealWeightResults = ({ idealWeight }: IdealWeightResultsProps) => {
                 <div className="flex items-center gap-2">
                   <div className="flex-1">
                     <div className="text-sm text-mint-800 font-medium flex items-center gap-2">
-                      {formula} Formula
+                      {formula.charAt(0).toUpperCase() + formula.slice(1)} Formula
                       <Info className="h-4 w-4 text-mint-500" />
                     </div>
                     <div className={`text-2xl font-semibold ${getValueColor(value)}`}>
