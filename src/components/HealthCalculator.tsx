@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { useHealth } from "@/contexts/HealthContext";
 import BasicMeasurements from "./health/BasicMeasurements";
@@ -37,7 +38,7 @@ const HealthCalculator = () => {
   };
 
   // Update BMR when relevant metrics change
-  React.useEffect(() => {
+  useEffect(() => {
     calculateMetabolicRates();
   }, [
     state.metrics.height,
