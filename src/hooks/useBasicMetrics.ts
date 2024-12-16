@@ -23,12 +23,9 @@ export const useBasicMetrics = () => {
 
     try {
       // Calculate BMI using numeric values
-      const bmiResults = calculateBMI({
-        height: parseFloat(metrics.height),
-        weight: parseFloat(metrics.weight),
-        gender: metrics.gender,
-        unit: metrics.unit
-      } as BaseHealthMetrics, metrics.unit);
+      const height = parseFloat(metrics.height);
+      const weight = parseFloat(metrics.weight);
+      const bmiResults = calculateBMI(height, weight);
 
       // Calculate ideal weight
       const baseIdealWeight = calculateIdealWeight(
