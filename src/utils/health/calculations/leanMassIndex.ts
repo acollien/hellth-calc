@@ -32,15 +32,13 @@ export const calculateLeanMassIndex = (metrics: HealthMetrics): number | null =>
     subscapularSkinfold: metrics.subscapularSkinfold ? Number(metrics.subscapularSkinfold) : undefined,
     calfSkinfold: metrics.calfSkinfold ? Number(metrics.calfSkinfold) : undefined,
     midaxillarySkinfold2: metrics.midaxillarySkinfold2 ? Number(metrics.midaxillarySkinfold2) : undefined,
-    // Only pass gender if it's male or female, otherwise undefined
     gender: metrics.gender === 'male' || metrics.gender === 'female' ? metrics.gender : undefined,
-    // Only pass activityLevel if it's a valid value, otherwise undefined
     activityLevel: metrics.activityLevel === '' ? undefined : metrics.activityLevel,
     unit: metrics.unit
   };
   
   const bodyFatResults = calculateBodyFat(convertedMetrics);
-  const bodyFatPercentage = bodyFatResults?.navy || null;
+  const bodyFatPercentage = bodyFatResults?.navy || bodyFatResults?.jackson || bodyFatResults?.bmiBased || null;
   
   if (bodyFatPercentage === null) {
     console.log('No valid body fat percentage available for Lean Mass Index calculation');

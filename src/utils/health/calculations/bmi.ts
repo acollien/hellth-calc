@@ -13,23 +13,18 @@ export const calculateBMI = (height: number, weight: number) => {
 
   if (!standardBMI) {
     console.log('Failed to calculate standard BMI, returning null results');
-    return {
-      standard: null,
-      athletic: null,
-      devine: null,
-      bmiBased: null
-    };
+    return null;
   }
 
   const athleticBMI = calculateAthleticBMI(standardBMI);
   const devineBMI = calculateDevineBMI(height, weight);
-  const bmiBasedRange = calculateBMIBasedRange(standardBMI);
+  const bmiBased = calculateBMIBasedRange(standardBMI);
 
   const results = {
     standard: standardBMI,
     athletic: athleticBMI,
     devine: devineBMI,
-    bmiBased: bmiBasedRange
+    bmiBased: bmiBased
   };
 
   console.log('Final BMI calculation results:', results);

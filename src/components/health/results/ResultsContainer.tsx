@@ -39,8 +39,8 @@ const ResultsContainer = ({ results, metrics }: ResultsContainerProps) => {
       />
       {results.bmi && results.bodyFat && results.bmr && (
         <Group4Results
-          bmi={results.bmi.standard}
-          bodyFat={results.bodyFat.navy || results.bodyFat.jackson || results.bodyFat.bmiBased}
+          bmi={results.bmi}
+          bodyFat={results.bodyFat}
           bmr={results.bmr.bmr}
           unit={metrics.unit}
         />
