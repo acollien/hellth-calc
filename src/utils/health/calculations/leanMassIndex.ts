@@ -18,7 +18,9 @@ export const calculateLeanMassIndex = (metrics: HealthMetrics): number | null =>
     parseFloat(metrics.weight);
   
   const bodyFatResults = calculateBodyFat(metrics);
-  const bodyFatPercentage = bodyFatResults?.navy || bodyFatResults?.jackson || bodyFatResults?.bmiBased || null;
+  if (!bodyFatResults) return null;
+  
+  const bodyFatPercentage = bodyFatResults.navy || bodyFatResults.jackson || bodyFatResults.bmiBased || null;
   
   if (bodyFatPercentage === null) {
     console.log('No valid body fat percentage available for Lean Mass Index calculation');

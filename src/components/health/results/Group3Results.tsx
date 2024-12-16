@@ -40,15 +40,17 @@ const Group3Results = ({
       title="Advanced Body Measurements"
       description="Advanced measurements that provide detailed insights about your body composition and health risks."
     >
-      {hasValidLeanMassIndex && (
-        <LeanMassIndexCard value={leanMassIndex} />
-      )}
-      {hasValidBodyAdiposityIndex && (
-        <BodyAdiposityCard value={bodyAdiposityIndex} />
-      )}
-      {hasValidConicityIndex && (
-        <ConicityCard value={conicityIndex} />
-      )}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {hasValidLeanMassIndex && (
+          <LeanMassIndexCard value={leanMassIndex} />
+        )}
+        {hasValidBodyAdiposityIndex && (
+          <BodyAdiposityCard value={bodyAdiposityIndex} />
+        )}
+        {hasValidConicityIndex && (
+          <ConicityCard value={conicityIndex} />
+        )}
+      </div>
     </GroupResults>
   );
 };
