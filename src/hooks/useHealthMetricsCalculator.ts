@@ -46,16 +46,15 @@ export const useHealthMetricsCalculator = ({
         wrist: metrics.wrist ? parseFloat(metrics.wrist) : undefined,
         forearm: metrics.forearm ? parseFloat(metrics.forearm) : undefined,
         activityLevel: metrics.activityLevel,
-        // Add skinfold measurements
-        chestSkinfold: metrics.chestSkinfold || "",
-        midaxillarySkinfold: metrics.midaxillarySkinfold || "",
-        suprailiacSkinfold: metrics.suprailiacSkinfold || "",
-        thighSkinfold: metrics.thighSkinfold || "",
-        umbilicalSkinfold: metrics.umbilicalSkinfold || "",
-        tricepsSkinfold: metrics.tricepsSkinfold || "",
-        subscapularSkinfold: metrics.subscapularSkinfold || "",
-        calfSkinfold: metrics.calfSkinfold || "",
-        midaxillarySkinfold2: metrics.midaxillarySkinfold2 || ""
+        chestSkinfold: metrics.chestSkinfold ? parseFloat(metrics.chestSkinfold) : undefined,
+        midaxillarySkinfold: metrics.midaxillarySkinfold ? parseFloat(metrics.midaxillarySkinfold) : undefined,
+        suprailiacSkinfold: metrics.suprailiacSkinfold ? parseFloat(metrics.suprailiacSkinfold) : undefined,
+        thighSkinfold: metrics.thighSkinfold ? parseFloat(metrics.thighSkinfold) : undefined,
+        umbilicalSkinfold: metrics.umbilicalSkinfold ? parseFloat(metrics.umbilicalSkinfold) : undefined,
+        tricepsSkinfold: metrics.tricepsSkinfold ? parseFloat(metrics.tricepsSkinfold) : undefined,
+        subscapularSkinfold: metrics.subscapularSkinfold ? parseFloat(metrics.subscapularSkinfold) : undefined,
+        calfSkinfold: metrics.calfSkinfold ? parseFloat(metrics.calfSkinfold) : undefined,
+        midaxillarySkinfold2: metrics.midaxillarySkinfold2 ? parseFloat(metrics.midaxillarySkinfold2) : undefined
       };
 
       const results: Partial<HealthResult> = {};
@@ -66,11 +65,9 @@ export const useHealthMetricsCalculator = ({
 
       // Calculate BMR and TDEE
       if (metrics.activityLevel) {
-        const bmrMetrics: HealthMetrics = {
-          ...metrics,
-          height: numericMetrics.height.toString(),
-          weight: numericMetrics.weight.toString(),
-          age: numericMetrics.age.toString()
+        const bmrMetrics = {
+          ...numericMetrics,
+          activityLevel: metrics.activityLevel
         };
         results.bmr = calculateBMR(bmrMetrics);
         console.log('Calculated BMR:', results.bmr);
@@ -86,7 +83,16 @@ export const useHealthMetricsCalculator = ({
 
       // Calculate Body Fat if required measurements are present
       if (numericMetrics.neck && numericMetrics.waist && numericMetrics.hip) {
-        results.bodyFat = calculateBodyFat(metrics);
+        const bodyFatMetrics = {
+          ...numericMetrics,
+          height: numericMetrics.height,
+          weight: numericMetrics.weight,
+          age: numericMetrics.age,
+          neck: numericMetrics.neck,
+          waist: numericMetrics.waist,
+          hip: numericMetrics.hip
+        };
+        results.bodyFat = calculateBodyFat(bodyFatMetrics);
         console.log('Calculated Body Fat:', results.bodyFat);
       }
 
@@ -130,7 +136,11 @@ export const useHealthMetricsCalculator = ({
 
       // Calculate Waist to Hip Ratio if both measurements are present
       if (numericMetrics.waist && numericMetrics.hip) {
-        results.waistToHip = calculateWaistToHipRatio(metrics);
+        results.waistToHip = calculateWaistToHipRatio({
+          ...numericMetrics,
+          waist: numericMetrics.waist,
+          hip: numericMetrics.hip
+        });
       }
 
       console.log('Final calculated results:', results);
