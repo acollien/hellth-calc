@@ -30,69 +30,91 @@ const HealthCalculator = () => {
     }
 
     try {
-      const height = parseFloat(metrics.height);
-      const weight = parseFloat(metrics.weight);
+      // Convert string measurements to numbers for calculations
+      const numericMetrics = {
+        height: parseFloat(metrics.height),
+        weight: parseFloat(metrics.weight),
+        age: parseFloat(metrics.age),
+        gender: metrics.gender,
+        neck: metrics.neck ? parseFloat(metrics.neck) : undefined,
+        waist: metrics.waist ? parseFloat(metrics.waist) : undefined,
+        hip: metrics.hip ? parseFloat(metrics.hip) : undefined,
+        wrist: metrics.wrist ? parseFloat(metrics.wrist) : undefined,
+        forearm: metrics.forearm ? parseFloat(metrics.forearm) : undefined,
+        chestSkinfold: metrics.chestSkinfold ? parseFloat(metrics.chestSkinfold) : undefined,
+        midaxillarySkinfold: metrics.midaxillarySkinfold ? parseFloat(metrics.midaxillarySkinfold) : undefined,
+        suprailiacSkinfold: metrics.suprailiacSkinfold ? parseFloat(metrics.suprailiacSkinfold) : undefined,
+        thighSkinfold: metrics.thighSkinfold ? parseFloat(metrics.thighSkinfold) : undefined,
+        umbilicalSkinfold: metrics.umbilicalSkinfold ? parseFloat(metrics.umbilicalSkinfold) : undefined,
+        tricepsSkinfold: metrics.tricepsSkinfold ? parseFloat(metrics.tricepsSkinfold) : undefined,
+        subscapularSkinfold: metrics.subscapularSkinfold ? parseFloat(metrics.subscapularSkinfold) : undefined,
+        calfSkinfold: metrics.calfSkinfold ? parseFloat(metrics.calfSkinfold) : undefined,
+        midaxillarySkinfold2: metrics.midaxillarySkinfold2 ? parseFloat(metrics.midaxillarySkinfold2) : undefined,
+        activityLevel: metrics.activityLevel,
+        unit: metrics.unit
+      };
+
       const results: any = {};
 
       // Calculate BMI
-      results.bmi = calculateBMI(height, weight);
+      results.bmi = calculateBMI(numericMetrics.height, numericMetrics.weight);
       console.log('Calculated BMI:', results.bmi);
 
       // Calculate BMR and TDEE
-      results.bmr = calculateBMR(metrics);
+      results.bmr = calculateBMR(numericMetrics);
       console.log('Calculated BMR:', results.bmr);
 
       // Calculate Ideal Weight
-      results.idealWeight = calculateIdealWeight(height, metrics.gender);
+      results.idealWeight = calculateIdealWeight(numericMetrics.height, numericMetrics.gender);
       console.log('Calculated Ideal Weight:', results.idealWeight);
 
       // Calculate Biological Age
-      results.biologicalAge = calculateBiologicalAge(metrics);
+      results.biologicalAge = calculateBiologicalAge(numericMetrics);
       console.log('Calculated Biological Age:', results.biologicalAge);
 
       // Calculate Body Fat if required measurements are present
-      if (metrics.neck && metrics.waist && metrics.hip) {
-        results.bodyFat = calculateBodyFat(metrics);
+      if (numericMetrics.neck && numericMetrics.waist && numericMetrics.hip) {
+        results.bodyFat = calculateBodyFat(numericMetrics);
         console.log('Calculated Body Fat:', results.bodyFat);
       }
 
       // Calculate Body Indices if waist measurement is present
-      if (metrics.waist) {
+      if (numericMetrics.waist) {
         results.absi = calculateABSI(
-          parseFloat(metrics.waist),
-          height,
-          weight,
+          numericMetrics.waist,
+          numericMetrics.height,
+          numericMetrics.weight,
           metrics.unit
         );
         
         results.bodyRoundnessIndex = calculateBodyRoundnessIndex(
-          parseFloat(metrics.waist),
-          height,
+          numericMetrics.waist,
+          numericMetrics.height,
           metrics.unit
         );
 
         results.waistToHeightRatio = calculateWaistToHeightRatio(
-          parseFloat(metrics.waist),
-          height
+          numericMetrics.waist,
+          numericMetrics.height
         );
       }
 
       // Calculate Ponderal Index
-      results.ponderalIndex = calculatePonderalIndex(height, weight, metrics.unit);
+      results.ponderalIndex = calculatePonderalIndex(numericMetrics.height, numericMetrics.weight, metrics.unit);
 
       // Calculate Frame Size if wrist measurement is present
-      if (metrics.wrist) {
+      if (numericMetrics.wrist) {
         results.frameSize = calculateFrameSize({
-          height,
-          wrist: parseFloat(metrics.wrist),
-          gender: metrics.gender,
+          height: numericMetrics.height,
+          wrist: numericMetrics.wrist,
+          gender: numericMetrics.gender,
           unit: metrics.unit
         });
       }
 
       // Calculate Waist to Hip Ratio if both measurements are present
-      if (metrics.waist && metrics.hip) {
-        results.waistToHip = calculateWaistToHipRatio(metrics);
+      if (numericMetrics.waist && numericMetrics.hip) {
+        results.waistToHip = calculateWaistToHipRatio(numericMetrics);
       }
 
       console.log('Final calculated results:', results);
