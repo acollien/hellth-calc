@@ -8,55 +8,116 @@ import ActivityLevel from "./health/ActivityLevel";
 import { HealthMetrics } from "./health/types";
 import Header from "./health/Header";
 import HealthResults from "./HealthResults";
-import useBasicMetrics from "@/hooks/useBasicMetrics";
-import { useBodyCompositionMetrics } from "@/hooks/useBodyCompositionMetrics";
-import { useBodyIndicesMetrics } from "@/hooks/useBodyIndicesMetrics";
+import { calculateBMI } from "@/utils/health/calculations/bmi";
 import { calculateBMR } from "@/utils/health/calculations/bmr";
+import { calculateIdealWeight } from "@/utils/health/calculations/idealWeight";
+import { calculateBiologicalAge } from "@/utils/health/calculations/biologicalAge";
+import { calculateBodyFat } from "@/utils/health/bodyFat";
+import { calculateABSI, calculateBodyRoundnessIndex, calculatePonderalIndex } from "@/utils/health/indices";
+import { calculateWaistToHipRatio, calculateWaistToHeightRatio } from "@/utils/health/metrics";
+import { calculateFrameSize } from "@/utils/health/metrics/frameSize";
 
 const HealthCalculator = () => {
   const { state, dispatch } = useHealth();
   
   console.log('Current state in HealthCalculator:', state);
 
-  // Use all metric calculation hooks
-  const basicResults = useBasicMetrics();
-  const compositionResults = useBodyCompositionMetrics();
-  const indicesResults = useBodyIndicesMetrics();
+  const calculateAllMetrics = () => {
+    const metrics = state.metrics;
+    if (!metrics.height || !metrics.weight || !metrics.age || !metrics.gender) {
+      console.log('Missing required basic metrics');
+      return;
+    }
 
-  // Calculate BMR whenever metrics change
-  const calculateMetabolicRates = () => {
-    if (state.metrics.height && state.metrics.weight && state.metrics.age && state.metrics.gender) {
-      const bmrResults = calculateBMR(state.metrics);
-      dispatch({ 
-        type: 'SET_RESULTS', 
-        results: { 
-          ...state.results,
-          ...basicResults,
-          ...compositionResults,
-          ...indicesResults,
-          bmr: bmrResults 
-        } 
-      });
+    try {
+      const height = parseFloat(metrics.height);
+      const weight = parseFloat(metrics.weight);
+      const results: any = {};
+
+      // Calculate BMI
+      results.bmi = calculateBMI(height, weight);
+      console.log('Calculated BMI:', results.bmi);
+
+      // Calculate BMR and TDEE
+      results.bmr = calculateBMR(metrics);
+      console.log('Calculated BMR:', results.bmr);
+
+      // Calculate Ideal Weight
+      results.idealWeight = calculateIdealWeight(height, metrics.gender);
+      console.log('Calculated Ideal Weight:', results.idealWeight);
+
+      // Calculate Biological Age
+      results.biologicalAge = calculateBiologicalAge(metrics);
+      console.log('Calculated Biological Age:', results.biologicalAge);
+
+      // Calculate Body Fat if required measurements are present
+      if (metrics.neck && metrics.waist && metrics.hip) {
+        results.bodyFat = calculateBodyFat(metrics);
+        console.log('Calculated Body Fat:', results.bodyFat);
+      }
+
+      // Calculate Body Indices if waist measurement is present
+      if (metrics.waist) {
+        results.absi = calculateABSI(
+          parseFloat(metrics.waist),
+          height,
+          weight,
+          metrics.unit
+        );
+        
+        results.bodyRoundnessIndex = calculateBodyRoundnessIndex(
+          parseFloat(metrics.waist),
+          height,
+          metrics.unit
+        );
+
+        results.waistToHeightRatio = calculateWaistToHeightRatio(
+          parseFloat(metrics.waist),
+          height
+        );
+      }
+
+      // Calculate Ponderal Index
+      results.ponderalIndex = calculatePonderalIndex(height, weight, metrics.unit);
+
+      // Calculate Frame Size if wrist measurement is present
+      if (metrics.wrist) {
+        results.frameSize = calculateFrameSize({
+          height,
+          wrist: parseFloat(metrics.wrist),
+          gender: metrics.gender,
+          unit: metrics.unit
+        });
+      }
+
+      // Calculate Waist to Hip Ratio if both measurements are present
+      if (metrics.waist && metrics.hip) {
+        results.waistToHip = calculateWaistToHipRatio(metrics);
+      }
+
+      console.log('Final calculated results:', results);
+      dispatch({ type: 'SET_RESULTS', results });
+
+    } catch (error) {
+      console.error('Error calculating metrics:', error);
     }
   };
 
-  // Update all results when relevant metrics change
+  // Calculate all metrics when relevant measurements change
   useEffect(() => {
-    calculateMetabolicRates();
+    calculateAllMetrics();
   }, [
     state.metrics.height,
     state.metrics.weight,
     state.metrics.age,
     state.metrics.gender,
-    state.metrics.activityLevel,
     state.metrics.neck,
     state.metrics.waist,
     state.metrics.hip,
     state.metrics.wrist,
     state.metrics.forearm,
-    basicResults,
-    compositionResults,
-    indicesResults
+    state.metrics.activityLevel,
+    state.metrics.unit
   ]);
 
   const handleMetricChange = (key: keyof HealthMetrics, value: string) => {
