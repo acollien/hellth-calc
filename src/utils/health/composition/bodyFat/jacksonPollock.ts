@@ -23,10 +23,11 @@ export const calculateJacksonPollockBodyFat = (metrics: HealthMetrics): number |
 
   let bodyDensity: number;
   if (metrics.gender === 'male') {
+    // Male formula (correct)
     bodyDensity = 1.10938 - (0.0008267 * sum) + (0.0000016 * sum * sum) - (0.0002574 * age);
   } else {
-    // Updated coefficients for female formula
-    bodyDensity = 1.0994921 - (0.0009929 * sum) + (0.0000023 * sum * sum) - (0.0001392 * age);
+    // Female formula (corrected)
+    bodyDensity = 1.089733 - (0.0009245 * sum) + (0.0000025 * sum * sum) - (0.0000979 * age);
   }
 
   console.log('Calculated body density:', bodyDensity);
