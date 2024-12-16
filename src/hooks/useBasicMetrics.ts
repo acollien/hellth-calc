@@ -38,9 +38,9 @@ export const useBasicMetrics = () => {
         ...state.results,
         bmi,
         idealWeight: {
-          robinson: idealWeight.robinson,
-          miller: idealWeight.miller,
-          devine: idealWeight.devine
+          ...idealWeight,
+          athletic: 0, // Adding required properties with default values
+          bmiBased: 0
         },
         biologicalAge
       };
@@ -53,3 +53,5 @@ export const useBasicMetrics = () => {
 
   return state.results;
 };
+
+export default useBasicMetrics;
