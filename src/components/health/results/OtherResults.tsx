@@ -3,11 +3,10 @@ import WaistToHipCard from "./cards/WaistToHipCard";
 
 interface OtherResultsProps {
   frameSize: string | null;
-  waistToHip: number | undefined;
-  unit: 'metric' | 'imperial';
+  waistToHip?: number;
 }
 
-const OtherResults = ({ frameSize, waistToHip, unit }: OtherResultsProps) => {
+const OtherResults = ({ frameSize, waistToHip }: OtherResultsProps) => {
   console.log("OtherResults received frameSize:", frameSize);
   
   // Only render if we have valid data to show
@@ -25,12 +24,9 @@ const OtherResults = ({ frameSize, waistToHip, unit }: OtherResultsProps) => {
   console.log("Is valid frame size:", isValidFrameSize, "with value:", frameSize);
 
   return (
-    <div className="space-y-4">
-      <h3 className="text-lg font-medium text-mint-800">Other Measurements</h3>
-      <div className="grid gap-4 sm:grid-cols-2">
-        {isValidFrameSize && <FrameSizeCard frameSize={frameSize} />}
-        {waistToHip && <WaistToHipCard value={waistToHip} />}
-      </div>
+    <div className="grid gap-4 sm:grid-cols-2">
+      {isValidFrameSize && <FrameSizeCard frameSize={frameSize} />}
+      {waistToHip && <WaistToHipCard value={waistToHip} />}
     </div>
   );
 };

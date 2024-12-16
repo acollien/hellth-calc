@@ -19,8 +19,6 @@ export const useBasicMetrics = () => {
       const weight = parseFloat(metrics.weight);
       const age = parseFloat(metrics.age);
 
-      console.log('Calculating basic metrics with:', { height, weight, age, gender: metrics.gender });
-
       const bmi = calculateBMI(height, weight);
       const idealWeight = calculateIdealWeight(height, metrics.gender);
       const biologicalAge = calculateBiologicalAge({
@@ -35,8 +33,6 @@ export const useBasicMetrics = () => {
         forearm: metrics.forearm ? parseFloat(metrics.forearm) : undefined,
         unit: metrics.unit
       });
-
-      console.log('Calculated results:', { bmi, idealWeight, biologicalAge });
 
       const newResults = {
         ...state.results,
