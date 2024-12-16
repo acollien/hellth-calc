@@ -29,7 +29,7 @@ const HealthResults = ({ results }: ResultsProps) => {
       {results.bodyFat && (
         <BodyFatResults 
           bodyFat={results.bodyFat} 
-          gender={results.gender || 'male'} 
+          gender={results.gender ?? 'male'} 
         />
       )}
 

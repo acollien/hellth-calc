@@ -45,6 +45,7 @@ export interface HealthResult {
   leanMassIndex?: number;
   bodyAdiposityIndex?: number;
   conicityIndex?: number;
+  gender?: 'male' | 'female';
 }
 
 export interface ResultsProps {
