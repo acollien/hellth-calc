@@ -3,7 +3,6 @@ import BMIResults from "./health/results/BMIResults";
 import BodyFatResults from "./health/results/BodyFatResults";
 import MetabolicResults from "./health/results/MetabolicResults";
 import IdealWeightResults from "./health/results/IdealWeightResults";
-import OtherResults from "./health/results/OtherResults";
 import BiologicalAgeResults from "./health/results/BiologicalAgeResults";
 import { HealthResult } from "@/types/health";
 import Group1Results from "./health/results/Group1Results";
@@ -57,6 +56,7 @@ const HealthResults = ({ results, metrics }: ResultsProps) => {
         absi={results.absi || null}
         bodyRoundnessIndex={results.bodyRoundnessIndex || null}
         waistToHeightRatio={results.waistToHeightRatio || null}
+        waistToHip={results.waistToHip || null}
         unit={metrics.unit}
       />
 
@@ -65,6 +65,7 @@ const HealthResults = ({ results, metrics }: ResultsProps) => {
         fatFreeMassIndex={results.fatFreeMassIndex}
         skeletalMuscleMass={results.skeletalMuscleMass}
         bodyFatDistribution={results.bodyFatDistribution}
+        frameSize={results.frameSize || null}
         unit={metrics.unit}
       />
 
@@ -83,11 +84,6 @@ const HealthResults = ({ results, metrics }: ResultsProps) => {
           unit={metrics.unit}
         />
       )}
-
-      <OtherResults 
-        frameSize={results.frameSize || null}
-        waistToHip={results.waistToHip}
-      />
     </div>
   );
 };

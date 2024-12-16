@@ -2,6 +2,7 @@ import FatFreeMassCard from "./cards/FatFreeMassCard";
 import LeanBodyMassCard from "./cards/LeanBodyMassCard";
 import SkeletalMuscleMassCard from "./cards/SkeletalMuscleMassCard";
 import BodyFatDistributionCard from "./cards/BodyFatDistributionCard";
+import FrameSizeCard from "./cards/FrameSizeCard";
 import GroupResults from "./GroupResults";
 
 interface Group2ResultsProps {
@@ -9,6 +10,7 @@ interface Group2ResultsProps {
   fatFreeMassIndex?: number;
   skeletalMuscleMass?: number;
   bodyFatDistribution?: number;
+  frameSize: string | null;
   unit: 'metric' | 'imperial';
 }
 
@@ -17,13 +19,15 @@ const Group2Results = ({
   fatFreeMassIndex, 
   skeletalMuscleMass, 
   bodyFatDistribution,
+  frameSize,
   unit 
 }: Group2ResultsProps) => {
   console.log("Group2Results received values:", {
     leanBodyMass,
     fatFreeMassIndex,
     skeletalMuscleMass,
-    bodyFatDistribution
+    bodyFatDistribution,
+    frameSize
   });
 
   // Check if we have at least one valid value
@@ -31,7 +35,8 @@ const Group2Results = ({
     (typeof leanBodyMass === 'number' && !isNaN(leanBodyMass)) ||
     (typeof fatFreeMassIndex === 'number' && !isNaN(fatFreeMassIndex)) ||
     (typeof skeletalMuscleMass === 'number' && !isNaN(skeletalMuscleMass)) ||
-    (typeof bodyFatDistribution === 'number' && !isNaN(bodyFatDistribution));
+    (typeof bodyFatDistribution === 'number' && !isNaN(bodyFatDistribution)) ||
+    (frameSize && typeof frameSize === 'string');
 
   if (!hasAnyValidValues) {
     console.log("No valid values present in Group2Results, not rendering");
@@ -40,8 +45,8 @@ const Group2Results = ({
 
   return (
     <GroupResults 
-      title="Mass and Composition"
-      description="Detailed breakdown of your body's mass components and their distribution."
+      title="Body Composition"
+      description="Detailed breakdown of your body's structural and mass components."
     >
       {typeof leanBodyMass === 'number' && !isNaN(leanBodyMass) && (
         <LeanBodyMassCard value={leanBodyMass} unit={unit} />
@@ -55,6 +60,7 @@ const Group2Results = ({
       {typeof bodyFatDistribution === 'number' && !isNaN(bodyFatDistribution) && (
         <BodyFatDistributionCard value={bodyFatDistribution} />
       )}
+      {frameSize && <FrameSizeCard frameSize={frameSize} />}
     </GroupResults>
   );
 };
