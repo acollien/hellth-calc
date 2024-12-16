@@ -1,6 +1,8 @@
-import { useState } from "react";
 import { Card } from "@/components/ui/card";
-import { useHealthCalculations } from "@/hooks/useHealthCalculations";
+import { useHealth } from "@/contexts/HealthContext";
+import { useBasicMetrics } from "@/hooks/useBasicMetrics";
+import { useBodyCompositionMetrics } from "@/hooks/useBodyCompositionMetrics";
+import { useBodyIndicesMetrics } from "@/hooks/useBodyIndicesMetrics";
 import BasicMeasurements from "./health/BasicMeasurements";
 import BodyMeasurements from "./health/BodyMeasurements";
 import SkinFoldMeasurements from "./health/SkinFoldMeasurements";
@@ -9,41 +11,20 @@ import { HealthMetrics } from "./health/types";
 import Header from "./health/Header";
 import ResultsContainer from "./health/results/ResultsContainer";
 
-const initialMetrics: HealthMetrics = {
-  height: "",
-  weight: "",
-  age: "",
-  gender: "",
-  neck: "",
-  waist: "",
-  hip: "",
-  wrist: "",
-  forearm: "",
-  chestSkinfold: "",
-  midaxillarySkinfold: "",
-  suprailiacSkinfold: "",
-  thighSkinfold: "",
-  umbilicalSkinfold: "",
-  tricepsSkinfold: "",
-  subscapularSkinfold: "",
-  calfSkinfold: "",
-  midaxillarySkinfold2: "",
-  activityLevel: "",
-  unit: "metric"
-};
-
 const HealthCalculator = () => {
-  const [metrics, setMetrics] = useState<HealthMetrics>(initialMetrics);
-  const { results, calculateResults } = useHealthCalculations();
+  const { state, dispatch } = useHealth();
+  
+  // Use all the calculation hooks
+  useBasicMetrics();
+  useBodyCompositionMetrics();
+  useBodyIndicesMetrics();
 
   const handleMetricChange = (key: keyof HealthMetrics, value: string) => {
-    setMetrics(prev => ({ ...prev, [key]: value }));
-    calculateResults({ ...metrics, [key]: value });
+    dispatch({ type: 'UPDATE_METRIC', key, value });
   };
 
   const handleTestDataClick = (testData: HealthMetrics) => {
-    setMetrics(testData);
-    calculateResults(testData);
+    dispatch({ type: 'SET_METRICS', metrics: testData });
   };
 
   return (
@@ -53,13 +34,13 @@ const HealthCalculator = () => {
           <Header onTestDataClick={handleTestDataClick} />
 
           <div className="grid gap-6">
-            <BasicMeasurements metrics={metrics} onMetricChange={handleMetricChange} />
-            <BodyMeasurements metrics={metrics} onMetricChange={handleMetricChange} />
-            <SkinFoldMeasurements metrics={metrics} onMetricChange={handleMetricChange} />
-            <ActivityLevel metrics={metrics} onMetricChange={handleMetricChange} />
+            <BasicMeasurements metrics={state.metrics} onMetricChange={handleMetricChange} />
+            <BodyMeasurements metrics={state.metrics} onMetricChange={handleMetricChange} />
+            <SkinFoldMeasurements metrics={state.metrics} onMetricChange={handleMetricChange} />
+            <ActivityLevel metrics={state.metrics} onMetricChange={handleMetricChange} />
           </div>
 
-          {results && <ResultsContainer results={results} metrics={metrics} />}
+          {state.results && <ResultsContainer results={state.results} metrics={state.metrics} />}
         </div>
       </Card>
     </div>
