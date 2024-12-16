@@ -15,55 +15,58 @@ export const useBasicMetrics = () => {
       return;
     }
 
+    // Only proceed if gender is male or female (not empty string)
+    if (metrics.gender !== 'male' && metrics.gender !== 'female') {
+      console.log('Gender must be either male or female');
+      return;
+    }
+
     try {
-      // Convert string metrics to numbers while maintaining the string type in the metrics object
+      // Convert string metrics to numbers
       const height = parseFloat(metrics.height);
       const weight = parseFloat(metrics.weight);
       const age = parseFloat(metrics.age);
 
-      // Calculate BMI with numeric values
-      const bmiResults = calculateBMI({
+      // Create numeric metrics object with valid gender type
+      const numericMetrics = {
         ...metrics,
         height,
         weight,
-        age
-      });
+        age,
+        gender: metrics.gender as 'male' | 'female' // Type assertion since we checked above
+      };
 
-      // Calculate ideal weight with numeric values
-      const idealWeightResults = calculateIdealWeight({
-        ...metrics,
-        height,
-        weight,
-        age
-      });
+      // Calculate BMI with numeric values and unit
+      const bmiResults = calculateBMI(numericMetrics, metrics.unit);
 
-      // Calculate biological age with numeric values
-      const biologicalAge = calculateBiologicalAge({
-        ...metrics,
-        height,
-        weight,
-        age
-      });
+      // Calculate ideal weight with numeric values and unit
+      const idealWeightResults = calculateIdealWeight(numericMetrics, metrics.unit);
 
-      // Create complete results object
+      // Calculate biological age
+      const biologicalAge = calculateBiologicalAge(numericMetrics);
+
+      // Create complete results object with all required properties
       const newResults = {
         bmi: bmiResults,
         idealWeight: {
           ...idealWeightResults,
-          athletic: idealWeightResults.athletic || 0,
-          bmiBased: idealWeightResults.bmiBased || 0
+          athletic: typeof idealWeightResults.athletic === 'number' ? idealWeightResults.athletic : 0,
+          bmiBased: typeof idealWeightResults.bmiBased === 'number' ? idealWeightResults.bmiBased : 0,
+          robinson: idealWeightResults.robinson,
+          miller: idealWeightResults.miller,
+          devine: idealWeightResults.devine
         },
         biologicalAge
       };
 
       console.log('Basic metrics calculated:', newResults);
       
-      // Merge new results with existing results instead of replacing them
+      // Merge new results with existing results
       dispatch({ 
         type: 'SET_RESULTS', 
         results: { 
-          ...state.results, // Keep existing results
-          ...newResults     // Add/update new results
+          ...state.results,
+          ...newResults
         } 
       });
     } catch (error) {
