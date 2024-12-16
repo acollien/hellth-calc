@@ -6,6 +6,8 @@ interface IdealWeightResultsProps {
     robinson: number;
     miller: number;
     devine: number;
+    athletic: number;
+    bmiBased: number;
   };
 }
 
@@ -91,6 +93,10 @@ const getFormulaDescription = (formula: string) => {
       return 'The Miller formula (1983) tends to give the lowest estimates and may be more suitable for lean builds.';
     case 'devine':
       return 'The Devine formula (1974) is commonly used in clinical settings and provides a middle-ground estimate.';
+    case 'athletic':
+      return 'A modified formula optimized for athletic body types, accounting for higher muscle mass.';
+    case 'bmiBased':
+      return 'Calculation based on healthy BMI range, providing a general reference point.';
     default:
       return '';
   }
@@ -104,6 +110,10 @@ const getFormula = (formula: string) => {
       return 'Men: 56.2 + 1.41 × (height in inches - 60)\nWomen: 53.1 + 1.36 × (height in inches - 60)';
     case 'devine':
       return 'Men: 50 + 2.3 × (height in inches - 60)\nWomen: 45.5 + 2.3 × (height in inches - 60)';
+    case 'athletic':
+      return 'Standard ideal weight × 1.1';
+    case 'bmiBased':
+      return 'Height² × target BMI (21.7)';
     default:
       return '';
   }
