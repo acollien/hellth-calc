@@ -2,6 +2,7 @@ import LeanBodyMassCard from "./cards/LeanBodyMassCard";
 import FatFreeMassCard from "./cards/FatFreeMassCard";
 import SkeletalMuscleMassCard from "./cards/SkeletalMuscleMassCard";
 import BodyFatDistributionCard from "./cards/BodyFatDistributionCard";
+import GroupResults from "./GroupResults";
 
 interface Group2ResultsProps {
   leanBodyMass?: number;
@@ -23,15 +24,15 @@ const Group2Results = ({
   if (!hasAnyResults) return null;
 
   return (
-    <div className="space-y-6">
-      <h3 className="text-lg font-medium text-mint-800">Mass and Composition</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {leanBodyMass && <LeanBodyMassCard value={leanBodyMass} unit={unit} />}
-        {fatFreeMassIndex && <FatFreeMassCard value={fatFreeMassIndex} />}
-        {skeletalMuscleMass && <SkeletalMuscleMassCard value={skeletalMuscleMass} unit={unit} />}
-        {bodyFatDistribution && <BodyFatDistributionCard value={bodyFatDistribution} />}
-      </div>
-    </div>
+    <GroupResults 
+      title="Mass and Composition"
+      description="Detailed breakdown of your body's mass components and their distribution."
+    >
+      {leanBodyMass && <LeanBodyMassCard value={leanBodyMass} unit={unit} />}
+      {fatFreeMassIndex && <FatFreeMassCard value={fatFreeMassIndex} />}
+      {skeletalMuscleMass && <SkeletalMuscleMassCard value={skeletalMuscleMass} unit={unit} />}
+      {bodyFatDistribution && <BodyFatDistributionCard value={bodyFatDistribution} />}
+    </GroupResults>
   );
 };
 
