@@ -1,45 +1,47 @@
-import { useState } from 'react';
-import { HealthMetrics, HealthResult } from "@/utils/health/types";
-import {
-  calculateBMI,
-  calculateIdealWeight,
-  calculateBiologicalAge,
-} from "@/utils/health/calculations";
+import { useEffect } from 'react';
+import { useHealth } from '@/contexts/HealthContext';
+import { calculateBMI } from '@/utils/health/calculations/bmi';
+import { calculateIdealWeight } from '@/utils/health/calculations/idealWeight';
+import { calculateBiologicalAge } from '@/utils/health/calculations/biologicalAge';
+import { HealthMetrics } from '@/components/health/types';
 
 export const useBasicMetrics = () => {
-  const [results, setResults] = useState<HealthResult | null>(null);
+  const { state, dispatch } = useHealth();
+  const { metrics } = state;
 
-  const calculateBasicMetrics = (metrics: HealthMetrics) => {
-    console.log('Calculating basic health metrics:', metrics);
-    
+  useEffect(() => {
+    if (!metrics.height || !metrics.weight || !metrics.age || !metrics.gender) {
+      console.log('Missing required metrics for basic calculations');
+      return;
+    }
+
     const numericMetrics: HealthMetrics = {
       ...metrics,
-      height: Number(metrics.height),
-      weight: Number(metrics.weight),
-      age: metrics.age ? Number(metrics.age) : undefined,
-      neck: metrics.neck ? Number(metrics.neck) : undefined,
-      waist: metrics.waist ? Number(metrics.waist) : undefined,
-      hip: metrics.hip ? Number(metrics.hip) : undefined,
-      wrist: metrics.wrist ? Number(metrics.wrist) : undefined,
-      forearm: metrics.forearm ? Number(metrics.forearm) : undefined,
+      height: parseFloat(metrics.height),
+      weight: parseFloat(metrics.weight),
+      age: parseFloat(metrics.age)
     };
 
-    const results: HealthResult = {};
+    const bmiResults = calculateBMI(numericMetrics);
+    const idealWeightResults = calculateIdealWeight(numericMetrics);
+    const biologicalAge = calculateBiologicalAge(numericMetrics);
 
-    if (numericMetrics.height && numericMetrics.weight) {
-      results.bmi = calculateBMI(numericMetrics.height, numericMetrics.weight);
-    }
+    // Ensure all required properties are included in idealWeightResults
+    const completeIdealWeightResults = {
+      ...idealWeightResults,
+      athletic: idealWeightResults.athletic || 0,
+      bmiBased: idealWeightResults.bmiBased || 0
+    };
 
-    if (numericMetrics.gender && numericMetrics.height) {
-      results.idealWeight = calculateIdealWeight(numericMetrics.height, numericMetrics.gender);
-    }
+    const results = {
+      bmi: bmiResults,
+      idealWeight: completeIdealWeightResults,
+      biologicalAge
+    };
 
-    results.biologicalAge = calculateBiologicalAge(numericMetrics);
+    console.log('Basic metrics calculated:', results);
+    dispatch({ type: 'SET_RESULTS', results: { ...state.results, ...results } });
+  }, [metrics.height, metrics.weight, metrics.age, metrics.gender, metrics.unit]);
 
-    console.log('Basic metrics results:', results);
-    setResults(results);
-    return results;
-  };
-
-  return { results, calculateBasicMetrics };
+  return state.results;
 };
