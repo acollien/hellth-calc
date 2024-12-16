@@ -6,6 +6,9 @@ import IdealWeightResults from "./health/results/IdealWeightResults";
 import OtherResults from "./health/results/OtherResults";
 import BiologicalAgeResults from "./health/results/BiologicalAgeResults";
 import { HealthResult } from "@/types/health";
+import Group1Results from "./health/results/Group1Results";
+import Group2Results from "./health/results/Group2Results";
+import Group3Results from "./health/results/Group3Results";
 
 interface ResultsProps {
   results: HealthResult;
@@ -37,6 +40,29 @@ const HealthResults = ({ results, metrics }: ResultsProps) => {
       {results.biologicalAge && (
         <BiologicalAgeResults biologicalAge={results.biologicalAge} />
       )}
+
+      <Group1Results
+        ponderalIndex={results.ponderalIndex || null}
+        absi={results.absi || null}
+        bodyRoundnessIndex={results.bodyRoundnessIndex || null}
+        waistToHeightRatio={results.waistToHeightRatio || null}
+        unit={metrics.unit}
+      />
+
+      <Group2Results
+        leanBodyMass={results.leanBodyMass}
+        fatFreeMassIndex={results.fatFreeMassIndex}
+        skeletalMuscleMass={results.skeletalMuscleMass}
+        bodyFatDistribution={results.bodyFatDistribution}
+        unit={metrics.unit}
+      />
+
+      <Group3Results
+        leanMassIndex={results.leanMassIndex}
+        bodyAdiposityIndex={results.bodyAdiposityIndex}
+        conicityIndex={results.conicityIndex}
+        unit={metrics.unit}
+      />
 
       <OtherResults 
         frameSize={results.frameSize}
