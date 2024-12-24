@@ -52,13 +52,21 @@ const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) 
         <div className="flex flex-col space-y-2">
           <div className="flex items-center gap-2">
             <Label htmlFor="gender">Biological Sex at Birth</Label>
-            <Tooltip defaultOpen={false} disableHoverableContent>
+            <Tooltip>
               <TooltipTrigger asChild>
-                <button type="button" onClick={(e) => e.preventDefault()}>
+                <button 
+                  type="button" 
+                  onClick={(e) => e.preventDefault()}
+                  className="hover:bg-transparent focus:outline-none"
+                >
                   <Info className="h-4 w-4 text-mint-500 cursor-pointer" />
                 </button>
               </TooltipTrigger>
-              <TooltipContent className="max-w-xs">
+              <TooltipContent 
+                side="right"
+                onPointerEnterCapture={(e) => e.preventDefault()}
+                onPointerLeaveCapture={(e) => e.preventDefault()}
+              >
                 <p>We acknowledge that gender exists on a spectrum. Due to the historical nature of available medical calculation methods, this application currently requires biological sex at birth for accurate results. We are committed to updating our methods as more inclusive research becomes available.</p>
               </TooltipContent>
             </Tooltip>

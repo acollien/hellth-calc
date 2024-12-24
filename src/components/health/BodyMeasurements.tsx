@@ -31,13 +31,21 @@ const BodyMeasurements = ({ metrics, onMetricChange }: BodyMeasurementsProps) =>
       <div className="space-y-4">
         <div className="flex items-center gap-2">
           <Label>{label} {formatValue(Number(metrics[key]) || range.min, key)}</Label>
-          <Tooltip defaultOpen={false} disableHoverableContent>
+          <Tooltip>
             <TooltipTrigger asChild>
-              <button type="button" onClick={(e) => e.preventDefault()}>
+              <button 
+                type="button" 
+                onClick={(e) => e.preventDefault()}
+                className="hover:bg-transparent focus:outline-none"
+              >
                 <Info className="h-4 w-4 text-mint-500 cursor-pointer" />
               </button>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent 
+              side="right"
+              onPointerEnterCapture={(e) => e.preventDefault()}
+              onPointerLeaveCapture={(e) => e.preventDefault()}
+            >
               <p className="max-w-xs">{tooltip}</p>
             </TooltipContent>
           </Tooltip>
