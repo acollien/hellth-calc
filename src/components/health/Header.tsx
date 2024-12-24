@@ -14,7 +14,7 @@ const Header = ({ onTestDataClick }: HeaderProps) => {
         <Dialog>
           <DialogTrigger asChild>
             <Button variant="outline" size="sm" className="text-xs">
-              Legal Information
+              Disclosure
             </Button>
           </DialogTrigger>
           <DialogContent>
