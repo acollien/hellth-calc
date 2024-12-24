@@ -38,7 +38,7 @@ const BodyMeasurements = ({ metrics, onMetricChange }: BodyMeasurementsProps) =>
             <PopoverContent 
               side="top" 
               align="center" 
-              className="max-w-[280px] z-50 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+              className="fixed inset-5 m-auto h-fit max-h-[90vh] w-[90vw] max-w-[280px] z-50"
             >
               <p>{tooltip}</p>
             </PopoverContent>

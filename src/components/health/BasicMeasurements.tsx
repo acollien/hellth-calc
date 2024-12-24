@@ -59,7 +59,7 @@ const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) 
               <PopoverContent 
                 side="top" 
                 align="center" 
-                className="max-w-[280px] z-50 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                className="fixed inset-5 m-auto h-fit max-h-[90vh] w-[90vw] max-w-[280px] z-50"
               >
                 <p>We acknowledge that gender exists on a spectrum. Due to the historical nature of available medical calculation methods, this application currently requires biological sex at birth for accurate results. We are committed to updating our methods as more inclusive research becomes available.</p>
               </PopoverContent>
