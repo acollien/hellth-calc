@@ -58,8 +58,7 @@ const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) 
               </PopoverTrigger>
               <PopoverContent 
                 side="top" 
-                align="center"
-                className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] z-50"
+                className="fixed top-[50vh] left-[50vw] -translate-x-1/2 -translate-y-1/2 w-[280px] z-50"
               >
                 <p>We acknowledge that gender exists on a spectrum. Due to the historical nature of available medical calculation methods, this application currently requires biological sex at birth for accurate results. We are committed to updating our methods as more inclusive research becomes available.</p>
               </PopoverContent>
