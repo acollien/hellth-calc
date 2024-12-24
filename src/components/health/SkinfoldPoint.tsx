@@ -25,7 +25,7 @@ const SkinfoldPoint = ({ label, value, point, tooltip, onChange, unit }: Skinfol
     <div className="space-y-4">
       <div className="flex items-center gap-2">
         <Label>{label} {formatValue(Number(value) || range.min)}</Label>
-        <Tooltip delayDuration={0}>
+        <Tooltip defaultOpen={false} disableHoverableContent>
           <TooltipTrigger asChild>
             <button type="button" onClick={(e) => e.preventDefault()}>
               <Info className="h-4 w-4 text-mint-500 cursor-pointer" />
