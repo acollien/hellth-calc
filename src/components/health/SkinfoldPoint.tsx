@@ -1,7 +1,7 @@
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Info } from "lucide-react";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 interface SkinfoldPointProps {
   label: string;
@@ -25,15 +25,11 @@ const SkinfoldPoint = ({ label, value, point, tooltip, onChange, unit }: Skinfol
     <div className="space-y-4">
       <div className="flex items-center gap-2">
         <Label>{label} {formatValue(Number(value) || range.min)}</Label>
-        <Popover>
-          <PopoverTrigger>
+        <Dialog>
+          <DialogTrigger>
             <Info className="h-4 w-4 text-mint-500" />
-          </PopoverTrigger>
-          <PopoverContent 
-            align="center"
-            side="top"
-            className="w-[280px]"
-          >
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
             <div className="space-y-2">
               <h4 className="font-semibold">Skinfold Measurement - {label}</h4>
               <div className="text-sm space-y-2">
@@ -63,8 +59,8 @@ const SkinfoldPoint = ({ label, value, point, tooltip, onChange, unit }: Skinfol
                 </div>
               </div>
             </div>
-          </PopoverContent>
-        </Popover>
+          </DialogContent>
+        </Dialog>
       </div>
       <Slider
         value={[Number(value) || range.min]}

@@ -1,6 +1,6 @@
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Info } from "lucide-react";
 import { HealthMetrics } from "./types";
 import { Slider } from "@/components/ui/slider";
@@ -52,18 +52,14 @@ const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) 
         <div className="flex flex-col space-y-2">
           <div className="flex items-center gap-2">
             <Label htmlFor="gender">Biological Sex at Birth</Label>
-            <Popover>
-              <PopoverTrigger>
+            <Dialog>
+              <DialogTrigger>
                 <Info className="h-4 w-4 text-mint-500" />
-              </PopoverTrigger>
-              <PopoverContent 
-                align="center"
-                side="top"
-                className="w-[280px]"
-              >
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
                 <p>We acknowledge that gender exists on a spectrum. Due to the historical nature of available medical calculation methods, this application currently requires biological sex at birth for accurate results. We are committed to updating our methods as more inclusive research becomes available.</p>
-              </PopoverContent>
-            </Popover>
+              </DialogContent>
+            </Dialog>
           </div>
           <Select
             value={metrics.gender}

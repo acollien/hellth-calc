@@ -1,6 +1,6 @@
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Info } from "lucide-react";
 import { HealthMetrics } from "./types";
 
@@ -31,18 +31,14 @@ const BodyMeasurements = ({ metrics, onMetricChange }: BodyMeasurementsProps) =>
       <div className="space-y-4">
         <div className="flex items-center gap-2">
           <Label>{label} {formatValue(Number(metrics[key]) || range.min, key)}</Label>
-          <Popover>
-            <PopoverTrigger>
+          <Dialog>
+            <DialogTrigger>
               <Info className="h-4 w-4 text-mint-500" />
-            </PopoverTrigger>
-            <PopoverContent 
-              align="center"
-              side="top"
-              className="w-[280px]"
-            >
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
               <p>{tooltip}</p>
-            </PopoverContent>
-          </Popover>
+            </DialogContent>
+          </Dialog>
         </div>
         <Slider
           value={[Number(metrics[key]) || range.min]}
