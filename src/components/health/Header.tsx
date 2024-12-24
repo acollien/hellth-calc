@@ -49,6 +49,7 @@ const Header = ({ onTestDataClick }: HeaderProps) => {
       <div className="text-center">
         <h1 className="text-3xl font-semibold text-mint-800">Hellth Calculator</h1>
         <p className="text-gray-600">Calculate various health metrics based on your measurements</p>
+        <p className="text-xs text-gray-500 mt-1">Note: If tooltips aren't appearing, they may be blocked by your ad blocker</p>
       </div>
     </div>
   );
