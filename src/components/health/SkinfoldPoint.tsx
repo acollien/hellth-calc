@@ -31,8 +31,8 @@ const SkinfoldPoint = ({ label, value, point, tooltip, onChange, unit }: Skinfol
           </PopoverTrigger>
           <PopoverContent 
             side="top" 
-            align="start" 
-            className="max-w-[280px] z-50 sm:side-right"
+            align="center" 
+            className="max-w-[280px] z-50"
           >
             <div className="space-y-2">
               <h4 className="font-semibold">Skinfold Measurement - {label}</h4>
