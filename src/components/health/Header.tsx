@@ -1,55 +1,20 @@
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { generateTestData } from "@/utils/testData";
-import { HealthMetrics } from "./types";
+import { AlertCircle } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
-interface HeaderProps {
-  onTestDataClick: (data: HealthMetrics) => void;
-}
-
-const Header = ({ onTestDataClick }: HeaderProps) => {
+const Header = () => {
   return (
-    <div className="flex flex-col space-y-4">
-      <div className="flex justify-between items-start">
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button variant="outline" size="sm" className="text-xs">
-              Legal Information
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Legal Information</DialogTitle>
-              <DialogDescription className="space-y-4">
-                <p>This application ("Hellth") is provided for informational purposes only and should not be considered medical advice. Always consult with healthcare professionals for medical decisions.</p>
-                
-                <h4 className="font-semibold">Data Privacy</h4>
-                <p>We do not collect, store, or sell any personal information. All calculations are performed locally in your browser.</p>
-                
-                <h4 className="font-semibold">Cookies</h4>
-                <p>This application does not use cookies or tracking mechanisms.</p>
-                
-                <h4 className="font-semibold">Disclaimer</h4>
-                <p>The calculations and results provided are based on general formulas and may not account for individual variations or specific medical conditions. Use at your own discretion.</p>
-              </DialogDescription>
-            </DialogHeader>
-          </DialogContent>
-        </Dialog>
-
-        <Button 
-          variant="outline" 
-          size="sm" 
-          className="text-xs"
-          onClick={() => onTestDataClick(generateTestData())}
-        >
-          Random Example Data
-        </Button>
-      </div>
-      
+    <div className="space-y-4">
       <div className="text-center">
         <h1 className="text-3xl font-semibold text-mint-800">Hellth Calculator</h1>
         <p className="text-gray-600">Calculate various health metrics based on your measurements</p>
       </div>
+      
+      <Alert variant="default" className="bg-mint-50 border-mint-200">
+        <AlertCircle className="h-4 w-4 text-mint-500" />
+        <AlertDescription className="text-sm text-mint-700">
+          If tooltips aren't appearing when clicked, try disabling your ad blocker for this site.
+        </AlertDescription>
+      </Alert>
     </div>
   );
 };
