@@ -36,7 +36,7 @@ const HealthCalculator = () => {
     <div className="w-full max-w-4xl mx-auto p-6 animate-fade-in">
       <Card className="p-6 backdrop-blur-sm bg-white/90 shadow-lg">
         <div className="space-y-8">
-          <Header />
+          <Header onTestDataClick={handleTestDataClick} />
 
           <div className="grid gap-6">
             <BasicMeasurements metrics={state.metrics} onMetricChange={handleMetricChange} />
