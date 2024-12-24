@@ -24,7 +24,10 @@ const BasicMeasurements = ({ metrics, onMetricChange }: BasicMeasurementsProps) 
   };
 
   const formatValue = (value: number, type: 'height' | 'weight') => {
-    return `${value.toFixed(1)} ${metrics.unit === "metric" ? "cm" : "in"}`;
+    if (type === 'height') {
+      return `${value.toFixed(1)} ${metrics.unit === "metric" ? "cm" : "in"}`;
+    }
+    return `${value.toFixed(1)} ${metrics.unit === "metric" ? "kg" : "lbs"}`;
   };
 
   return (
