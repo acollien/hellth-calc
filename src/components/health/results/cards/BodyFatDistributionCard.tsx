@@ -29,7 +29,11 @@ const BodyFatDistributionCard = ({ value }: BodyFatDistributionCardProps) => {
         title: "Body Fat Distribution Index (BFDI)",
         description: "A measure that evaluates how body fat is distributed between the waist and hip regions, taking height into account. This index helps assess central obesity and related health risks.",
         formula: "BFDI = (Waist² × Height) / (Hip² × √Height)",
-        interpretation
+        interpretation,
+        citation: {
+          text: "View Body Fat Distribution Index Study",
+          url: "https://pubmed.ncbi.nlm.nih.gov/18356847/"
+        }
       }}
     />
   );
