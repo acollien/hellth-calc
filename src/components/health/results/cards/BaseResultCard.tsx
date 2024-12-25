@@ -1,15 +1,17 @@
 import { Info } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { ReactNode } from "react";
 import { formatValue } from "@/utils/health/display/formatters";
-import { getValueColor } from "@/utils/health/display/colors";
 
 interface TooltipContentProps {
   title: string;
   description: string;
-  formula?: string;
-  interpretation?: ReactNode;
-  additionalContent?: ReactNode;
+  formula: string;
+  interpretation: ReactNode;
+  citation: {
+    text: string;
+    url: string;
+  };
 }
 
 interface BaseResultCardProps {
@@ -33,13 +35,11 @@ const BaseResultCard = ({
   children,
   className = ""
 }: BaseResultCardProps) => {
-  console.log(`Rendering BaseResultCard for ${label} with value:`, value);
-  
   return (
     <div className={`p-4 rounded-lg bg-mint-50 border border-mint-100 ${className}`}>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <div className="flex items-start gap-2">
+      <Dialog>
+        <DialogTrigger asChild>
+          <div className="flex items-start gap-2 cursor-pointer">
             <div className="flex-1">
               <div className="text-sm text-mint-800 font-medium flex items-center gap-2">
                 {label}
@@ -52,29 +52,35 @@ const BaseResultCard = ({
               {children}
             </div>
           </div>
-        </TooltipTrigger>
-        <TooltipContent className="max-w-xs p-4">
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
           <div className="space-y-2">
             <h4 className="font-semibold">{tooltipContent.title}</h4>
+            <p>{tooltipContent.description}</p>
             <div className="text-sm space-y-2">
-              <p>{tooltipContent.description}</p>
-              {tooltipContent.formula && (
-                <div>
-                  <p className="font-medium">Formula:</p>
-                  <p className="text-mint-700">{tooltipContent.formula}</p>
-                </div>
-              )}
-              {tooltipContent.interpretation && (
-                <div>
-                  <p className="font-medium">Interpretation:</p>
-                  {tooltipContent.interpretation}
-                </div>
-              )}
-              {tooltipContent.additionalContent}
+              <div>
+                <p className="font-medium">Formula:</p>
+                <p className="text-mint-700">{tooltipContent.formula}</p>
+              </div>
+              <div>
+                <p className="font-medium">Interpretation:</p>
+                {tooltipContent.interpretation}
+              </div>
+              <div className="mt-2 text-xs text-gray-600">
+                <p className="font-medium">Citation:</p>
+                <a 
+                  href={tooltipContent.citation.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline"
+                >
+                  {tooltipContent.citation.text}
+                </a>
+              </div>
             </div>
           </div>
-        </TooltipContent>
-      </Tooltip>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

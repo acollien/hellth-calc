@@ -1,4 +1,4 @@
-import { HealthMetrics } from '@/components/health/types';
+import { HealthMetrics } from '@/types/health';
 
 export const calculateBMIBasedBodyFat = (metrics: HealthMetrics): number | null => {
   if (!metrics.height || !metrics.weight || !metrics.age || !metrics.gender) {
@@ -9,11 +9,18 @@ export const calculateBMIBasedBodyFat = (metrics: HealthMetrics): number | null 
   const weight = parseFloat(metrics.weight);
   const age = parseFloat(metrics.age);
   
+  // Calculate BMI
   const bmi = weight / Math.pow(height / 100, 2);
   
-  const bodyFat = metrics.gender === 'male'
-    ? (1.10 * bmi) + (0.15 * age) - 9.5
-    : (1.08 * bmi) + (0.15 * age) - 4.5;
+  // Deurenberg et al. (1991) equation
+  const bodyFat = (1.20 * bmi) + (0.23 * age) - (10.8 * (metrics.gender === 'male' ? 1 : 0)) - 5.4;
 
-  return Math.max(0, Math.min(bodyFat, 100));
+  console.log('BMI-Based body fat calculation:', {
+    bmi,
+    age,
+    gender: metrics.gender,
+    result: bodyFat
+  });
+
+  return Math.round(bodyFat * 10) / 10; // Round to 1 decimal place
 };

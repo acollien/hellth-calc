@@ -1,5 +1,4 @@
-import { Info } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import BaseResultCard from "./BaseResultCard";
 
 interface WaistHeightCardProps {
   value: number;
@@ -13,45 +12,32 @@ const WaistHeightCard = ({ value }: WaistHeightCardProps) => {
     return "text-red-600";
   };
 
+  const tooltipContent = {
+    title: "Waist-to-Height Ratio (WHtR)",
+    description: "A simple and effective screening tool for cardiovascular health risk and central obesity.",
+    formula: "WHtR = Waist Circumference / Height",
+    interpretation: (
+      <ul className="list-disc pl-4">
+        <li>Below 0.4: Very Low - may indicate insufficient body mass</li>
+        <li>0.4-0.5: Healthy - optimal range for health outcomes</li>
+        <li>0.5-0.6: Overweight - increased health risks</li>
+        <li>Above 0.6: Obese - significantly elevated health risks</li>
+      </ul>
+    ),
+    citation: {
+      text: "View WHtR Meta-Analysis Study",
+      url: "https://pubmed.ncbi.nlm.nih.gov/20819243/"
+    }
+  };
+
   return (
-    <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <div className="flex items-start gap-2">
-            <div className="flex-1">
-              <div className="text-sm text-mint-800 font-medium flex items-center gap-2">
-                Waist-to-Height Ratio
-                <Info className="h-4 w-4 text-mint-500" />
-              </div>
-              <div className={`text-2xl font-semibold ${getTextColor(value)}`}>
-                {value.toFixed(3)}
-              </div>
-            </div>
-          </div>
-        </TooltipTrigger>
-        <TooltipContent className="max-w-xs p-4">
-          <div className="space-y-2">
-            <h4 className="font-semibold">Waist-to-Height Ratio (WHtR)</h4>
-            <p>A simple and effective screening tool for cardiovascular health risk and central obesity.</p>
-            <div className="text-sm space-y-2">
-              <div>
-                <p className="font-medium">Formula:</p>
-                <p className="text-mint-700">WHtR = Waist Circumference / Height</p>
-              </div>
-              <div>
-                <p className="font-medium">Ranges:</p>
-                <ul className="list-disc pl-4 space-y-1">
-                  <li>Below 0.4: Very Low - may indicate insufficient body mass</li>
-                  <li>0.4-0.5: Healthy - optimal range for health outcomes</li>
-                  <li>0.5-0.6: Overweight - increased health risks</li>
-                  <li>Above 0.6: Obese - significantly elevated health risks</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </TooltipContent>
-      </Tooltip>
-    </div>
+    <BaseResultCard
+      label="Waist-to-Height Ratio"
+      value={value}
+      valueColor={getTextColor(value)}
+      tooltipContent={tooltipContent}
+      precision={3}
+    />
   );
 };
 

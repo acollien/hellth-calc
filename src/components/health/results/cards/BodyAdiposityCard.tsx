@@ -1,58 +1,41 @@
-import { Info } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import BaseResultCard from "./BaseResultCard";
 
 interface BodyAdiposityCardProps {
   value: number;
 }
 
 const BodyAdiposityCard = ({ value }: BodyAdiposityCardProps) => {
-  const getColor = (value: number) => {
-    if (value < 8) return "text-blue-600";
+  const getValueColor = (value: number) => {
     if (value < 21) return "text-green-600";
-    if (value < 33) return "text-yellow-600";
+    if (value < 26) return "text-yellow-600";
     return "text-red-600";
   };
 
+  const tooltipContent = {
+    title: "Body Adiposity Index (BAI)",
+    description: "A measure of body fat percentage that uses hip circumference and height.",
+    formula: "BAI = (hip circumference / height^1.5) - 18",
+    interpretation: (
+      <ul className="list-disc pl-4">
+        <li>&lt;21: Low body fat</li>
+        <li>21-26: Healthy range</li>
+        <li>&gt;26: Elevated body fat</li>
+      </ul>
+    ),
+    citation: {
+      text: "View BAI Development Study (2011)",
+      url: "https://pubmed.ncbi.nlm.nih.gov/21475137/"
+    }
+  };
+
   return (
-    <div className="p-4 rounded-lg bg-mint-50 border border-mint-100 w-full">
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <div className="flex items-start gap-2">
-            <div>
-              <div className="text-sm text-mint-800 font-medium">Body Adiposity Index</div>
-              <div className={`text-2xl font-semibold ${getColor(value)}`}>
-                {value.toFixed(1)}%
-              </div>
-            </div>
-            <Info className="h-4 w-4 text-mint-500 mt-1" />
-          </div>
-        </TooltipTrigger>
-        <TooltipContent align="start" className="max-w-xs p-4">
-          <div className="space-y-2">
-            <h4 className="font-semibold">Body Adiposity Index (BAI)</h4>
-            <div className="text-sm space-y-2">
-              <div>
-                <p className="font-medium">Formula:</p>
-                <p className="text-mint-700">BAI = (Hip Circumference / Height^1.5) - 18</p>
-              </div>
-              <div>
-                <p className="font-medium">Description:</p>
-                <p>A method to estimate body fat percentage using hip circumference and height measurements, without requiring weight measurement.</p>
-              </div>
-              <div>
-                <p className="font-medium">Interpretation:</p>
-                <ul className="list-disc pl-4">
-                  <li>Men: 8-20% is considered healthy</li>
-                  <li>Women: 21-33% is considered healthy</li>
-                  <li>Below ranges: Potential insufficient body fat</li>
-                  <li>Above ranges: Elevated body fat levels</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </TooltipContent>
-      </Tooltip>
-    </div>
+    <BaseResultCard
+      label="Body Adiposity Index"
+      value={value}
+      valueColor={getValueColor(value)}
+      tooltipContent={tooltipContent}
+      precision={1}
+    />
   );
 };
 
