@@ -32,11 +32,11 @@ const BiologicalAgeResults = ({ biologicalAge }: BiologicalAgeResultsProps) => {
                 <div>
                   <p className="font-medium">Formula:</p>
                   <p className="text-mint-700">
-                    Base = Chronological Age
-                    Adjustments:
-                    • BMI > 25: +0.5 years per unit above
-                    • BMI < 18.5: +0.5 years per unit below
-                    • WHR > 0.9 (men) or 0.85 (women): +10 years per 0.1 above
+                    Base = Chronological Age<br />
+                    Adjustments:<br />
+                    - BMI {'>'}25: +0.5 years per unit above<br />
+                    - BMI {'<'}18.5: +0.5 years per unit below<br />
+                    - WHR {'>'}0.9 (men) or {'>'}0.85 (women): +10 years per 0.1 above
                   </p>
                 </div>
                 <div>
