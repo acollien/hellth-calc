@@ -52,7 +52,7 @@ const BodyRoundnessCard = ({ value, unit }: BodyRoundnessCardProps) => {
                   rel="noopener noreferrer"
                   className="text-blue-600 hover:underline"
                 >
-                  Thomas DM, Bredlau C, Bosy-Westphal A, et al. Relationships between body roundness with body fat and visceral adipose tissue emerging from a new geometrical model. Obesity (Silver Spring). 2013;21(11):2264-2271.
+                  View BRI Development Study (2013)
                 </a>
               </div>
             </div>

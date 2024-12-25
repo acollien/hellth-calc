@@ -51,7 +51,7 @@ const AbsiCard = ({ value, unit }: AbsiCardProps) => {
                   rel="noopener noreferrer"
                   className="text-blue-600 hover:underline"
                 >
-                  Krakauer NY, Krakauer JC. A new body shape index predicts mortality hazard independently of body mass index. PLoS One. 2012;7(7):e39504.
+                  View ABSI Development Study (2012)
                 </a>
               </div>
             </div>
