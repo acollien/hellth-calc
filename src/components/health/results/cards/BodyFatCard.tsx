@@ -1,5 +1,5 @@
 import { Info } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 interface BodyFatCardProps {
   methodKey: string;
@@ -32,34 +32,34 @@ const BodyFatCard = ({ methodKey, value, gender, tooltipContent }: BodyFatCardPr
   
   return (
     <div className="flex-1 p-4 rounded-lg bg-mint-50 border border-mint-100 w-full">
-      <div className="flex items-center gap-2">
-        <span className="text-sm text-mint-800 font-medium capitalize">
-          {methodKey.replace(/([A-Z])/g, ' $1').trim()}
-        </span>
-        <Tooltip>
-          <TooltipTrigger>
+      <Dialog>
+        <DialogTrigger asChild>
+          <div className="flex items-center gap-2 cursor-pointer">
+            <span className="text-sm text-mint-800 font-medium capitalize">
+              {methodKey.replace(/([A-Z])/g, ' $1').trim()}
+            </span>
             <Info className="h-4 w-4 text-mint-500" />
-          </TooltipTrigger>
-          <TooltipContent className="max-w-xs p-4">
-            <div className="space-y-2">
-              <h4 className="font-semibold">{tooltipContent.title}</h4>
-              <p>{tooltipContent.description}</p>
-              <div className="text-sm space-y-1">
-                <p className="font-medium">Formula:</p>
-                <p className="text-mint-700 whitespace-pre-line">
-                  {tooltipContent.formula}
-                </p>
-                <p className="font-medium mt-2">Ranges ({gender === 'male' ? 'Men' : 'Women'}):</p>
-                <ul className="list-disc pl-4">
-                  {tooltipContent.ranges[gender].map((range, index) => (
-                    <li key={index}>{range}</li>
-                  ))}
-                </ul>
-              </div>
+          </div>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <div className="space-y-2">
+            <h4 className="font-semibold">{tooltipContent.title}</h4>
+            <p>{tooltipContent.description}</p>
+            <div className="text-sm space-y-1">
+              <p className="font-medium">Formula:</p>
+              <p className="text-mint-700 whitespace-pre-line">
+                {tooltipContent.formula}
+              </p>
+              <p className="font-medium mt-2">Ranges ({gender === 'male' ? 'Men' : 'Women'}):</p>
+              <ul className="list-disc pl-4">
+                {tooltipContent.ranges[gender].map((range, index) => (
+                  <li key={index}>{range}</li>
+                ))}
+              </ul>
             </div>
-          </TooltipContent>
-        </Tooltip>
-      </div>
+          </div>
+        </DialogContent>
+      </Dialog>
       <div className={`text-2xl font-semibold mt-2 ${getBodyFatColor(value, gender)}`}>
         {value.toFixed(1)}%
       </div>
