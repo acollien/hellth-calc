@@ -17,10 +17,10 @@ export const bodyFatTooltips = {
   },
   bmiBased: {
     title: "Enhanced BMI-Based Method",
-    description: "An advanced calculation that considers multiple factors including age-specific adjustments, gender differences, and BMI ranges.",
+    description: "A refined BMI-based calculation that includes adjustments for age groups, gender differences, and BMI ranges to provide more accurate estimates.",
     formula: {
-      male: "BF% = (1.20 × BMI) + (0.23 × age) - (10.8 × 1) - 5.4\nwith age-specific adjustments and BMI range compensation",
-      female: "BF% = (1.20 × BMI) + (0.23 × age) - (10.8 × 0) - 5.4\nwith age-specific adjustments and BMI range compensation"
+      male: "Base: (1.20 × BMI) + (0.23 × age) - 16.2\nWith adjustments for:\n- BMI ranges\n- Age groups\n- Gender-specific factors",
+      female: "Base: (1.20 × BMI) + (0.23 × age) - 5.4\nWith adjustments for:\n- BMI ranges\n- Age groups\n- Gender-specific factors"
     }
   },
   army: {
