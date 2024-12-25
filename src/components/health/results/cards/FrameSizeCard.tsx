@@ -42,18 +42,39 @@ const FrameSizeCard = ({ frameSize }: FrameSizeCardProps) => {
         <DialogContent className="sm:max-w-[425px]">
           <div className="space-y-2">
             <h4 className="font-semibold">Body Frame Size</h4>
-            <p>Determined by wrist circumference in relation to height.</p>
-            <div className="text-sm space-y-1">
-              <p className="font-medium">Method:</p>
-              <p>Uses the height-to-wrist ratio to determine frame size.</p>
-              <p className="font-medium mt-2">Formula:</p>
-              <p className="text-mint-700">Frame Size Index = Height (cm) / Wrist Circumference (cm)</p>
-              <p className="font-medium mt-2">Categories:</p>
-              <ul className="list-disc pl-4 space-y-1">
-                <li>Small: Height/Wrist &gt; 10.4</li>
-                <li>Medium: Height/Wrist 9.6 - 10.4</li>
-                <li>Large: Height/Wrist &lt; 9.6</li>
-              </ul>
+            <p>A measure of skeletal mass that helps determine your basic body type and optimal weight range based on wrist circumference and height.</p>
+            <div className="text-sm space-y-2">
+              <div>
+                <p className="font-medium">Method:</p>
+                <p className="text-mint-700">Frame Size Index = Height (cm) / Wrist Circumference (cm)</p>
+              </div>
+              <div>
+                <p className="font-medium">Categories:</p>
+                <ul className="list-disc pl-4">
+                  <li>Small Frame: Height/Wrist &gt; 10.4</li>
+                  <li>Medium Frame: Height/Wrist 9.6 - 10.4</li>
+                  <li>Large Frame: Height/Wrist &lt; 9.6</li>
+                </ul>
+              </div>
+              <div>
+                <p className="font-medium">Interpretation:</p>
+                <ul className="list-disc pl-4">
+                  <li>Small: Lighter bone structure, may need lower weight targets</li>
+                  <li>Medium: Average bone structure, standard weight targets apply</li>
+                  <li>Large: Heavier bone structure, may need higher weight targets</li>
+                </ul>
+              </div>
+              <div className="mt-2 text-xs text-gray-600">
+                <p className="font-medium">Citation:</p>
+                <a 
+                  href="https://pubmed.ncbi.nlm.nih.gov/7900416/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline"
+                >
+                  View Body Frame Size Research Study
+                </a>
+              </div>
             </div>
           </div>
         </DialogContent>

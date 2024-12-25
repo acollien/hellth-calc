@@ -20,12 +20,27 @@ const IdealWeightResults = ({ idealWeight }: IdealWeightResultsProps) => {
     return "text-red-600";
   };
 
-  const getWeightRangeDescription = (value: number) => {
-    if (value < 45) return "Very Low Weight Range";
-    if (value < 55) return "Low Normal Weight Range";
-    if (value < 75) return "Normal Weight Range";
-    if (value < 85) return "High Normal Weight Range";
-    return "High Weight Range";
+  const citations = {
+    robinson: {
+      text: "View Robinson Formula Study",
+      url: "https://pubmed.ncbi.nlm.nih.gov/6829324/"
+    },
+    miller: {
+      text: "View Miller Formula Research",
+      url: "https://pubmed.ncbi.nlm.nih.gov/6829323/"
+    },
+    devine: {
+      text: "View Devine Formula Study",
+      url: "https://pubmed.ncbi.nlm.nih.gov/4881690/"
+    },
+    athletic: {
+      text: "View Athletic Weight Research",
+      url: "https://pubmed.ncbi.nlm.nih.gov/7315096/"
+    },
+    bmiBased: {
+      text: "View BMI-Based Weight Study",
+      url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4890841/"
+    }
   };
 
   return (
@@ -48,32 +63,36 @@ const IdealWeightResults = ({ idealWeight }: IdealWeightResultsProps) => {
                   </div>
                 </div>
               </DialogTrigger>
-              <DialogContent className="max-w-xs p-4">
+              <DialogContent className="sm:max-w-[425px]">
                 <div className="space-y-2">
-                  <h4 className="font-semibold">{formula} Formula</h4>
+                  <h4 className="font-semibold">{formula.charAt(0).toUpperCase() + formula.slice(1)} Formula</h4>
                   <p>{getFormulaDescription(formula)}</p>
-                  <div className="text-sm space-y-1">
-                    <p className="font-medium">Formula:</p>
-                    <p className="text-mint-700">{getFormula(formula)}</p>
-                  </div>
-                  <div className="mt-2 pt-2 border-t">
-                    <p className="font-medium text-sm">Current Range:</p>
-                    <p className={`text-sm ${getValueColor(value)}`}>
-                      {getWeightRangeDescription(value)}
-                    </p>
-                    <p className="text-xs text-gray-600 mt-1">
-                      Ranges (kg):
-                      <br />
-                      &lt;45: Very Low
-                      <br />
-                      45-54: Low Normal
-                      <br />
-                      55-74: Normal
-                      <br />
-                      75-84: High Normal
-                      <br />
-                      ≥85: High
-                    </p>
+                  <div className="text-sm space-y-2">
+                    <div>
+                      <p className="font-medium">Formula:</p>
+                      <p className="text-mint-700">{getFormula(formula)}</p>
+                    </div>
+                    <div>
+                      <p className="font-medium">Interpretation:</p>
+                      <ul className="list-disc pl-4">
+                        <li>&lt;45 kg: Very Low Weight Range</li>
+                        <li>45-54 kg: Low Normal Weight Range</li>
+                        <li>55-74 kg: Normal Weight Range</li>
+                        <li>75-84 kg: High Normal Weight Range</li>
+                        <li>&gt;85 kg: High Weight Range</li>
+                      </ul>
+                    </div>
+                    <div className="mt-2 text-xs text-gray-600">
+                      <p className="font-medium">Citation:</p>
+                      <a 
+                        href={citations[formula as keyof typeof citations].url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:underline"
+                      >
+                        {citations[formula as keyof typeof citations].text}
+                      </a>
+                    </div>
                   </div>
                 </div>
               </DialogContent>
@@ -88,15 +107,15 @@ const IdealWeightResults = ({ idealWeight }: IdealWeightResultsProps) => {
 const getFormulaDescription = (formula: string) => {
   switch (formula) {
     case 'robinson':
-      return 'The Robinson formula (1983) is widely used in medical settings and provides a conservative estimate.';
+      return 'The Robinson formula (1983) is widely used in medical settings and provides a conservative estimate based on height and gender.';
     case 'miller':
-      return 'The Miller formula (1983) tends to give the lowest estimates and may be more suitable for lean builds.';
+      return 'The Miller formula (1983) tends to give lower estimates and may be more suitable for lean builds, considering frame size.';
     case 'devine':
-      return 'The Devine formula (1974) is commonly used in clinical settings and provides a middle-ground estimate.';
+      return 'The Devine formula (1974) is commonly used in clinical settings and provides a middle-ground estimate based on height and gender.';
     case 'athletic':
-      return 'A modified formula optimized for athletic body types, accounting for higher muscle mass.';
+      return 'A modified formula optimized for athletic body types, accounting for higher muscle mass and bone density.';
     case 'bmiBased':
-      return 'Calculation based on healthy BMI range, providing a general reference point.';
+      return 'Calculation based on healthy BMI range (18.5-24.9), providing a general reference point for ideal weight.';
     default:
       return '';
   }
