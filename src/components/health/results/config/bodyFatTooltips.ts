@@ -1,111 +1,34 @@
-interface TooltipRanges {
-  male: string[];
-  female: string[];
-}
-
-interface TooltipContent {
-  title: string;
-  description: string;
-  formula: {
-    male: string;
-    female: string;
-  };
-  ranges: TooltipRanges;
-}
-
-export const bodyFatTooltips: Record<string, TooltipContent> = {
+export const bodyFatTooltips = {
   navy: {
     title: "U.S. Navy Method",
-    description: "A circumference-based method developed by the U.S. Navy for quick and accurate body fat estimation using basic body measurements.",
+    description: "Uses circumference measurements to estimate body fat percentage.",
     formula: {
-      male: "495 / (1.0324 - 0.19077 × log₁₀(waist - neck) + 0.15456 × log₁₀(height)) - 450",
-      female: "495 / (1.29579 - 0.35004 × log₁₀(waist + hip - neck) + 0.22100 × log₁₀(height)) - 450"
-    },
-    ranges: {
-      male: [
-        "Essential Fat: 2-5%",
-        "Athletes: 6-13%",
-        "Fitness: 14-17%",
-        "Average: 18-24%",
-        "Obese: 25%+"
-      ],
-      female: [
-        "Essential Fat: 10-13%",
-        "Athletes: 14-20%",
-        "Fitness: 21-24%",
-        "Average: 25-31%",
-        "Obese: 32%+"
-      ]
+      male: "495 / (1.0324 - 0.19077 × log10(waist-neck) + 0.15456 × log10(height)) - 450",
+      female: "495 / (1.29579 - 0.35004 × log10(waist+hip-neck) + 0.22100 × log10(height)) - 450"
     }
   },
   jackson: {
     title: "Jackson-Pollock Method",
-    description: "A highly accurate method using skinfold measurements to estimate body density and calculate body fat percentage.",
+    description: "Uses skinfold measurements to calculate body density and estimate body fat percentage.",
     formula: {
-      male: "Body Density = 1.10938 - (0.0008267 × sum) + (0.0000016 × sum²) - (0.0002574 × age)\nBody Fat % = (495 / Body Density) - 450",
-      female: "Body Density = 1.089733 - (0.0009245 × sum) + (0.0000025 × sum²) - (0.0000979 × age)\nBody Fat % = (495 / Body Density) - 450"
-    },
-    ranges: {
-      male: [
-        "Essential Fat: 2-5%",
-        "Athletes: 6-13%",
-        "Fitness: 14-17%",
-        "Average: 18-24%",
-        "Obese: 25%+"
-      ],
-      female: [
-        "Essential Fat: 10-13%",
-        "Athletes: 14-20%",
-        "Fitness: 21-24%",
-        "Average: 25-31%",
-        "Obese: 32%+"
-      ]
+      male: "Body Density = 1.10938 - (0.0008267 × sum) + (0.0000016 × sum²) - (0.0002574 × age)",
+      female: "Body Density = 1.089733 - (0.0009245 × sum) + (0.0000025 × sum²) - (0.0000979 × age)"
     }
   },
   bmiBased: {
-    title: "BMI-Based Method",
-    description: "A simplified estimation using BMI and age to approximate body fat percentage.",
+    title: "Enhanced BMI-Based Method",
+    description: "An advanced calculation that considers multiple factors including age-specific adjustments, gender differences, and BMI ranges.",
     formula: {
-      male: "Body Fat % = (1.20 × BMI) + (0.23 × age) - 10.8 - 5.4",
-      female: "Body Fat % = (1.20 × BMI) + (0.23 × age) - 5.4"
-    },
-    ranges: {
-      male: [
-        "Very Low: <8%",
-        "Low: 8-15%",
-        "Normal: 15-20%",
-        "Moderate: 20-25%",
-        "High: >25%"
-      ],
-      female: [
-        "Very Low: <15%",
-        "Low: 15-22%",
-        "Normal: 22-27%",
-        "Moderate: 27-32%",
-        "High: >32%"
-      ]
+      male: "BF% = (1.20 × BMI) + (0.23 × age) - (10.8 × 1) - 5.4\nwith age-specific adjustments and BMI range compensation",
+      female: "BF% = (1.20 × BMI) + (0.23 × age) - (10.8 × 0) - 5.4\nwith age-specific adjustments and BMI range compensation"
     }
   },
   army: {
     title: "U.S. Army Method",
-    description: "The official method used by the U.S. Army for body fat assessment.",
+    description: "Uses circumference-based calculations following U.S. Army standards.",
     formula: {
-      male: "86.010 × log₁₀(waist - neck) - 70.041 × log₁₀(height) + 36.76",
-      female: "163.205 × log₁₀(waist + hip - neck) - 97.684 × log₁₀(height) - 78.387"
-    },
-    ranges: {
-      male: [
-        "17-20 years: <20%",
-        "21-27 years: <22%",
-        "28-39 years: <24%",
-        "40+ years: <26%"
-      ],
-      female: [
-        "17-20 years: <30%",
-        "21-27 years: <32%",
-        "28-39 years: <34%",
-        "40+ years: <36%"
-      ]
+      male: "Body Fat % = (86.010 × log10(abdomen - neck)) - (70.041 × log10(height)) + 36.76",
+      female: "Body Fat % = (163.205 × log10(waist + hip - neck)) - (97.684 × log10(height)) - 78.387"
     }
   }
 };
