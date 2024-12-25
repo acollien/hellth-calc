@@ -7,60 +7,64 @@ export const exportResults = (results: any, format: 'pdf' | 'json') => {
 
   console.log("Full results object received in exportUtils:", results);
 
-  const getRangeForMetric = (metric: string, value: number): string => {
+  const getRangeForMetric = (metric: string, value: number | string): string => {
+    // Convert string value to number if needed
+    const numericValue = typeof value === 'string' ? parseFloat(value) : value;
+    
+    if (isNaN(numericValue)) return "N/A";
+
     const ranges: { [key: string]: string } = {
-      "BMI (Standard)": value < 18.5 ? "Underweight (<18.5)" : 
-                       value < 25 ? "Normal (18.5-24.9)" :
-                       value < 30 ? "Overweight (25-29.9)" : "Obese (≥30)",
-      "BMI (Athletic)": value < 17 ? "Underweight (<17)" :
-                       value < 23 ? "Normal (17-23)" :
-                       value < 28 ? "Overweight (23-28)" : "Obese (≥28)",
-      "BMI (Devine)": value < 18.5 ? "Underweight (<18.5)" :
-                      value < 25 ? "Normal (18.5-24.9)" :
-                      value < 30 ? "Overweight (25-29.9)" : "Obese (≥30)",
-      "BMI (BMI Based)": value < 18.5 ? "Underweight (<18.5)" :
-                         value < 25 ? "Normal (18.5-24.9)" :
-                         value < 30 ? "Overweight (25-29.9)" : "Obese (≥30)",
-      "Body Fat % (Navy)": value < 10 ? "Essential Fat (<10%)" :
-                          value < 20 ? "Athletes (10-20%)" :
-                          value < 30 ? "Fitness (20-30%)" : "Excess (>30%)",
-      "Body Fat % (Jackson)": value < 10 ? "Essential Fat (<10%)" :
-                             value < 20 ? "Athletes (10-20%)" :
-                             value < 30 ? "Fitness (20-30%)" : "Excess (>30%)",
-      "Body Fat % (BMI Based)": value < 10 ? "Essential Fat (<10%)" :
-                               value < 20 ? "Athletes (10-20%)" :
-                               value < 30 ? "Fitness (20-30%)" : "Excess (>30%)",
-      "Body Fat % (Army)": value < 10 ? "Essential Fat (<10%)" :
-                          value < 20 ? "Athletes (10-20%)" :
-                          value < 30 ? "Fitness (20-30%)" : "Excess (>30%)",
-      "BMR": value < 1200 ? "Low (<1200 kcal/day)" :
-             value < 1800 ? "Normal (1200-1800 kcal/day)" :
-             value < 2200 ? "High (1800-2200 kcal/day)" : "Very High (>2200 kcal/day)",
-      "TDEE": value < 1500 ? "Low (<1500 kcal/day)" :
-              value < 2500 ? "Normal (1500-2500 kcal/day)" :
-              value < 3000 ? "High (2500-3000 kcal/day)" : "Very High (>3000 kcal/day)",
-      "Lean Body Mass": value < 40 ? "Below Average (<40)" :
-                        value < 60 ? "Average (40-60)" :
-                        value < 80 ? "Above Average (60-80)" : "High (>80)",
-      "Body Fat Distribution": value < 0.8 ? "Healthy (<0.8)" :
-                             value < 0.9 ? "Moderate Risk (0.8-0.9)" : "High Risk (>0.9)",
-      "Frame Size": value === 'small' ? "Small Frame" :
-                   value === 'medium' ? "Medium Frame" : "Large Frame",
-      "Robinson Formula": value < 45 ? "Underweight (<45)" :
-                         value < 60 ? "Normal (45-60)" :
-                         value < 75 ? "Overweight (60-75)" : "Obese (>75)",
-      "Miller Formula": value < 45 ? "Underweight (<45)" :
-                       value < 60 ? "Normal (45-60)" :
-                       value < 75 ? "Overweight (60-75)" : "Obese (>75)",
-      "Devine Formula": value < 45 ? "Underweight (<45)" :
-                       value < 60 ? "Normal (45-60)" :
-                       value < 75 ? "Overweight (60-75)" : "Obese (>75)",
-      "Athletic Formula": value < 50 ? "Underweight (<50)" :
-                         value < 65 ? "Normal (50-65)" :
-                         value < 80 ? "Overweight (65-80)" : "Obese (>80)",
-      "BMI Based Range": value < 45 ? "Underweight (<45)" :
-                        value < 60 ? "Normal (45-60)" :
-                        value < 75 ? "Overweight (60-75)" : "Obese (>75)",
+      "BMI (Standard)": numericValue < 18.5 ? "Underweight (<18.5)" : 
+                       numericValue < 25 ? "Normal (18.5-24.9)" :
+                       numericValue < 30 ? "Overweight (25-29.9)" : "Obese (≥30)",
+      "BMI (Athletic)": numericValue < 17 ? "Underweight (<17)" :
+                       numericValue < 23 ? "Normal (17-23)" :
+                       numericValue < 28 ? "Overweight (23-28)" : "Obese (≥28)",
+      "BMI (Devine)": numericValue < 18.5 ? "Underweight (<18.5)" :
+                      numericValue < 25 ? "Normal (18.5-24.9)" :
+                      numericValue < 30 ? "Overweight (25-29.9)" : "Obese (≥30)",
+      "BMI (BMI Based)": numericValue < 18.5 ? "Underweight (<18.5)" :
+                         numericValue < 25 ? "Normal (18.5-24.9)" :
+                         numericValue < 30 ? "Overweight (25-29.9)" : "Obese (≥30)",
+      "Body Fat % (Navy)": numericValue < 10 ? "Essential Fat (<10%)" :
+                          numericValue < 20 ? "Athletes (10-20%)" :
+                          numericValue < 30 ? "Fitness (20-30%)" : "Excess (>30%)",
+      "Body Fat % (Jackson)": numericValue < 10 ? "Essential Fat (<10%)" :
+                             numericValue < 20 ? "Athletes (10-20%)" :
+                             numericValue < 30 ? "Fitness (20-30%)" : "Excess (>30%)",
+      "Body Fat % (BMI Based)": numericValue < 10 ? "Essential Fat (<10%)" :
+                               numericValue < 20 ? "Athletes (10-20%)" :
+                               numericValue < 30 ? "Fitness (20-30%)" : "Excess (>30%)",
+      "Body Fat % (Army)": numericValue < 10 ? "Essential Fat (<10%)" :
+                          numericValue < 20 ? "Athletes (10-20%)" :
+                          numericValue < 30 ? "Fitness (20-30%)" : "Excess (>30%)",
+      "BMR": numericValue < 1200 ? "Low (<1200 kcal/day)" :
+             numericValue < 1800 ? "Normal (1200-1800 kcal/day)" :
+             numericValue < 2200 ? "High (1800-2200 kcal/day)" : "Very High (>2200 kcal/day)",
+      "TDEE": numericValue < 1500 ? "Low (<1500 kcal/day)" :
+              numericValue < 2500 ? "Normal (1500-2500 kcal/day)" :
+              numericValue < 3000 ? "High (2500-3000 kcal/day)" : "Very High (>3000 kcal/day)",
+      "Lean Body Mass": numericValue < 40 ? "Below Average (<40)" :
+                        numericValue < 60 ? "Average (40-60)" :
+                        numericValue < 80 ? "Above Average (60-80)" : "High (>80)",
+      "Body Fat Distribution": numericValue < 0.8 ? "Healthy (<0.8)" :
+                             numericValue < 0.9 ? "Moderate Risk (0.8-0.9)" : "High Risk (>0.9)",
+      "Frame Size": typeof value === 'string' ? value : "N/A",
+      "Robinson Formula": numericValue < 45 ? "Underweight (<45)" :
+                         numericValue < 60 ? "Normal (45-60)" :
+                         numericValue < 75 ? "Overweight (60-75)" : "Obese (>75)",
+      "Miller Formula": numericValue < 45 ? "Underweight (<45)" :
+                       numericValue < 60 ? "Normal (45-60)" :
+                       numericValue < 75 ? "Overweight (60-75)" : "Obese (>75)",
+      "Devine Formula": numericValue < 45 ? "Underweight (<45)" :
+                       numericValue < 60 ? "Normal (45-60)" :
+                       numericValue < 75 ? "Overweight (60-75)" : "Obese (>75)",
+      "Athletic Formula": numericValue < 50 ? "Underweight (<50)" :
+                         numericValue < 65 ? "Normal (50-65)" :
+                         numericValue < 80 ? "Overweight (65-80)" : "Obese (>80)",
+      "BMI Based Range": numericValue < 45 ? "Underweight (<45)" :
+                        numericValue < 60 ? "Normal (45-60)" :
+                        numericValue < 75 ? "Overweight (60-75)" : "Obese (>75)",
     };
     return ranges[metric] || "";
   };
