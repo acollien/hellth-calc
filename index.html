@@ -9,9 +9,35 @@
     <meta property="og:image" content="/og-image.png" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9330148408630548"
      crossorigin="anonymous"></script>
+    <style>
+      .ad-container {
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 160px;
+        height: 600px;
+        border: 2px solid black;
+        background: white;
+        z-index: 1000;
+      }
+      
+      .ad-left {
+        left: 10px;
+      }
+      
+      .ad-right {
+        right: 10px;
+      }
+
+      #root {
+        margin: 0 180px;
+      }
+    </style>
   </head>
 
   <body>
+    <div class="ad-container ad-left"></div>
+    <div class="ad-container ad-right"></div>
     <div id="root"></div>
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
