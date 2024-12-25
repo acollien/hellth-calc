@@ -8,7 +8,6 @@ interface TooltipContentProps {
   description: string;
   formula?: string;
   interpretation?: ReactNode;
-  additionalContent?: ReactNode;
   citation?: {
     text: string;
     url: string;
@@ -71,7 +70,6 @@ const BaseResultCard = ({
                   {tooltipContent.interpretation}
                 </div>
               )}
-              {tooltipContent.additionalContent}
               {tooltipContent.citation && (
                 <div className="mt-2 text-xs text-gray-600">
                   <p className="font-medium">Citation:</p>
