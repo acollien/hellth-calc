@@ -1,5 +1,5 @@
 import { Info } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 interface BodyAdiposityCardProps {
   value: number;
@@ -15,9 +15,9 @@ const BodyAdiposityCard = ({ value }: BodyAdiposityCardProps) => {
 
   return (
     <div className="p-4 rounded-lg bg-mint-50 border border-mint-100 w-full">
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <div className="flex items-start gap-2">
+      <Dialog>
+        <DialogTrigger asChild>
+          <div className="flex items-start gap-2 cursor-pointer">
             <div>
               <div className="text-sm text-mint-800 font-medium">Body Adiposity Index</div>
               <div className={`text-2xl font-semibold ${getColor(value)}`}>
@@ -26,8 +26,8 @@ const BodyAdiposityCard = ({ value }: BodyAdiposityCardProps) => {
             </div>
             <Info className="h-4 w-4 text-mint-500 mt-1" />
           </div>
-        </TooltipTrigger>
-        <TooltipContent align="start" className="max-w-xs p-4">
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
           <div className="space-y-2">
             <h4 className="font-semibold">Body Adiposity Index (BAI)</h4>
             <div className="text-sm space-y-2">
@@ -50,8 +50,8 @@ const BodyAdiposityCard = ({ value }: BodyAdiposityCardProps) => {
               </div>
             </div>
           </div>
-        </TooltipContent>
-      </Tooltip>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

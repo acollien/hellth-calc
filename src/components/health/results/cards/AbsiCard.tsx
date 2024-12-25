@@ -1,4 +1,5 @@
-import BaseResultCard from "./BaseResultCard";
+import { Info } from "lucide-react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 interface AbsiCardProps {
   value: { metric: number; imperial: number };
@@ -21,17 +22,31 @@ const AbsiCard = ({ value, unit }: AbsiCardProps) => {
   );
 
   return (
-    <BaseResultCard
-      label="A Body Shape Index"
-      value={value[unit]}
-      valueColor={getValueColor(value[unit])}
-      tooltipContent={{
-        title: "A Body Shape Index (ABSI)",
-        description: "A measure that evaluates body shape independent of height and weight, focusing on the health implications of central obesity.",
-        formula: "ABSI = WC / (BMI^(2/3) × Height^(1/2))",
-        interpretation
-      }}
-    />
+    <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
+      <Dialog>
+        <DialogTrigger asChild>
+          <div className="flex items-center gap-2 cursor-pointer">
+            <span className="text-sm text-mint-800 font-medium">A Body Shape Index</span>
+            <Info className="h-4 w-4 text-mint-500" />
+          </div>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <div className="space-y-2">
+            <h4 className="font-semibold">A Body Shape Index (ABSI)</h4>
+            <p>A measure that evaluates body shape independent of height and weight, focusing on the health implications of central obesity.</p>
+            <div className="text-sm space-y-1">
+              <p className="font-medium">Formula:</p>
+              <p className="text-mint-700">ABSI = WC / (BMI^(2/3) × Height^(1/2))</p>
+              <p className="font-medium mt-2">Interpretation:</p>
+              {interpretation}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+      <div className={`text-2xl font-semibold ${getValueColor(value[unit])}`}>
+        {value[unit].toFixed(3)}
+      </div>
+    </div>
   );
 };
 

@@ -1,5 +1,5 @@
 import { Info } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 interface LeanBodyMassCardProps {
   value: number;
@@ -16,9 +16,9 @@ const LeanBodyMassCard = ({ value, unit }: LeanBodyMassCardProps) => {
 
   return (
     <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <div className="flex items-start justify-between">
+      <Dialog>
+        <DialogTrigger asChild>
+          <div className="flex items-start justify-between cursor-pointer">
             <div>
               <div className="text-sm text-mint-800 font-medium">Lean Body Mass</div>
               <div className={`text-2xl font-semibold ${getLBMColor(value)}`}>
@@ -27,8 +27,8 @@ const LeanBodyMassCard = ({ value, unit }: LeanBodyMassCardProps) => {
             </div>
             <Info className="h-4 w-4 text-mint-500" />
           </div>
-        </TooltipTrigger>
-        <TooltipContent className="max-w-xs p-4">
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
           <div className="space-y-2">
             <h4 className="font-semibold">Lean Body Mass (LBM)</h4>
             <div className="text-sm space-y-2">
@@ -51,8 +51,8 @@ const LeanBodyMassCard = ({ value, unit }: LeanBodyMassCardProps) => {
               </div>
             </div>
           </div>
-        </TooltipContent>
-      </Tooltip>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

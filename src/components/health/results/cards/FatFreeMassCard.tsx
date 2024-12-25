@@ -1,5 +1,5 @@
 import { Info } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 interface FatFreeMassCardProps {
   value: number;
@@ -15,9 +15,9 @@ const FatFreeMassCard = ({ value }: FatFreeMassCardProps) => {
 
   return (
     <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <div className="flex items-start justify-between">
+      <Dialog>
+        <DialogTrigger asChild>
+          <div className="flex items-start justify-between cursor-pointer">
             <div>
               <div className="text-sm text-mint-800 font-medium">Fat-Free Mass Index</div>
               <div className={`text-2xl font-semibold ${getFFMIColor(value)}`}>
@@ -26,8 +26,8 @@ const FatFreeMassCard = ({ value }: FatFreeMassCardProps) => {
             </div>
             <Info className="h-4 w-4 text-mint-500" />
           </div>
-        </TooltipTrigger>
-        <TooltipContent className="max-w-xs p-4">
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
           <div className="space-y-2">
             <h4 className="font-semibold">Fat-Free Mass Index (FFMI)</h4>
             <div className="text-sm space-y-2">
@@ -50,8 +50,8 @@ const FatFreeMassCard = ({ value }: FatFreeMassCardProps) => {
               </div>
             </div>
           </div>
-        </TooltipContent>
-      </Tooltip>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
