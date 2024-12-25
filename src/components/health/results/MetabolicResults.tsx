@@ -1,5 +1,5 @@
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 interface MetabolicResultsProps {
   bmr: {
@@ -28,9 +28,9 @@ const MetabolicResults = ({ bmr }: MetabolicResultsProps) => {
       <h3 className="text-lg font-medium text-mint-800">Metabolic Rates</h3>
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="flex items-center gap-2">
+          <Dialog>
+            <DialogTrigger asChild>
+              <div className="flex items-center gap-2 cursor-pointer">
                 <div className="flex-1">
                   <div className="text-sm text-mint-800 font-medium flex items-center gap-2">
                     BMR (calories/day)
@@ -41,8 +41,8 @@ const MetabolicResults = ({ bmr }: MetabolicResultsProps) => {
                   </div>
                 </div>
               </div>
-            </TooltipTrigger>
-            <TooltipContent className="max-w-xs p-4">
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
               <div className="space-y-2">
                 <h4 className="font-semibold">Basal Metabolic Rate (BMR)</h4>
                 <p>The number of calories your body burns at rest to maintain basic life functions.</p>
@@ -63,14 +63,14 @@ const MetabolicResults = ({ bmr }: MetabolicResultsProps) => {
                   </ul>
                 </div>
               </div>
-            </TooltipContent>
-          </Tooltip>
+            </DialogContent>
+          </Dialog>
         </div>
         {bmr.tdee && (
           <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="flex items-center gap-2">
+            <Dialog>
+              <DialogTrigger asChild>
+                <div className="flex items-center gap-2 cursor-pointer">
                   <div className="flex-1">
                     <div className="text-sm text-mint-800 font-medium flex items-center gap-2">
                       TDEE (calories/day)
@@ -81,8 +81,8 @@ const MetabolicResults = ({ bmr }: MetabolicResultsProps) => {
                     </div>
                   </div>
                 </div>
-              </TooltipTrigger>
-              <TooltipContent className="max-w-xs p-4">
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
                 <div className="space-y-2">
                   <h4 className="font-semibold">Total Daily Energy Expenditure (TDEE)</h4>
                   <p>The total number of calories you burn in a day, including activity.</p>
@@ -108,8 +108,8 @@ const MetabolicResults = ({ bmr }: MetabolicResultsProps) => {
                     </ul>
                   </div>
                 </div>
-              </TooltipContent>
-            </Tooltip>
+              </DialogContent>
+            </Dialog>
           </div>
         )}
       </div>

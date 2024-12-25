@@ -1,5 +1,5 @@
 import { Info } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import RangeBar from "@/components/health/visualizations/RangeBar";
 import BMIDescription from "./BMIDescription";
 
@@ -27,17 +27,17 @@ const BMICard = ({ type, value, info, ranges }: BMICardProps) => {
   return (
     <div className="p-4 rounded-lg bg-mint-50 border border-mint-100">
       <div className="mb-2">
-        <div className="flex items-center gap-2 mb-1">
-          <span className="text-sm text-mint-800 font-medium">{info.title}</span>
-          <Tooltip>
-            <TooltipTrigger>
+        <Dialog>
+          <DialogTrigger asChild>
+            <div className="flex items-center gap-2 cursor-pointer">
+              <span className="text-sm text-mint-800 font-medium">{info.title}</span>
               <Info className="h-4 w-4 text-mint-500" />
-            </TooltipTrigger>
-            <TooltipContent className="max-w-sm p-4">
-              <BMIDescription {...info} />
-            </TooltipContent>
-          </Tooltip>
-        </div>
+            </div>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <BMIDescription {...info} />
+          </DialogContent>
+        </Dialog>
         <div className="text-2xl font-semibold text-mint-900">
           {value.toFixed(1)}
         </div>
