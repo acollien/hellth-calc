@@ -16,11 +16,11 @@ export const bodyFatTooltips = {
     }
   },
   bmiBased: {
-    title: "Enhanced BMI-Based Method",
-    description: "A refined BMI-based calculation that includes adjustments for age groups, gender differences, and BMI ranges to provide more accurate estimates.",
+    title: "Deurenberg BMI Method",
+    description: "Uses the validated Deurenberg equation (1991) to estimate body fat percentage based on BMI, age, and gender.",
     formula: {
-      male: "Base: (1.20 × BMI) + (0.23 × age) - 16.2\nWith adjustments for:\n- BMI ranges\n- Age groups\n- Gender-specific factors",
-      female: "Base: (1.20 × BMI) + (0.23 × age) - 5.4\nWith adjustments for:\n- BMI ranges\n- Age groups\n- Gender-specific factors"
+      male: "Body Fat % = (1.20 × BMI) + (0.23 × age) - (10.8 × 1) - 5.4",
+      female: "Body Fat % = (1.20 × BMI) + (0.23 × age) - 5.4"
     }
   },
   army: {
