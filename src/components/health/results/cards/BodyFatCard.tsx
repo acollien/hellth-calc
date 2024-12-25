@@ -69,19 +69,10 @@ const BodyFatCard = ({ methodKey, value, gender, tooltipContent }: BodyFatCardPr
   const enhancedTooltipContent = {
     ...tooltipContent,
     interpretation: getInterpretation(value, gender),
-    citation: tooltipContent.citation && (
-      <div className="mt-2 text-xs text-gray-600">
-        <p className="font-medium">Citation:</p>
-        <a 
-          href={tooltipContent.citation}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-600 hover:underline"
-        >
-          View Research Paper
-        </a>
-      </div>
-    )
+    citation: tooltipContent.citation ? {
+      text: "View Research Paper",
+      url: tooltipContent.citation
+    } : undefined
   };
 
   return (
