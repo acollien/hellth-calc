@@ -1,4 +1,4 @@
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Info } from "lucide-react";
 
 interface IdealWeightResultsProps {
@@ -34,9 +34,9 @@ const IdealWeightResults = ({ idealWeight }: IdealWeightResultsProps) => {
       <div className="grid gap-4 sm:grid-cols-3">
         {Object.entries(idealWeight).map(([formula, value]) => (
           <div key={formula} className="p-4 rounded-lg bg-mint-50 border border-mint-100">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="flex items-center gap-2">
+            <Dialog>
+              <DialogTrigger asChild>
+                <div className="flex items-center gap-2 cursor-pointer">
                   <div className="flex-1">
                     <div className="text-sm text-mint-800 font-medium flex items-center gap-2">
                       {formula.charAt(0).toUpperCase() + formula.slice(1)} Formula
@@ -47,8 +47,8 @@ const IdealWeightResults = ({ idealWeight }: IdealWeightResultsProps) => {
                     </div>
                   </div>
                 </div>
-              </TooltipTrigger>
-              <TooltipContent className="max-w-xs p-4">
+              </DialogTrigger>
+              <DialogContent className="max-w-xs p-4">
                 <div className="space-y-2">
                   <h4 className="font-semibold">{formula} Formula</h4>
                   <p>{getFormulaDescription(formula)}</p>
@@ -76,8 +76,8 @@ const IdealWeightResults = ({ idealWeight }: IdealWeightResultsProps) => {
                     </p>
                   </div>
                 </div>
-              </TooltipContent>
-            </Tooltip>
+              </DialogContent>
+            </Dialog>
           </div>
         ))}
       </div>
