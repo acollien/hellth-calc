@@ -9,38 +9,58 @@ export const exportResults = (results: any, format: 'pdf' | 'json') => {
 
   const getRangeForMetric = (metric: string, value: number): string => {
     const ranges: { [key: string]: string } = {
-      "BMI": value < 18.5 ? "Underweight (<18.5)" : 
-             value < 25 ? "Normal (18.5-24.9)" :
-             value < 30 ? "Overweight (25-29.9)" : "Obese (≥30)",
-      "Body Fat %": value < 10 ? "Essential Fat (<10%)" :
-                   value < 20 ? "Athletes (10-20%)" :
-                   value < 30 ? "Fitness (20-30%)" : "Excess (>30%)",
-      "Lean Mass Index": value < 16 ? "Low (<16)" :
-                        value < 19 ? "Normal (16-19)" :
-                        value < 22 ? "Athletic (19-22)" : "High (>22)",
-      "Waist-to-Hip Ratio": value < 0.85 ? "Low Risk (<0.85)" :
-                           value < 0.95 ? "Moderate Risk (0.85-0.95)" : "High Risk (>0.95)",
-      "Waist-to-Height Ratio": value < 0.4 ? "Underweight (<0.4)" :
-                              value < 0.5 ? "Healthy (0.4-0.5)" :
-                              value < 0.6 ? "Overweight (0.5-0.6)" : "Obese (>0.6)",
-      "Ponderal Index": value < 11 ? "Underweight (<11)" :
-                       value < 14 ? "Normal (11-14)" : "Overweight (>14)",
-      "ABSI": value < 0.07 ? "Low Risk (<0.07)" :
-              value < 0.08 ? "Average Risk (0.07-0.08)" : "High Risk (>0.08)",
-      "Body Roundness Index": value < 1 ? "Very Lean (<1)" :
-                            value < 2 ? "Lean (1-2)" :
-                            value < 3 ? "Average (2-3)" : "High (>3)",
-      "Conicity Index": value < 1.2 ? "Low Risk (<1.2)" :
-                       value < 1.35 ? "Moderate Risk (1.2-1.35)" : "High Risk (>1.35)",
-      "Body Adiposity Index": value < 20 ? "Underweight (<20)" :
-                            value < 25 ? "Normal (20-25)" :
-                            value < 30 ? "Overweight (25-30)" : "Obese (>30)",
-      "Fat Free Mass Index": value < 16 ? "Below Average (<16)" :
-                           value < 19 ? "Average (16-19)" :
-                           value < 22 ? "Above Average (19-22)" : "High (>22)",
-      "Skeletal Muscle Mass": value < 30 ? "Low (<30)" :
-                            value < 40 ? "Average (30-40)" :
-                            value < 50 ? "Athletic (40-50)" : "High (>50)",
+      "BMI (Standard)": value < 18.5 ? "Underweight (<18.5)" : 
+                       value < 25 ? "Normal (18.5-24.9)" :
+                       value < 30 ? "Overweight (25-29.9)" : "Obese (≥30)",
+      "BMI (Athletic)": value < 17 ? "Underweight (<17)" :
+                       value < 23 ? "Normal (17-23)" :
+                       value < 28 ? "Overweight (23-28)" : "Obese (≥28)",
+      "BMI (Devine)": value < 18.5 ? "Underweight (<18.5)" :
+                      value < 25 ? "Normal (18.5-24.9)" :
+                      value < 30 ? "Overweight (25-29.9)" : "Obese (≥30)",
+      "BMI (BMI Based)": value < 18.5 ? "Underweight (<18.5)" :
+                         value < 25 ? "Normal (18.5-24.9)" :
+                         value < 30 ? "Overweight (25-29.9)" : "Obese (≥30)",
+      "Body Fat % (Navy)": value < 10 ? "Essential Fat (<10%)" :
+                          value < 20 ? "Athletes (10-20%)" :
+                          value < 30 ? "Fitness (20-30%)" : "Excess (>30%)",
+      "Body Fat % (Jackson)": value < 10 ? "Essential Fat (<10%)" :
+                             value < 20 ? "Athletes (10-20%)" :
+                             value < 30 ? "Fitness (20-30%)" : "Excess (>30%)",
+      "Body Fat % (BMI Based)": value < 10 ? "Essential Fat (<10%)" :
+                               value < 20 ? "Athletes (10-20%)" :
+                               value < 30 ? "Fitness (20-30%)" : "Excess (>30%)",
+      "Body Fat % (Army)": value < 10 ? "Essential Fat (<10%)" :
+                          value < 20 ? "Athletes (10-20%)" :
+                          value < 30 ? "Fitness (20-30%)" : "Excess (>30%)",
+      "BMR": value < 1200 ? "Low (<1200 kcal/day)" :
+             value < 1800 ? "Normal (1200-1800 kcal/day)" :
+             value < 2200 ? "High (1800-2200 kcal/day)" : "Very High (>2200 kcal/day)",
+      "TDEE": value < 1500 ? "Low (<1500 kcal/day)" :
+              value < 2500 ? "Normal (1500-2500 kcal/day)" :
+              value < 3000 ? "High (2500-3000 kcal/day)" : "Very High (>3000 kcal/day)",
+      "Lean Body Mass": value < 40 ? "Below Average (<40)" :
+                        value < 60 ? "Average (40-60)" :
+                        value < 80 ? "Above Average (60-80)" : "High (>80)",
+      "Body Fat Distribution": value < 0.8 ? "Healthy (<0.8)" :
+                             value < 0.9 ? "Moderate Risk (0.8-0.9)" : "High Risk (>0.9)",
+      "Frame Size": value === 'small' ? "Small Frame" :
+                   value === 'medium' ? "Medium Frame" : "Large Frame",
+      "Robinson Formula": value < 45 ? "Underweight (<45)" :
+                         value < 60 ? "Normal (45-60)" :
+                         value < 75 ? "Overweight (60-75)" : "Obese (>75)",
+      "Miller Formula": value < 45 ? "Underweight (<45)" :
+                       value < 60 ? "Normal (45-60)" :
+                       value < 75 ? "Overweight (60-75)" : "Obese (>75)",
+      "Devine Formula": value < 45 ? "Underweight (<45)" :
+                       value < 60 ? "Normal (45-60)" :
+                       value < 75 ? "Overweight (60-75)" : "Obese (>75)",
+      "Athletic Formula": value < 50 ? "Underweight (<50)" :
+                         value < 65 ? "Normal (50-65)" :
+                         value < 80 ? "Overweight (65-80)" : "Obese (>80)",
+      "BMI Based Range": value < 45 ? "Underweight (<45)" :
+                        value < 60 ? "Normal (45-60)" :
+                        value < 75 ? "Overweight (60-75)" : "Obese (>75)",
     };
     return ranges[metric] || "";
   };
@@ -52,6 +72,9 @@ export const exportResults = (results: any, format: 'pdf' | 'json') => {
     if (metric.includes('Body Fat') || metric.includes('%')) {
       return `${value.toFixed(1)}%`;
     }
+    if (metric.includes('BMR') || metric.includes('TDEE')) {
+      return `${Math.round(value)} kcal/day`;
+    }
     if (metric.includes('Weight') || metric.includes('Mass')) {
       return `${value.toFixed(1)} ${unit}`;
     }
@@ -62,10 +85,17 @@ export const exportResults = (results: any, format: 'pdf' | 'json') => {
   const data = {
     "Primary Metrics": {
       "BMI (Standard)": results.bmi?.standard,
+      "BMI (Athletic)": results.bmi?.athletic,
+      "BMI (Devine)": results.bmi?.devine,
+      "BMI (BMI Based)": results.bmi?.bmiBased,
       "Body Fat % (Navy)": results.bodyFat?.navy,
+      "Body Fat % (Jackson)": results.bodyFat?.jackson,
+      "Body Fat % (BMI Based)": results.bodyFat?.bmiBased,
+      "Body Fat % (Army)": results.bodyFat?.army,
       "BMR": results.bmr?.bmr,
       "TDEE": results.bmr?.tdee,
-      "Biological Age": results.biologicalAge
+      "Biological Age": results.biologicalAge,
+      "Frame Size": results.frameSize
     },
     "Body Composition": {
       "Lean Body Mass": results.leanBodyMass,
@@ -113,14 +143,14 @@ export const exportResults = (results: any, format: 'pdf' | 'json') => {
     doc.setTextColor(128, 128, 128);
     doc.text(`Generated on ${new Date().toLocaleDateString()}`, 14, 25);
 
-    let startY = 35;
+    let startY = 40; // Increased spacing after date
     
     const tableConfig = {
       startY,
       head: [['Metric', 'Value', 'Interpretation']],
       styles: {
         fontSize: 8,
-        cellPadding: 2,
+        cellPadding: 3,
         overflow: 'linebreak' as const,
         cellWidth: 'auto' as const
       },
@@ -132,8 +162,8 @@ export const exportResults = (results: any, format: 'pdf' | 'json') => {
         cellPadding: 3,
       },
       columnStyles: {
-        0: { cellWidth: 60 },
-        1: { cellWidth: 50 },
+        0: { cellWidth: 50 },
+        1: { cellWidth: 40 },
         2: { cellWidth: 70 }
       },
       margin: { left: 14, right: 14 },
@@ -142,7 +172,7 @@ export const exportResults = (results: any, format: 'pdf' | 'json') => {
 
     Object.entries(data).forEach(([section, metrics], index) => {
       // Section headers with increased prominence
-      doc.setFontSize(14);
+      doc.setFontSize(16);
       doc.setTextColor(41, 128, 185);
       doc.setFont(undefined, 'bold');
       doc.text(section, 14, startY - 5);
@@ -151,7 +181,7 @@ export const exportResults = (results: any, format: 'pdf' | 'json') => {
         const formattedValue = formatValue(value, key, unitSymbol);
         const range = getRangeForMetric(key, Number(value));
         return [key, formattedValue, range];
-      });
+      }).filter(([_, value]) => value !== 'N/A');
       
       autoTable(doc, {
         ...tableConfig,
@@ -159,7 +189,7 @@ export const exportResults = (results: any, format: 'pdf' | 'json') => {
         body: tableData,
       });
       
-      startY = (doc as any).lastAutoTable.finalY + 15;
+      startY = (doc as any).lastAutoTable.finalY + 20; // Increased spacing between sections
     });
 
     doc.save('health-metrics.pdf');
