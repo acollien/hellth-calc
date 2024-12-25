@@ -45,8 +45,8 @@ const BMICard = ({ type, value, info, ranges }: BMICardProps) => {
       url: "https://pubmed.ncbi.nlm.nih.gov/4881690/"
     },
     bmiBased: {
-      text: "View Modified BMI Research",
-      url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4477891/"
+      text: "View Oxford Modified BMI Formula",
+      url: "https://people.maths.ox.ac.uk/trefethen/bmi.html"
     }
   };
 
