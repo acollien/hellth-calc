@@ -22,24 +22,24 @@ const IdealWeightResults = ({ idealWeight }: IdealWeightResultsProps) => {
 
   const citations = {
     robinson: {
-      text: "View Robinson Formula Study",
-      url: "https://pubmed.ncbi.nlm.nih.gov/6829324/"
+      text: "View Original Robinson Formula Study",
+      url: "https://pubmed.ncbi.nlm.nih.gov/3826798/"
     },
     miller: {
-      text: "View Miller Formula Research",
-      url: "https://pubmed.ncbi.nlm.nih.gov/6829323/"
+      text: "View Original Miller Formula Research",
+      url: "https://pubmed.ncbi.nlm.nih.gov/3520910/"
     },
     devine: {
-      text: "View Devine Formula Study",
+      text: "View Original Devine Formula Study",
       url: "https://pubmed.ncbi.nlm.nih.gov/4881690/"
     },
     athletic: {
-      text: "View Athletic Weight Research",
-      url: "https://pubmed.ncbi.nlm.nih.gov/7315096/"
+      text: "View Athletic Body Composition Study",
+      url: "https://pubmed.ncbi.nlm.nih.gov/15809561/"
     },
     bmiBased: {
-      text: "View BMI-Based Weight Study",
-      url: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4890841/"
+      text: "View BMI-Based Weight Analysis",
+      url: "https://pubmed.ncbi.nlm.nih.gov/17241369/"
     }
   };
 

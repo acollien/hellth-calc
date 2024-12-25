@@ -33,15 +33,15 @@ const BMICard = ({ type, value, info, ranges }: BMICardProps) => {
 
   const citations = {
     standard: {
-      text: "View WHO BMI Classification Study",
-      url: "https://www.who.int/europe/news-room/fact-sheets/item/body-mass-index---bmi"
+      text: "View Original BMI Classification Research",
+      url: "https://pubmed.ncbi.nlm.nih.gov/8782094/"
     },
     athletic: {
-      text: "View Athletic BMI Research",
-      url: "https://pubmed.ncbi.nlm.nih.gov/7315096/"
+      text: "View Athletic Population BMI Study",
+      url: "https://pubmed.ncbi.nlm.nih.gov/15809561/"
     },
     devine: {
-      text: "View Devine Formula Study",
+      text: "View Original Devine Formula Study",
       url: "https://pubmed.ncbi.nlm.nih.gov/4881690/"
     },
     bmiBased: {
