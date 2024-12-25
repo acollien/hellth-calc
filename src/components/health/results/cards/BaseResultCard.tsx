@@ -9,7 +9,10 @@ interface TooltipContentProps {
   formula?: string;
   interpretation?: ReactNode;
   additionalContent?: ReactNode;
-  citation?: ReactNode;
+  citation?: {
+    text: string;
+    url: string;
+  };
 }
 
 interface BaseResultCardProps {
@@ -33,8 +36,6 @@ const BaseResultCard = ({
   children,
   className = ""
 }: BaseResultCardProps) => {
-  console.log(`Rendering BaseResultCard for ${label} with value:`, value);
-  
   return (
     <div className={`p-4 rounded-lg bg-mint-50 border border-mint-100 ${className}`}>
       <Dialog>
@@ -71,7 +72,19 @@ const BaseResultCard = ({
                 </div>
               )}
               {tooltipContent.additionalContent}
-              {tooltipContent.citation}
+              {tooltipContent.citation && (
+                <div className="mt-2 text-xs text-gray-600">
+                  <p className="font-medium">Citation:</p>
+                  <a 
+                    href={tooltipContent.citation.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline"
+                  >
+                    {tooltipContent.citation.text}
+                  </a>
+                </div>
+              )}
             </div>
           </div>
         </DialogContent>

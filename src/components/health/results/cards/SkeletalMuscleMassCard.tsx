@@ -25,7 +25,10 @@ const SkeletalMuscleMassCard = ({ value, unit }: SkeletalMuscleMassCardProps) =>
         <li>Very High: &gt;45 kg</li>
       </ul>
     ),
-    citation: "https://pubmed.ncbi.nlm.nih.gov/11074538/"
+    citation: {
+      text: "View Lee et al. SMM Study (2000)",
+      url: "https://pubmed.ncbi.nlm.nih.gov/11074538/"
+    }
   };
 
   return (

@@ -1,5 +1,3 @@
-import { Info } from "lucide-react";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import BaseResultCard from "./BaseResultCard";
 
 interface MetabolicCardProps {
@@ -45,9 +43,14 @@ const MetabolicCard = ({ value, type }: MetabolicCardProps) => {
         <li>Very High: &gt;3000 calories</li>
       </ul>
     ),
-    citation: type === 'bmr' 
-      ? "https://pubmed.ncbi.nlm.nih.gov/2305711/"  // Mifflin-St Jeor Equation
-      : "https://pubmed.ncbi.nlm.nih.gov/3522187/"  // Activity multipliers validation
+    citation: {
+      text: type === 'bmr' 
+        ? "View Mifflin-St Jeor BMR Study (1990)"
+        : "View Activity Multipliers Validation Study (1988)",
+      url: type === 'bmr'
+        ? "https://pubmed.ncbi.nlm.nih.gov/2305711/"
+        : "https://pubmed.ncbi.nlm.nih.gov/3522187/"
+    }
   };
 
   return (

@@ -24,7 +24,10 @@ const FatFreeMassCard = ({ value }: FatFreeMassCardProps) => {
         <li>&gt;25: Exceptional lean mass</li>
       </ul>
     ),
-    citation: "https://pubmed.ncbi.nlm.nih.gov/1730811/"
+    citation: {
+      text: "View FFMI Development Study",
+      url: "https://pubmed.ncbi.nlm.nih.gov/1730811/"
+    }
   };
 
   return (

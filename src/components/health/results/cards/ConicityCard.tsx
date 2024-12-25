@@ -22,7 +22,10 @@ const ConicityCard = ({ value }: ConicityCardProps) => {
         <li>&gt;1.35: High cardiovascular risk</li>
       </ul>
     ),
-    citation: "https://pubmed.ncbi.nlm.nih.gov/1895955/"
+    citation: {
+      text: "View Conicity Index Development Study (1991)",
+      url: "https://pubmed.ncbi.nlm.nih.gov/1895955/"
+    }
   };
 
   return (

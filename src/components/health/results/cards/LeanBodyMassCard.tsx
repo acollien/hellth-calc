@@ -25,7 +25,10 @@ const LeanBodyMassCard = ({ value, unit }: LeanBodyMassCardProps) => {
         <li>Very High: &gt;55 kg</li>
       </ul>
     ),
-    citation: "https://pubmed.ncbi.nlm.nih.gov/6520232/"
+    citation: {
+      text: "View Boer Formula Study (1984)",
+      url: "https://pubmed.ncbi.nlm.nih.gov/6520232/"
+    }
   };
 
   return (

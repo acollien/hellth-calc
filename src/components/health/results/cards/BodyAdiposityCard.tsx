@@ -22,7 +22,10 @@ const BodyAdiposityCard = ({ value }: BodyAdiposityCardProps) => {
         <li>&gt;26: Elevated body fat</li>
       </ul>
     ),
-    citation: "https://pubmed.ncbi.nlm.nih.gov/21475137/"
+    citation: {
+      text: "View BAI Development Study (2011)",
+      url: "https://pubmed.ncbi.nlm.nih.gov/21475137/"
+    }
   };
 
   return (
