@@ -9,6 +9,7 @@ interface BodyFatCardProps {
     title: string;
     description: string;
     formula: string;
+    citation?: string;
   };
 }
 
@@ -35,7 +36,7 @@ const BodyFatCard = ({ methodKey, value, gender, tooltipContent }: BodyFatCardPr
     const labels: { [key: string]: string } = {
       navy: "U.S. Navy Method",
       jackson: "Jackson-Pollock",
-      bmiBased: "Enhanced BMI-Based",
+      bmiBased: "Deurenberg BMI",
       army: "U.S. Army Method"
     };
     return labels[key] || key;
@@ -68,19 +69,19 @@ const BodyFatCard = ({ methodKey, value, gender, tooltipContent }: BodyFatCardPr
   const enhancedTooltipContent = {
     ...tooltipContent,
     interpretation: getInterpretation(value, gender),
-    ...(methodKey === 'bmiBased' && {
-      additionalContent: (
-        <div className="mt-2">
-          <p className="font-medium">Enhanced Formula Features:</p>
-          <ul className="list-disc pl-4">
-            <li>Age-specific adjustments</li>
-            <li>Gender-specific calculations</li>
-            <li>BMI range compensation</li>
-            <li>Adult/child differentiation</li>
-          </ul>
-        </div>
-      )
-    })
+    citation: tooltipContent.citation && (
+      <div className="mt-2 text-xs text-gray-600">
+        <p className="font-medium">Citation:</p>
+        <a 
+          href={tooltipContent.citation}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 hover:underline"
+        >
+          View Research Paper
+        </a>
+      </div>
+    )
   };
 
   return (

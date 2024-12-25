@@ -9,6 +9,7 @@ interface TooltipContentProps {
   formula?: string;
   interpretation?: ReactNode;
   additionalContent?: ReactNode;
+  citation?: ReactNode;
 }
 
 interface BaseResultCardProps {
@@ -70,6 +71,7 @@ const BaseResultCard = ({
                 </div>
               )}
               {tooltipContent.additionalContent}
+              {tooltipContent.citation}
             </div>
           </div>
         </DialogContent>
