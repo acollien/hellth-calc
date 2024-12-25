@@ -1,4 +1,3 @@
-import { getValueColor } from "@/utils/health/display";
 import BaseResultCard from "./BaseResultCard";
 
 interface BodyFatCardProps {
@@ -9,13 +8,10 @@ interface BodyFatCardProps {
     title: string;
     description: string;
     formula: string;
-    citation?: string;
   };
 }
 
 const BodyFatCard = ({ methodKey, value, gender, tooltipContent }: BodyFatCardProps) => {
-  console.log(`Rendering BodyFatCard for ${methodKey} with value:`, value);
-
   const getBodyFatColor = (value: number, gender: string) => {
     if (gender === 'male') {
       if (value < 6) return "text-blue-600";
@@ -30,8 +26,6 @@ const BodyFatCard = ({ methodKey, value, gender, tooltipContent }: BodyFatCardPr
     }
   };
 
-  const valueColor = getBodyFatColor(value, gender);
-
   const getMethodLabel = (key: string) => {
     const labels: { [key: string]: string } = {
       navy: "U.S. Navy Method",
@@ -42,44 +36,61 @@ const BodyFatCard = ({ methodKey, value, gender, tooltipContent }: BodyFatCardPr
     return labels[key] || key;
   };
 
-  const getInterpretation = (value: number, gender: string) => {
-    if (gender === 'male') {
-      return (
-        <ul className="list-disc pl-4">
+  const interpretation = (
+    <ul className="list-disc pl-4">
+      {gender === 'male' ? (
+        <>
           <li>Essential Fat: 2-5%</li>
           <li>Athletes: 6-13%</li>
           <li>Fitness: 14-17%</li>
           <li>Acceptable: 18-24%</li>
           <li>Excess: 25%+</li>
-        </ul>
-      );
-    } else {
-      return (
-        <ul className="list-disc pl-4">
+        </>
+      ) : (
+        <>
           <li>Essential Fat: 10-13%</li>
           <li>Athletes: 14-20%</li>
           <li>Fitness: 21-24%</li>
           <li>Acceptable: 25-31%</li>
           <li>Excess: 32%+</li>
-        </ul>
-      );
+        </>
+      )}
+    </ul>
+  );
+
+  const citations = {
+    navy: {
+      text: "View U.S. Navy Method Study",
+      url: "https://pubmed.ncbi.nlm.nih.gov/3140611/"
+    },
+    jackson: {
+      text: "View Jackson-Pollock Method Study",
+      url: "https://pubmed.ncbi.nlm.nih.gov/497191/"
+    },
+    bmiBased: {
+      text: "View Deurenberg Method Study",
+      url: "https://pubmed.ncbi.nlm.nih.gov/1895955/"
+    },
+    army: {
+      text: "View U.S. Army Method Study",
+      url: "https://pubmed.ncbi.nlm.nih.gov/15142296/"
     }
   };
 
   const enhancedTooltipContent = {
     ...tooltipContent,
-    interpretation: getInterpretation(value, gender),
-    citation: tooltipContent.citation ? {
-      text: "View Research Paper",
-      url: tooltipContent.citation
-    } : undefined
+    interpretation,
+    citation: citations[methodKey as keyof typeof citations] || {
+      text: "View Method Study",
+      url: "https://pubmed.ncbi.nlm.nih.gov/"
+    }
   };
 
   return (
     <BaseResultCard
       label={getMethodLabel(methodKey)}
       value={value}
-      valueColor={valueColor}
+      valueColor={getBodyFatColor(value, gender)}
       tooltipContent={enhancedTooltipContent}
       precision={1}
       unit="%"

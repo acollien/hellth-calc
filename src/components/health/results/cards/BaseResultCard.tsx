@@ -6,9 +6,9 @@ import { formatValue } from "@/utils/health/display/formatters";
 interface TooltipContentProps {
   title: string;
   description: string;
-  formula?: string;
-  interpretation?: ReactNode;
-  citation?: {
+  formula: string;
+  interpretation: ReactNode;
+  citation: {
     text: string;
     url: string;
   };
@@ -56,33 +56,27 @@ const BaseResultCard = ({
         <DialogContent className="sm:max-w-[425px]">
           <div className="space-y-2">
             <h4 className="font-semibold">{tooltipContent.title}</h4>
+            <p>{tooltipContent.description}</p>
             <div className="text-sm space-y-2">
-              <p>{tooltipContent.description}</p>
-              {tooltipContent.formula && (
-                <div>
-                  <p className="font-medium">Formula:</p>
-                  <p className="text-mint-700">{tooltipContent.formula}</p>
-                </div>
-              )}
-              {tooltipContent.interpretation && (
-                <div>
-                  <p className="font-medium">Interpretation:</p>
-                  {tooltipContent.interpretation}
-                </div>
-              )}
-              {tooltipContent.citation && (
-                <div className="mt-2 text-xs text-gray-600">
-                  <p className="font-medium">Citation:</p>
-                  <a 
-                    href={tooltipContent.citation.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:underline"
-                  >
-                    {tooltipContent.citation.text}
-                  </a>
-                </div>
-              )}
+              <div>
+                <p className="font-medium">Formula:</p>
+                <p className="text-mint-700">{tooltipContent.formula}</p>
+              </div>
+              <div>
+                <p className="font-medium">Interpretation:</p>
+                {tooltipContent.interpretation}
+              </div>
+              <div className="mt-2 text-xs text-gray-600">
+                <p className="font-medium">Citation:</p>
+                <a 
+                  href={tooltipContent.citation.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline"
+                >
+                  {tooltipContent.citation.text}
+                </a>
+              </div>
             </div>
           </div>
         </DialogContent>
