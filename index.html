@@ -10,27 +10,26 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9330148408630548"
      crossorigin="anonymous"></script>
     <style>
-      .left-ad-container {
+      .ad-wrapper {
         position: fixed;
-        left: calc(50% - 640px - 10px);
         top: 50%;
         transform: translateY(-50%);
         border: 2px solid black;
+        width: 160px;
+        height: 600px;
         z-index: 1000;
       }
-      .right-ad-container {
-        position: fixed;
+      .left-ad-wrapper {
+        left: calc(50% - 640px - 10px);
+      }
+      .right-ad-wrapper {
         right: calc(50% - 640px - 10px);
-        top: 50%;
-        transform: translateY(-50%);
-        border: 2px solid black;
-        z-index: 1000;
       }
     </style>
   </head>
 
   <body>
-    <div class="left-ad-container">
+    <div class="ad-wrapper left-ad-wrapper">
       <!-- Desktop side-ads -->
       <ins class="adsbygoogle"
            style="display:block"
@@ -42,7 +41,7 @@
            (adsbygoogle = window.adsbygoogle || []).push({});
       </script>
     </div>
-    <div class="right-ad-container">
+    <div class="ad-wrapper right-ad-wrapper">
       <!-- Desktop right-side ads -->
       <ins class="adsbygoogle"
            style="display:block"
