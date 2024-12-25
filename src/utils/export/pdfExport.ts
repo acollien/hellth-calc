@@ -3,6 +3,7 @@ import autoTable from 'jspdf-autotable';
 import { getMetricRange, getBiologicalAgeInterpretation } from './ranges';
 
 export const exportToPDF = (results: any) => {
+  console.log('Starting PDF export with results:', results);
   const doc = new jsPDF();
   
   // Title and date
@@ -17,21 +18,64 @@ export const exportToPDF = (results: any) => {
   let startY = 40;
 
   const formatMetricValue = (metric: string, value: any): string => {
+    if (typeof value === 'object') {
+      if (metric.toLowerCase().includes('bmi')) {
+        return `${value.standard.toFixed(1)}`;
+      }
+      if (metric.toLowerCase().includes('body fat')) {
+        return `${value.navy ? value.navy.toFixed(1) : 'N/A'}%`;
+      }
+      if (value.metric !== undefined) {
+        return value.metric.toFixed(2).toString();
+      }
+      if (value.bmr !== undefined) {
+        return `${value.bmr} kcal/day`;
+      }
+      return 'Complex Value';
+    }
+    
     if (metric === "Biological Age") return `${value} years`;
     if (metric.includes("BMR") || metric.includes("TDEE")) return `${value} kcal/day`;
+    if (typeof value === 'number') return value.toFixed(2);
     return String(value);
   };
 
-  const getMetricInterpretation = (metric: string, value: any, metrics?: any): string => {
+  const getMetricInterpretation = (metric: string, value: any, results: any): string => {
     if (metric === "Biological Age") {
-      return getBiologicalAgeInterpretation(value, Number(metrics?.age || 0));
+      return getBiologicalAgeInterpretation(value, Number(results.age || 0));
     }
+    
+    if (typeof value === 'object') {
+      if (metric.toLowerCase().includes('bmi')) {
+        return getMetricRange('BMI', value.standard);
+      }
+      if (metric.toLowerCase().includes('body fat')) {
+        return getMetricRange('Body Fat % (Navy)', value.navy);
+      }
+      if (value.metric !== undefined) {
+        return getMetricRange(metric, value.metric);
+      }
+    }
+    
     return getMetricRange(metric, value);
   };
 
-  const tableConfig = {
+  // Prepare data for table
+  const tableData = Object.entries(results)
+    .filter(([key, value]) => value !== undefined && value !== null)
+    .map(([key, value]) => {
+      const formattedValue = formatMetricValue(key, value);
+      const interpretation = getMetricInterpretation(key, value, results);
+      return [key, formattedValue, interpretation];
+    });
+
+  console.log('Prepared table data:', tableData);
+
+  // Configure and draw table
+  autoTable(doc, {
     startY,
     head: [['Metric', 'Value', 'Interpretation']],
+    body: tableData,
     styles: {
       fontSize: 8,
       cellPadding: 3,
@@ -52,15 +96,6 @@ export const exportToPDF = (results: any) => {
     },
     margin: { left: 14, right: 14 },
     tableWidth: 182
-  };
-
-  Object.entries(results).forEach(([metric, value]) => {
-    const formattedValue = formatMetricValue(metric, value);
-    const interpretation = getMetricInterpretation(metric, value, results);
-    autoTable(doc, {
-      ...tableConfig,
-      body: [[metric, formattedValue, interpretation]],
-    });
   });
 
   doc.save('health-metrics.pdf');
