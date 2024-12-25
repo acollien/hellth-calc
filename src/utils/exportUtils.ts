@@ -42,107 +42,116 @@ export const exportResults = (results: any, format: 'pdf' | 'json') => {
                             value < 40 ? "Average (30-40)" :
                             value < 50 ? "Athletic (40-50)" : "High (>50)",
     };
-    return ranges[metric] || "No range data";
+    return ranges[metric] || "";
   };
 
-  const formatValue = (value: any): string => {
+  const formatValue = (value: any, metric: string, unit: string = ''): string => {
     if (value === null || value === undefined || isNaN(value)) return 'N/A';
-    if (typeof value === 'number') return value.toFixed(1);
+    
+    // Add units based on metric type
+    if (metric.includes('Body Fat') || metric.includes('%')) {
+      return `${value.toFixed(1)}%`;
+    }
+    if (metric.includes('Weight') || metric.includes('Mass')) {
+      return `${value.toFixed(1)} ${unit}`;
+    }
+    if (typeof value === 'number') return value.toFixed(2);
     return String(value);
   };
 
   const data = {
     "Primary Metrics": {
-      "BMI (Standard)": `${formatValue(results.bmi?.standard)} - ${getRangeForMetric("BMI", results.bmi?.standard)}`,
-      "BMI (Athletic)": formatValue(results.bmi?.athletic),
-      "BMI (Devine)": formatValue(results.bmi?.devine),
-      "BMI (Based)": formatValue(results.bmi?.bmiBased),
-      "Body Fat % (Navy)": `${formatValue(results.bodyFat?.navy)} - ${getRangeForMetric("Body Fat %", results.bodyFat?.navy)}`,
-      "Body Fat % (Jackson)": formatValue(results.bodyFat?.jackson),
-      "Body Fat % (BMI Based)": formatValue(results.bodyFat?.bmiBased),
-      "Body Fat % (Army)": formatValue(results.bodyFat?.army),
-      "BMR": `${formatValue(results.bmr?.bmr)} kcal`,
-      "TDEE": `${formatValue(results.bmr?.tdee)} kcal`,
-      "Biological Age": `${formatValue(results.biologicalAge)} years`
+      "BMI (Standard)": results.bmi?.standard,
+      "Body Fat % (Navy)": results.bodyFat?.navy,
+      "BMR": results.bmr?.bmr,
+      "TDEE": results.bmr?.tdee,
+      "Biological Age": results.biologicalAge
     },
     "Body Composition": {
-      "Lean Body Mass": `${formatValue(results.leanBodyMass)} kg`,
-      "Fat Free Mass Index": `${formatValue(results.fatFreeMassIndex)} - ${getRangeForMetric("Fat Free Mass Index", results.fatFreeMassIndex)}`,
-      "Skeletal Muscle Mass": `${formatValue(results.skeletalMuscleMass)} kg - ${getRangeForMetric("Skeletal Muscle Mass", results.skeletalMuscleMass)}`,
-      "Body Fat Distribution": formatValue(results.bodyFatDistribution),
-      "Frame Size": results.frameSize || 'N/A',
-      "Lean Mass Index": `${formatValue(results.leanMassIndex)} - ${getRangeForMetric("Lean Mass Index", results.leanMassIndex)}`
+      "Lean Body Mass": results.leanBodyMass,
+      "Fat Free Mass Index": results.fatFreeMassIndex,
+      "Skeletal Muscle Mass": results.skeletalMuscleMass,
+      "Body Fat Distribution": results.bodyFatDistribution,
+      "Frame Size": results.frameSize,
+      "Lean Mass Index": results.leanMassIndex
     },
     "Body Indices": {
-      "Ponderal Index": `${formatValue(results.ponderalIndex?.metric)} - ${getRangeForMetric("Ponderal Index", results.ponderalIndex?.metric)}`,
-      "ABSI": `${formatValue(results.absi?.metric)} - ${getRangeForMetric("ABSI", results.absi?.metric)}`,
-      "Body Roundness Index": `${formatValue(results.bodyRoundnessIndex?.metric)} - ${getRangeForMetric("Body Roundness Index", results.bodyRoundnessIndex?.metric)}`,
-      "Body Adiposity Index": `${formatValue(results.bodyAdiposityIndex)} - ${getRangeForMetric("Body Adiposity Index", results.bodyAdiposityIndex)}`,
-      "Conicity Index": `${formatValue(results.conicityIndex)} - ${getRangeForMetric("Conicity Index", results.conicityIndex)}`
+      "Ponderal Index": results.ponderalIndex?.metric,
+      "ABSI": results.absi?.metric,
+      "Body Roundness Index": results.bodyRoundnessIndex?.metric,
+      "Body Adiposity Index": results.bodyAdiposityIndex,
+      "Conicity Index": results.conicityIndex
     },
     "Health Ratios": {
-      "Waist-to-Hip Ratio": `${formatValue(results.waistToHip)} - ${getRangeForMetric("Waist-to-Hip Ratio", results.waistToHip)}`,
-      "Waist-to-Height Ratio": `${formatValue(results.waistToHeightRatio)} - ${getRangeForMetric("Waist-to-Height Ratio", results.waistToHeightRatio)}`
+      "Waist-to-Hip Ratio": results.waistToHip,
+      "Waist-to-Height Ratio": results.waistToHeightRatio
     },
     "Ideal Weight Ranges": {
-      "Robinson Formula": `${formatValue(results.idealWeight?.robinson)} kg`,
-      "Miller Formula": `${formatValue(results.idealWeight?.miller)} kg`,
-      "Devine Formula": `${formatValue(results.idealWeight?.devine)} kg`,
-      "Athletic Formula": `${formatValue(results.idealWeight?.athletic)} kg`,
-      "BMI Based Range": `${formatValue(results.idealWeight?.bmiBased)} kg`
+      "Robinson Formula": results.idealWeight?.robinson,
+      "Miller Formula": results.idealWeight?.miller,
+      "Devine Formula": results.idealWeight?.devine,
+      "Athletic Formula": results.idealWeight?.athletic,
+      "BMI Based Range": results.idealWeight?.bmiBased
     }
   };
-
-  console.log("Processed data for export:", data);
 
   if (format === 'json') {
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     saveAs(blob, 'health-metrics.json');
   } else {
     const doc = new jsPDF();
+    const unit = results.unit || 'metric';
+    const unitSymbol = unit === 'metric' ? 'kg' : 'lbs';
     
     // Title
-    doc.setFontSize(16);
+    doc.setFontSize(20);
     doc.setTextColor(41, 128, 185);
     doc.text('Health Metrics Report', 14, 15);
     
-    // Date
-    doc.setFontSize(8);
+    // Date with increased spacing
+    doc.setFontSize(10);
     doc.setTextColor(128, 128, 128);
-    doc.text(`Generated on ${new Date().toLocaleDateString()}`, 14, 20);
+    doc.text(`Generated on ${new Date().toLocaleDateString()}`, 14, 25);
 
-    let startY = 25;
+    let startY = 35;
     
     const tableConfig = {
       startY,
-      head: [['Metric', 'Value']],
+      head: [['Metric', 'Value', 'Interpretation']],
       styles: {
-        fontSize: 7,
-        cellPadding: 1,
+        fontSize: 8,
+        cellPadding: 2,
         overflow: 'linebreak' as const,
         cellWidth: 'auto' as const
       },
       headStyles: {
         fillColor: [41, 128, 185] as [number, number, number],
         textColor: 255,
-        fontSize: 8,
+        fontSize: 9,
         fontStyle: 'bold' as const,
-        cellPadding: 2,
+        cellPadding: 3,
       },
       columnStyles: {
-        0: { cellWidth: 80 },
-        1: { cellWidth: 110 }
+        0: { cellWidth: 60 },
+        1: { cellWidth: 50 },
+        2: { cellWidth: 70 }
       },
       margin: { left: 14, right: 14 },
       tableWidth: 182
     };
 
     Object.entries(data).forEach(([section, metrics], index) => {
-      const tableData = Object.entries(metrics).map(([key, value]) => [key, value]);
-      
-      doc.setFontSize(9);
+      // Section headers with increased prominence
+      doc.setFontSize(14);
       doc.setTextColor(41, 128, 185);
-      doc.text(section, 14, startY - 3);
+      doc.setFont(undefined, 'bold');
+      doc.text(section, 14, startY - 5);
+      
+      const tableData = Object.entries(metrics).map(([key, value]) => {
+        const formattedValue = formatValue(value, key, unitSymbol);
+        const range = getRangeForMetric(key, Number(value));
+        return [key, formattedValue, range];
+      });
       
       autoTable(doc, {
         ...tableConfig,
@@ -150,7 +159,7 @@ export const exportResults = (results: any, format: 'pdf' | 'json') => {
         body: tableData,
       });
       
-      startY = (doc as any).lastAutoTable.finalY + 5;
+      startY = (doc as any).lastAutoTable.finalY + 15;
     });
 
     doc.save('health-metrics.pdf');
