@@ -34,11 +34,26 @@ const AbsiCard = ({ value, unit }: AbsiCardProps) => {
           <div className="space-y-2">
             <h4 className="font-semibold">A Body Shape Index (ABSI)</h4>
             <p>A measure that evaluates body shape independent of height and weight, focusing on the health implications of central obesity.</p>
-            <div className="text-sm space-y-1">
-              <p className="font-medium">Formula:</p>
-              <p className="text-mint-700">ABSI = WC / (BMI^(2/3) × Height^(1/2))</p>
-              <p className="font-medium mt-2">Interpretation:</p>
-              {interpretation}
+            <div className="text-sm space-y-2">
+              <div>
+                <p className="font-medium">Formula:</p>
+                <p className="text-mint-700">ABSI = WC / (BMI^(2/3) × Height^(1/2))</p>
+              </div>
+              <div>
+                <p className="font-medium">Interpretation:</p>
+                {interpretation}
+              </div>
+              <div className="mt-2 text-xs text-gray-600">
+                <p className="font-medium">Citation:</p>
+                <a 
+                  href="https://doi.org/10.1371/journal.pone.0039504"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline"
+                >
+                  Krakauer NY, Krakauer JC. A new body shape index predicts mortality hazard independently of body mass index. PLoS One. 2012;7(7):e39504.
+                </a>
+              </div>
             </div>
           </div>
         </DialogContent>

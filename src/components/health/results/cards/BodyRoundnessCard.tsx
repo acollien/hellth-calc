@@ -44,6 +44,17 @@ const BodyRoundnessCard = ({ value, unit }: BodyRoundnessCardProps) => {
                   <li>Above 3: Obese body composition</li>
                 </ul>
               </div>
+              <div className="mt-2 text-xs text-gray-600">
+                <p className="font-medium">Citation:</p>
+                <a 
+                  href="https://doi.org/10.1371/journal.pone.0103483"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline"
+                >
+                  Thomas DM, Bredlau C, Bosy-Westphal A, et al. Relationships between body roundness with body fat and visceral adipose tissue emerging from a new geometrical model. Obesity (Silver Spring). 2013;21(11):2264-2271.
+                </a>
+              </div>
             </div>
           </div>
         </DialogContent>
