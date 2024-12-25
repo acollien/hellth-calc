@@ -64,10 +64,10 @@ const BMIResults = ({ bmi }: BMIResultsProps) => {
       interpretation: "• Under 16.5: Too lean\n• 16.5-22.5: Athletic build\n• 22.5-27: Muscular build\n• Above 27: May need body composition assessment"
     },
     bmiBased: {
-      title: "BMI Based Range",
-      formula: "Based on standard BMI ranges",
-      description: "A range calculation derived from standard BMI categories.",
-      interpretation: "• Under 18.5: Below healthy range\n• 18.5-24.9: Healthy range\n• 25-29.9: Above healthy range\n• 30+: Well above healthy range"
+      title: "Modified BMI",
+      formula: "1.3 × Weight (kg) / Height^2.5 (m)",
+      description: "Developed by Oxford mathematicians in 2013, this revised BMI formula better accounts for the natural scaling of body mass with height, providing more accurate assessments for both tall and short individuals.",
+      interpretation: "• Under 18.5: Underweight - May need nutritional assessment\n• 18.5-24.9: Normal range - Healthy weight for height\n• 25-29.9: Overweight - Consider lifestyle modifications\n• 30+: Obese - Consult healthcare provider"
     }
   }), []);
 

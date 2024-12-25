@@ -33,13 +33,14 @@ export const calculateDevineBMI = (height: number, weight: number): number | nul
   return (weight / devineIdealWeight) * 21.7;
 };
 
-export const calculateBMIBasedRange = (standardBMI: number): number | null => {
-  console.log('Calculating BMI-based range from standard BMI:', standardBMI);
+export const calculateModifiedBMI = (height: number, weight: number): number | null => {
+  console.log('Calculating Modified BMI with height:', height, 'and weight:', weight);
   
-  if (!standardBMI || standardBMI <= 0) {
-    console.log('Invalid standard BMI for BMI-based range');
+  if (!height || !weight || height <= 0 || weight <= 0) {
+    console.log('Invalid height or weight values for Modified BMI');
     return null;
   }
 
-  return standardBMI;
+  const heightInM = height / 100;
+  return 1.3 * weight / Math.pow(heightInM, 2.5);
 };

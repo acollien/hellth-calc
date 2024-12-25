@@ -2,7 +2,7 @@ import {
   calculateStandardBMI,
   calculateAthleticBMI,
   calculateDevineBMI,
-  calculateBMIBasedRange
+  calculateModifiedBMI
 } from './bmiFormulas';
 
 export const calculateBMI = (height: number, weight: number) => {
@@ -18,13 +18,13 @@ export const calculateBMI = (height: number, weight: number) => {
 
   const athleticBMI = calculateAthleticBMI(standardBMI);
   const devineBMI = calculateDevineBMI(height, weight);
-  const bmiBased = calculateBMIBasedRange(standardBMI);
+  const modifiedBMI = calculateModifiedBMI(height, weight);
 
   const results = {
     standard: standardBMI,
     athletic: athleticBMI,
     devine: devineBMI,
-    bmiBased: bmiBased
+    bmiBased: modifiedBMI
   };
 
   console.log('Final BMI calculation results:', results);
