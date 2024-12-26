@@ -13,7 +13,9 @@ export const calculateBMIBasedBodyFat = (metrics: HealthMetrics): number | null 
   const bmi = weight / Math.pow(height / 100, 2);
   
   // Deurenberg et al. (1991) equation
-  const bodyFat = (1.20 * bmi) + (0.23 * age) - (10.8 * (metrics.gender === 'male' ? 1 : 0)) - 5.4;
+  // For men: BF% = (1.20 × BMI) + (0.23 × Age) - 16.2
+  // For women: BF% = (1.20 × BMI) + (0.23 × Age) - 5.4
+  const bodyFat = (1.20 * bmi) + (0.23 * age) - (metrics.gender === 'male' ? 16.2 : 5.4);
 
   console.log('BMI-Based body fat calculation:', {
     bmi,
